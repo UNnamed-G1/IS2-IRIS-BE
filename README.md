@@ -1,13 +1,10 @@
-# IRIS Back-end
+# IRIS: Ideal Research Integration System - Backend
 
-In this repository you will find the IRIS Back-end
+In this repository you will find the IRIS Backend
 
-
-
-## CREATORS
-
-* Cristian David Gonzalez Carrllo
+## Members
+* Cristian David Gonzalez Carrillo
 * Julian Esteban Salomon Torres
-* Jhon Alexander Sedano
-* John Fredy Castro
-* David Felipe Rico Hernandez
+* David Felipe Rico Hernández
+* Jhon Alexander Sedano Delgado
+* John Fredy Castro Hernández
