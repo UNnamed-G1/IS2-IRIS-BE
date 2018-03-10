@@ -10,7 +10,54 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180310171429) do
+ActiveRecord::Schema.define(version: 20180310214256) do
+
+  create_table "events", force: :cascade do |t|
+    t.integer "id_event"
+    t.integer "id_group"
+    t.text "topic"
+    t.text "description_event"
+    t.integer "type_event"
+    t.datetime "date_time"
+    t.integer "frequence"
+    t.datetime "end_time_event"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "publications", force: :cascade do |t|
+    t.integer "id_product"
+    t.date "publication_date"
+    t.text "abstract"
+    t.text "url"
+    t.text "little_desc"
+    t.text "file_name"
+    t.integer "publication_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "publications_research_groups", id: false, force: :cascade do |t|
+    t.integer "research_group_id", null: false
+    t.integer "publication_id", null: false
+    t.index ["publication_id"], name: "index_publications_research_groups_on_publication_id"
+    t.index ["research_group_id"], name: "index_publications_research_groups_on_research_group_id"
+  end
+
+  create_table "research_groups", force: :cascade do |t|
+    t.integer "id_group"
+    t.text "name_group"
+    t.text "description_group"
+    t.text "strategic_focus"
+    t.text "research_priorities"
+    t.date "foundation_date"
+    t.text "classification"
+    t.date "date_classification"
+    t.text "url_group"
+    t.integer "id_photo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "research_subjects", force: :cascade do |t|
     t.string "name", limit: 100

@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id_group: 1
+  name_group: MyText
+  description_group: MyText
+  strategic_focus: MyText
+  research_priorities: MyText
+  foundation_date: 2018-03-10
+  classification: MyText
+  date_classification: 2018-03-10
+  url_group: MyText
+  id_photo: 1
+
+two:
+  id_group: 1
+  name_group: MyText
+  description_group: MyText
+  strategic_focus: MyText
+  research_priorities: MyText
+  foundation_date: 2018-03-10
+  classification: MyText
+  date_classification: 2018-03-10
+  url_group: MyText
+  id_photo: 1
