@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180310171429) do
+ActiveRecord::Schema.define(version: 20180310193124) do
+
+  create_table "relationships", id: false, force: :cascade do |t|
+    t.integer "followed_id"
+    t.integer "follower_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["followed_id"], name: "index_relationships_on_followed_id"
+    t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
+    t.index ["follower_id"], name: "index_relationships_on_follower_id"
+  end
 
   create_table "research_subjects", force: :cascade do |t|
     t.string "name", limit: 100
@@ -19,8 +29,8 @@ ActiveRecord::Schema.define(version: 20180310171429) do
   end
 
   create_table "research_subjects_users", id: false, force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "research_subject_id", null: false
+    t.integer "user_id"
+    t.integer "research_subject_id"
     t.index ["research_subject_id"], name: "index_research_subjects_users_on_research_subject_id"
     t.index ["user_id"], name: "index_research_subjects_users_on_user_id"
   end
@@ -33,8 +43,8 @@ ActiveRecord::Schema.define(version: 20180310171429) do
   end
 
   create_table "schedules_users", id: false, force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "schedule_id", null: false
+    t.integer "user_id"
+    t.integer "schedule_id"
     t.index ["schedule_id"], name: "index_schedules_users_on_schedule_id"
     t.index ["user_id"], name: "index_schedules_users_on_user_id"
   end
