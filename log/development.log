@@ -1,169 +1,164 @@
-Started GET "/" for 127.0.0.1 at 2018-03-04 14:46:09 -0500
-Processing by Rails::WelcomeController#index as HTML
-  Rendering /home/cristian/.rvm/gems/ruby-2.5.0/gems/railties-5.1.5/lib/rails/templates/rails/welcome/index.html.erb
-  Rendered /home/cristian/.rvm/gems/ruby-2.5.0/gems/railties-5.1.5/lib/rails/templates/rails/welcome/index.html.erb (4.2ms)
-Completed 200 OK in 557ms (Views: 26.6ms)
-
-
-Started GET "/favicon.ico" for 127.0.0.1 at 2018-03-04 14:46:10 -0500
-  
-ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
-  
-actionpack (5.1.5) lib/action_dispatch/middleware/debug_exceptions.rb:63:in `call'
-actionpack (5.1.5) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
-railties (5.1.5) lib/rails/rack/logger.rb:36:in `call_app'
-railties (5.1.5) lib/rails/rack/logger.rb:24:in `block in call'
-activesupport (5.1.5) lib/active_support/tagged_logging.rb:69:in `block in tagged'
-activesupport (5.1.5) lib/active_support/tagged_logging.rb:26:in `tagged'
-activesupport (5.1.5) lib/active_support/tagged_logging.rb:69:in `tagged'
-railties (5.1.5) lib/rails/rack/logger.rb:24:in `call'
-actionpack (5.1.5) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
-actionpack (5.1.5) lib/action_dispatch/middleware/request_id.rb:25:in `call'
-rack (2.0.4) lib/rack/runtime.rb:22:in `call'
-activesupport (5.1.5) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
-actionpack (5.1.5) lib/action_dispatch/middleware/executor.rb:12:in `call'
-actionpack (5.1.5) lib/action_dispatch/middleware/static.rb:125:in `call'
-rack (2.0.4) lib/rack/sendfile.rb:111:in `call'
-railties (5.1.5) lib/rails/engine.rb:522:in `call'
-puma (3.11.2) lib/puma/configuration.rb:225:in `call'
-puma (3.11.2) lib/puma/server.rb:624:in `handle_request'
-puma (3.11.2) lib/puma/server.rb:438:in `process_client'
-puma (3.11.2) lib/puma/server.rb:302:in `block in run'
-puma (3.11.2) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
-  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
-  [1m[35m (38.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
-  [1m[35m (13.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
-  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-Migrating to CreateFaculties (20180310175536)
-  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (3.1ms)[0m  [1m[35mCREATE TABLE "faculties" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "faculty_name" varchar(100), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
-  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180310175536"]]
-  [1m[35m (17.1ms)[0m  [1m[36mcommit transaction[0m
-  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
-  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35mSQL (1.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2018-03-10 18:08:58.115258"], ["updated_at", "2018-03-10 18:08:58.115258"]]
-  [1m[35m (5.4ms)[0m  [1m[36mcommit transaction[0m
   [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (22.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (6.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
   [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-Migrating to CreateFaculties (20180310175536)
-  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (1.6ms)[0m  [1m[35mDROP TABLE "faculties"[0m
-  [1m[35mSQL (0.1ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = ?[0m  [["version", "20180310175536"]]
-  [1m[35m (108.8ms)[0m  [1m[36mcommit transaction[0m
-  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-Migrating to CreateFaculties (20180310175536)
+Migrating to CreateUsers (20180310063644)
   [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
-  [1m[35m (2.8ms)[0m  [1m[35mCREATE TABLE "faculties" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "faculty_name" varchar(100), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
-  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180310175536"]]
-  [1m[35m (143.1ms)[0m  [1m[36mcommit transaction[0m
-Migrating to CreateDepartments (20180310181230)
-  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (3.1ms)[0m  [1m[35mCREATE TABLE "departments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "department_name" varchar(100), "faculty_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, CONSTRAINT "fk_rails_925f039a87"
-FOREIGN KEY ("faculty_id")
-  REFERENCES "faculties" ("id")
+  [1m[35m (3.1ms)[0m  [1m[35mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(100), "username" varchar(30), "professional_profile" varchar(5000), "email" varchar(50), "phone" varchar(15), "office" varchar(15), "cvlac_link" varchar(200), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180310063644"]]
+  [1m[35m (10.0ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateSchedules (20180310065507)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "schedules" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "start" datetime, "end" datetime, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180310065507"]]
+  [1m[35m (5.2ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateResearchSubjects (20180310070520)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "research_subjects" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(100), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180310070520"]]
+  [1m[35m (4.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateUsersSchedulesJoinTable (20180310171413)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "schedules_users" ("user_id" integer, "schedule_id" integer, CONSTRAINT "fk_rails_0f540d24ee"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_3d60a05897"
+FOREIGN KEY ("schedule_id")
+  REFERENCES "schedules" ("id")
 )[0m
-  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_departments_on_faculty_id" ON "departments" ("faculty_id")[0m
-  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180310181230"]]
-  [1m[35m (8.2ms)[0m  [1m[36mcommit transaction[0m
-Migrating to CreateCareers (20180310183254)
-  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (4.1ms)[0m  [1m[35mCREATE TABLE "careers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "career_name" varchar(100), "snies_code" integer, "degree_level" integer DEFAULT 0, "department_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, CONSTRAINT "fk_rails_e434643461"
-FOREIGN KEY ("department_id")
-  REFERENCES "departments" ("id")
-)[0m
-  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_careers_on_department_id" ON "careers" ("department_id")[0m
-  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180310183254"]]
-  [1m[35m (66.6ms)[0m  [1m[36mcommit transaction[0m
-  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
-  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
-  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_schedules_users_on_user_id" ON "schedules_users" ("user_id")[0m
   [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
             FROM sqlite_master
-            WHERE name='index_careers_on_department_id' AND type='index'
+            WHERE name='index_schedules_users_on_user_id' AND type='index'
             UNION ALL
             SELECT sql
             FROM sqlite_temp_master
-            WHERE name='index_careers_on_department_id' AND type='index'
+            WHERE name='index_schedules_users_on_user_id' AND type='index'
 [0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_schedules_users_on_schedule_id" ON "schedules_users" ("schedule_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180310171413"]]
+  [1m[35m (4.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateUsersResearchSubjectsJoinTable (20180310171429)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "research_subjects_users" ("user_id" integer, "research_subject_id" integer, CONSTRAINT "fk_rails_36197e1ac4"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_b7d5ca9663"
+FOREIGN KEY ("research_subject_id")
+  REFERENCES "research_subjects" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_research_subjects_users_on_user_id" ON "research_subjects_users" ("user_id")[0m
   [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
             FROM sqlite_master
-            WHERE name='index_departments_on_faculty_id' AND type='index'
+            WHERE name='index_research_subjects_users_on_user_id' AND type='index'
             UNION ALL
             SELECT sql
             FROM sqlite_temp_master
-            WHERE name='index_departments_on_faculty_id' AND type='index'
+            WHERE name='index_research_subjects_users_on_user_id' AND type='index'
 [0m
-  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-Migrating to CreateCareers (20180310183254)
-  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (1.7ms)[0m  [1m[35mDROP TABLE "careers"[0m
-  [1m[35mSQL (0.2ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = ?[0m  [["version", "20180310183254"]]
-  [1m[35m (115.4ms)[0m  [1m[36mcommit transaction[0m
-  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-  [1m[35m (0.5ms)[0m  [1m[34m            SELECT sql
-            FROM sqlite_master
-            WHERE name='index_departments_on_faculty_id' AND type='index'
-            UNION ALL
-            SELECT sql
-            FROM sqlite_temp_master
-            WHERE name='index_departments_on_faculty_id' AND type='index'
-[0m
-  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-Migrating to CreateDepartments (20180310181230)
-  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (2.2ms)[0m  [1m[35mDROP TABLE "departments"[0m
-  [1m[35mSQL (0.2ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = ?[0m  [["version", "20180310181230"]]
-  [1m[35m (42.8ms)[0m  [1m[36mcommit transaction[0m
-  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-Migrating to CreateFaculties (20180310175536)
-  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (2.0ms)[0m  [1m[35mDROP TABLE "faculties"[0m
-  [1m[35mSQL (0.2ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = ?[0m  [["version", "20180310175536"]]
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_research_subjects_users_on_research_subject_id" ON "research_subjects_users" ("research_subject_id")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180310171429"]]
   [1m[35m (4.8ms)[0m  [1m[36mcommit transaction[0m
-  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
 Migrating to CreateFaculties (20180310175536)
   [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
-  [1m[35m (17.7ms)[0m  [1m[35mCREATE TABLE "faculties" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(100), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
-  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180310175536"]]
-  [1m[35m (37.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "faculties" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(100), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180310175536"]]
+  [1m[35m (7.1ms)[0m  [1m[36mcommit transaction[0m
 Migrating to CreateDepartments (20180310181230)
   [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "departments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(100), "faculty_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, CONSTRAINT "fk_rails_925f039a87"
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "departments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(100), "faculty_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, CONSTRAINT "fk_rails_925f039a87"
 FOREIGN KEY ("faculty_id")
   REFERENCES "faculties" ("id")
 )[0m
   [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_departments_on_faculty_id" ON "departments" ("faculty_id")[0m
-  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180310181230"]]
-  [1m[35m (43.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180310181230"]]
+  [1m[35m (17.3ms)[0m  [1m[36mcommit transaction[0m
 Migrating to CreateCareers (20180310183254)
   [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "careers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(100), "snies_code" integer, "degree_type" integer DEFAULT 0, "department_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, CONSTRAINT "fk_rails_e434643461"
+  [1m[35m (3.1ms)[0m  [1m[35mCREATE TABLE "careers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(100), "snies_code" integer, "degree_type" integer DEFAULT 0, "department_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, CONSTRAINT "fk_rails_e434643461"
 FOREIGN KEY ("department_id")
   REFERENCES "departments" ("id")
 )[0m
   [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_careers_on_department_id" ON "careers" ("department_id")[0m
   [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180310183254"]]
-  [1m[35m (29.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (4.6ms)[0m  [1m[36mcommit transaction[0m
 Migrating to CreatePhotos (20180310184657)
   [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "photos" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "link" text, "type_imageable" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "photos" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "link" text, "type_imageable" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
   [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180310184657"]]
-  [1m[35m (6.9ms)[0m  [1m[36mcommit transaction[0m
-  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (6.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateRelationship (20180310193124)
   [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "relationships" ("followed_id" integer, "follower_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_relationships_on_followed_id" ON "relationships" ("followed_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_relationships_on_followed_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_relationships_on_followed_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_relationships_on_follower_id" ON "relationships" ("follower_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_relationships_on_follower_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_relationships_on_follower_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_relationships_on_followed_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_relationships_on_followed_id' AND type='index'
+[0m
+  [1m[35m (18.6ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_relationships_on_follower_id_and_followed_id" ON "relationships" ("follower_id", "followed_id")[0m
+  [1m[35mSQL (3.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180310193124"]]
+  [1m[35m (5.4ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateEvents (20180310212726)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE TABLE "events" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "id_event" integer, "id_group" integer, "topic" text, "description_event" text, "type_event" integer, "date_time" datetime, "frequence" integer, "end_time_event" datetime, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180310212726"]]
+  [1m[35m (7.0ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateResearchGroups (20180310212946)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "research_groups" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "id_group" integer, "name_group" text, "description_group" text, "strategic_focus" text, "research_priorities" text, "foundation_date" date, "classification" text, "date_classification" date, "url_group" text, "id_photo" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180310212946"]]
+  [1m[35m (8.5ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePublications (20180310213120)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "publications" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "id_product" integer, "publication_date" date, "abstract" text, "url" text, "little_desc" text, "file_name" text, "publication_type" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180310213120"]]
+  [1m[35m (6.0ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePublicationsResearchGroupsJoinTable (20180310214256)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "publications_research_groups" ("research_group_id" integer NOT NULL, "publication_id" integer NOT NULL)[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE  INDEX "index_publications_research_groups_on_research_group_id" ON "publications_research_groups" ("research_group_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_publications_research_groups_on_research_group_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_publications_research_groups_on_research_group_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_publications_research_groups_on_publication_id" ON "publications_research_groups" ("publication_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20180310214256"]]
+  [1m[35m (7.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2018-03-10 22:47:46.893532"], ["updated_at", "2018-03-10 22:47:46.893532"]]
+  [1m[35m (3.2ms)[0m  [1m[36mcommit transaction[0m
   [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
   [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
             FROM sqlite_master
@@ -173,7 +168,7 @@ Migrating to CreatePhotos (20180310184657)
             FROM sqlite_temp_master
             WHERE name='index_careers_on_department_id' AND type='index'
 [0m
-  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+  [1m[35m (2.2ms)[0m  [1m[34m            SELECT sql
             FROM sqlite_master
             WHERE name='index_departments_on_faculty_id' AND type='index'
             UNION ALL
@@ -181,46 +176,75 @@ Migrating to CreatePhotos (20180310184657)
             FROM sqlite_temp_master
             WHERE name='index_departments_on_faculty_id' AND type='index'
 [0m
-  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35mSQL (1.9ms)[0m  [1m[32mINSERT INTO "faculties" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "ingenieria"], ["created_at", "2018-03-10 21:00:36.388090"], ["updated_at", "2018-03-10 21:00:36.388090"]]
-  [1m[35m (60.3ms)[0m  [1m[36mcommit transaction[0m
-  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
-  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35mSQL (2.3ms)[0m  [1m[32mINSERT INTO "departments" ("name", "faculty_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "sisemas e industrial"], ["faculty_id", 1], ["created_at", "2018-03-10 21:12:28.254938"], ["updated_at", "2018-03-10 21:12:28.254938"]]
-  [1m[35m (72.2ms)[0m  [1m[36mcommit transaction[0m
-  [1m[36mDepartment Load (0.6ms)[0m  [1m[34mSELECT  "departments".* FROM "departments" ORDER BY "departments"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
-  [1m[36mDepartment Load (0.2ms)[0m  [1m[34mSELECT  "departments".* FROM "departments" ORDER BY "departments"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
-  [1m[36mDepartment Load (0.2ms)[0m  [1m[34mSELECT  "departments".* FROM "departments" ORDER BY "departments"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
-  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
-  [1m[36mDepartment Load (0.2ms)[0m  [1m[34mSELECT  "departments".* FROM "departments" ORDER BY "departments"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
-  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
-  [1m[36mDepartment Load (0.2ms)[0m  [1m[34mSELECT  "departments".* FROM "departments" ORDER BY "departments"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
-  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[36mCareer Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "careers" WHERE "careers"."snies_code" = ? LIMIT ?[0m  [["snies_code", 123], ["LIMIT", 1]]
-  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "careers" ("name", "snies_code", "department_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "asd"], ["snies_code", 123], ["department_id", 1], ["created_at", "2018-03-10 21:24:50.759154"], ["updated_at", "2018-03-10 21:24:50.759154"]]
-  [1m[35m (4.0ms)[0m  [1m[36mcommit transaction[0m
-  [1m[36mDepartment Load (0.3ms)[0m  [1m[34mSELECT  "departments".* FROM "departments" ORDER BY "departments"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
-  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[36mCareer Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "careers" WHERE "careers"."snies_code" = ? LIMIT ?[0m  [["snies_code", 1232], ["LIMIT", 1]]
-  [1m[35mSQL (4.2ms)[0m  [1m[32mINSERT INTO "careers" ("name", "snies_code", "department_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "asd"], ["snies_code", 1232], ["department_id", 1], ["created_at", "2018-03-10 21:29:41.796929"], ["updated_at", "2018-03-10 21:29:41.796929"]]
-  [1m[35m (49.2ms)[0m  [1m[36mcommit transaction[0m
-  [1m[36mDepartment Load (0.2ms)[0m  [1m[34mSELECT  "departments".* FROM "departments" ORDER BY "departments"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
-  [1m[36mDepartment Load (0.3ms)[0m  [1m[34mSELECT  "departments".* FROM "departments" ORDER BY "departments"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
-  [1m[36mDepartment Load (0.3ms)[0m  [1m[34mSELECT  "departments".* FROM "departments" ORDER BY "departments"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
-  [1m[36mDepartment Load (0.2ms)[0m  [1m[34mSELECT  "departments".* FROM "departments" ORDER BY "departments"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
-  [1m[36mDepartment Load (0.2ms)[0m  [1m[34mSELECT  "departments".* FROM "departments" ORDER BY "departments"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
-  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[36mCareer Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "careers" WHERE "careers"."snies_code" = ? LIMIT ?[0m  [["snies_code", 421232], ["LIMIT", 1]]
-  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
-  [1m[36mDepartment Load (0.2ms)[0m  [1m[34mSELECT  "departments".* FROM "departments" ORDER BY "departments"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
-  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[36mCareer Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "careers" WHERE "careers"."snies_code" = ? LIMIT ?[0m  [["snies_code", 421232], ["LIMIT", 1]]
-  [1m[35mSQL (3.7ms)[0m  [1m[32mINSERT INTO "careers" ("name", "snies_code", "degree_type", "department_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "asd"], ["snies_code", 421232], ["degree_type", 0], ["department_id", 1], ["created_at", "2018-03-10 21:45:34.057616"], ["updated_at", "2018-03-10 21:45:34.057616"]]
-  [1m[35m (62.8ms)[0m  [1m[36mcommit transaction[0m
-  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
-  [1m[36mCareer Exists (0.5ms)[0m  [1m[34mSELECT  1 AS one FROM "careers" WHERE "careers"."snies_code" = ? LIMIT ?[0m  [["snies_code", 42123], ["LIMIT", 1]]
-  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
-  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_publications_research_groups_on_publication_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_publications_research_groups_on_publication_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_publications_research_groups_on_research_group_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_publications_research_groups_on_research_group_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_relationships_on_follower_id_and_followed_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_relationships_on_follower_id_and_followed_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_relationships_on_follower_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_relationships_on_follower_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_relationships_on_followed_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_relationships_on_followed_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_research_subjects_users_on_research_subject_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_research_subjects_users_on_research_subject_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_research_subjects_users_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_research_subjects_users_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_schedules_users_on_schedule_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_schedules_users_on_schedule_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_schedules_users_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_schedules_users_on_user_id' AND type='index'
+[0m
