@@ -1,10 +1,8 @@
 class CreateUserResearchGroups < ActiveRecord::Migration[5.1]
   def change
     create_table :user_research_groups, id: false do |t|
-      t.timestamp :joining_date, :end_joining_date, presence: true
-      t.integer :user_state, presence: true, default: 0
-      t.integer :user_type, presence: true, default: 0
-      t.integer :hours_per_week, presence: false, default: 0
+      t.timestamp :joining_date, :end_joining_date, :state, :type presence: true
+      t.integer :state, :type, :hours_per_week, default: 0
 
       t.references :users, foreign_key: true
       t.references :research_groups, foreign_key: true
