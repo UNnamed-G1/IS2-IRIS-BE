@@ -1,4 +1,4 @@
-class CreateJoinTableUsersPublications < ActiveRecord::Migration[5.1]
+class CreateUsersPublicationsJoinTable < ActiveRecord::Migration[5.1]
   def change
     create_join_table :users, :publications do |t|
       t.references :user, foreign_key: true

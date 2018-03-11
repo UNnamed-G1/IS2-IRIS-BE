@@ -1,4 +1,4 @@
-class CreateJoinTablePhotosEvents < ActiveRecord::Migration[5.1]
+class CreatePhotosEventsJoinTable < ActiveRecord::Migration[5.1]
   def change
     create_join_table :photos, :events do |t|
       t.references :photo, foreign_key: true

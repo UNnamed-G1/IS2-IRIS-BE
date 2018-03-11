@@ -3,7 +3,7 @@ class UserResearchGroup < ApplicationRecord
   belongs_to :research_group
 
   enum state_type: [:retirado, :activo]
-  enum user_type: [:asociado, :estudiante] # Faltan màs tipos
+  enum user_type: [:asociado, :estudiante, :lider] # Faltan más tipos
 
   validate :joining_date, :user_state, :user_type, presence: true;
   validate :user_state, inclusion: {in: state_types.keys, message: "El estado no es valido"};

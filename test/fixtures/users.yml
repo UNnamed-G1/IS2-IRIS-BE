@@ -3,17 +3,17 @@
 one:
   name: MyString
   username: MyString
-  professional_profile: MyString
+  professional_profile: MyText
   email: MyString
   phone: MyString
   office: MyString
-  cvlack_link: MyString
+  cvlac_link: MyString
 
 two:
   name: MyString
   username: MyString
-  professional_profile: MyString
+  professional_profile: MyText
   email: MyString
   phone: MyString
   office: MyString
-  cvlack_link: MyString
+  cvlac_link: MyString

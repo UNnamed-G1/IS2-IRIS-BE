@@ -1,4 +1,4 @@
-class CreateJoinTableUsersEvents < ActiveRecord::Migration[5.1]
+class CreateUsersEventsJoinTable < ActiveRecord::Migration[5.1]
   def change
     create_join_table :users, :events do |t|
       t.references :user, foreign_key: true

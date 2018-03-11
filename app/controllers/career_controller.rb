@@ -1,2 +1,0 @@
-class CareerController < ApplicationController
-end

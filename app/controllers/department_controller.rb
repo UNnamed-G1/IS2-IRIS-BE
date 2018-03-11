@@ -1,2 +1,0 @@
-class DepartmentController < ApplicationController
-end

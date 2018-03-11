@@ -1,19 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  id_product: 1
-  publication_date: 2018-03-10
+  name: MyString
+  date: 2018-03-11
   abstract: MyText
-  url: MyText
-  little_desc: MyText
-  file_name: MyText
-  publication_type: 1
+  url: MyString
+  brief_description: MyString
+  file_name: MyString
+  type: 1
 
 two:
-  id_product: 1
-  publication_date: 2018-03-10
+  name: MyString
+  date: 2018-03-11
   abstract: MyText
-  url: MyText
-  little_desc: MyText
-  file_name: MyText
-  publication_type: 1
+  url: MyString
+  brief_description: MyString
+  file_name: MyString
+  type: 1
