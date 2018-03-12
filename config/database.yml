@@ -21,10 +21,5 @@ test:
   database: db/test.sqlite3
 
 production:
-<<<<<<< HEAD
-  <<: *default
-  database: db/production.sqlite3
-=======
   adapter: pg
   database: iris_db_production
->>>>>>> da0d017d6b98af73f220b6150bb010914eca3ae9

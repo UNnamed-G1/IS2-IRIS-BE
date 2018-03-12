@@ -1,10 +1,4 @@
 class Event < ApplicationRecord
-<<<<<<< HEAD
-    validates :topic, :description_topic, presence: true, length: { maximum: 1024, too_long: "Se permiten maximo %{count} caracteres" }
-    validates :id_event, :id_group, :type_event, :date_time, :frequence, :end_time_event, presence: true
-end
-
-=======
     has_and_belongs_to_many :users
     has_many :photos, as: :imageable
     belongs_to :research_group
@@ -19,4 +13,3 @@ end
     validates :frequence, inclusion: {in: frequences.keys, message: "Frecuencia del evento invalida."}
     validates :state, inclusion: {in: states.keys, message: "Estado del evento invalido."}
 end
->>>>>>> da0d017d6b98af73f220b6150bb010914eca3ae9

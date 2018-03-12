@@ -8,11 +8,6 @@ end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.5'
-<<<<<<< HEAD
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
-=======
->>>>>>> da0d017d6b98af73f220b6150bb010914eca3ae9
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -27,15 +22,13 @@ gem 'puma', '~> 3.7'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
+gem 'faker', '~> 1.8', '>= 1.8.7'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
-<<<<<<< HEAD
-group :development do
-=======
 group :production do
   gem 'pg'
 end
@@ -43,7 +36,6 @@ end
 group :development do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
->>>>>>> da0d017d6b98af73f220b6150bb010914eca3ae9
   gem 'listen', '>= 3.0.5', '< 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'

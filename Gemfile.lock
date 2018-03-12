@@ -43,11 +43,9 @@ GEM
     byebug (10.0.0)
     concurrent-ruby (1.0.5)
     crass (1.0.3)
-<<<<<<< HEAD
-    erubi (1.7.0)
-=======
     erubi (1.7.1)
->>>>>>> da0d017d6b98af73f220b6150bb010914eca3ae9
+    faker (1.8.7)
+      i18n (>= 0.7)
     ffi (1.9.23)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
@@ -69,12 +67,8 @@ GEM
     nio4r (2.2.0)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
-<<<<<<< HEAD
-    puma (3.11.2)
-=======
     pg (1.0.0)
     puma (3.11.3)
->>>>>>> da0d017d6b98af73f220b6150bb010914eca3ae9
     rack (2.0.4)
     rack-test (0.8.3)
       rack (>= 1.0, < 3)
@@ -132,11 +126,9 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
+  faker (~> 1.8, >= 1.8.7)
   listen (>= 3.0.5, < 3.2)
-<<<<<<< HEAD
-=======
   pg
->>>>>>> da0d017d6b98af73f220b6150bb010914eca3ae9
   puma (~> 3.7)
   rails (~> 5.1.5)
   spring
@@ -145,8 +137,4 @@ DEPENDENCIES
   tzinfo-data
 
 BUNDLED WITH
-<<<<<<< HEAD
    1.16.1
-=======
-   1.15.2
->>>>>>> da0d017d6b98af73f220b6150bb010914eca3ae9
