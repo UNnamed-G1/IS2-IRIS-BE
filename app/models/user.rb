@@ -12,8 +12,8 @@ class User < ApplicationRecord
 
   enum type: [:miembro, :lider]
 
-  validates :name, :username, :professional_profile, :email, presence: true
-  validates :name, length: { maximum: 100, too_long: "Se permiten máximo %´{count} caracteres" }
+  validates :name, :lastname, :username, :professional_profile, :email, presence: true
+  validates :name, :lastname, length: { maximum: 100, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :username, length: { maximum: 40, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :professional_profile, length: { maximum: 5000, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :email, length: { maximum: 100, too_long: "Se permiten máximo %´{count} caracteres" }
