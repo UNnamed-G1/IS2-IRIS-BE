@@ -1,6 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+<<<<<<< HEAD
   id_event: 1
   id_group: 1
   topic: MyText
@@ -19,3 +20,19 @@ two:
   date_time: 2018-03-10 21:27:26
   frequence: 1
   end_time_event: 2018-03-10 21:27:26
+=======
+  topic: MyText
+  description: MyText
+  type: 1
+  date_time: 2018-03-10 21:27:26
+  frequence: 1
+  end_time: 2018-03-10 21:27:26
+
+two:
+  topic: MyText
+  description: MyText
+  type: 1
+  date_time: 2018-03-10 21:27:26
+  frequence: 1
+  end_time: 2018-03-10 21:27:26
+>>>>>>> da0d017d6b98af73f220b6150bb010914eca3ae9

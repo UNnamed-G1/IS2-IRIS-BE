@@ -3,17 +3,33 @@
 one:
   name: MyString
   username: MyString
+<<<<<<< HEAD
   professional_profile: MyString
   email: MyString
   phone: MyString
   office: MyString
   cvlack_link: MyString
+=======
+  professional_profile: MyText
+  email: MyString
+  phone: MyString
+  office: MyString
+  cvlac_link: MyString
+>>>>>>> da0d017d6b98af73f220b6150bb010914eca3ae9
 
 two:
   name: MyString
   username: MyString
+<<<<<<< HEAD
   professional_profile: MyString
   email: MyString
   phone: MyString
   office: MyString
   cvlack_link: MyString
+=======
+  professional_profile: MyText
+  email: MyString
+  phone: MyString
+  office: MyString
+  cvlac_link: MyString
+>>>>>>> da0d017d6b98af73f220b6150bb010914eca3ae9
