@@ -5,7 +5,7 @@ class UserResearchGroup < ApplicationRecord
   enum state: [:retirado, :activo]
   enum type: [:miembro, :lider]
 
-  validates :joining_date, :state, :type, presence: true
+  validates :joining_date, :type, :state, presence: true
   validates :state, inclusion: {in: states.keys, message: "El estado no es valido"}
   validates :type, inclusion: {in: types.keys, message: "Tipo de usuario no valido"}
   validates :hours_per_week, numericality: {only_integer: true}
