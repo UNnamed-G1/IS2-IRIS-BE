@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :username, limit: 40, null: false
       t.string :email, limit: 100, null: false
       t.text :professional_profile, limit: 5000, null: false
-      t.integer :type, null: false
+      t.integer :type_u, null: false
       t.string :phone, limit: 20
       t.string :office, limit: 20
       t.string :cvlac_link, limit: 200

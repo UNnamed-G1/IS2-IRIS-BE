@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20180311005308) do
     t.integer "research_group_id"
     t.text "topic", null: false
     t.text "description", null: false
-    t.integer "type", null: false
+    t.integer "type_ev", null: false
     t.datetime "date", null: false
     t.integer "frequence", null: false
     t.datetime "end_time", null: false
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 20180311005308) do
     t.string "url", limit: 300, null: false
     t.string "brief_description", limit: 500, null: false
     t.string "file_name", limit: 300
-    t.integer "type", null: false
+    t.integer "type_pub", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -169,7 +169,7 @@ ActiveRecord::Schema.define(version: 20180311005308) do
     t.date "joining_date", null: false
     t.date "end_joining_date", null: false
     t.integer "state", default: 0, null: false
-    t.integer "type", default: 0, null: false
+    t.integer "type_urg", default: 0, null: false
     t.integer "hours_per_week", default: 0, null: false
     t.integer "users_id"
     t.integer "research_groups_id"
@@ -185,7 +185,7 @@ ActiveRecord::Schema.define(version: 20180311005308) do
     t.string "username", limit: 40, null: false
     t.string "email", limit: 100, null: false
     t.text "professional_profile", limit: 5000, null: false
-    t.integer "type", null: false
+    t.integer "type_u", null: false
     t.string "phone", limit: 20
     t.string "office", limit: 20
     t.string "cvlac_link", limit: 200

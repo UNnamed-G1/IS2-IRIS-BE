@@ -66,7 +66,7 @@ end
         url: Faker::Internet.url,
         brief_description: Faker::Lorem.sentence,
         file_name: Faker::Lorem.sentence,
-        type: Faker::Number.between(0,5)
+        type_pub: Faker::Number.between(0,5)
     )
 
 end
@@ -75,11 +75,17 @@ end
         research_group_id: Faker::Number.between(1, 10),
         topic: Faker::Lorem.sentence,
         description: Faker::Lorem.paragraph,
-        type: Faker::Number.between(0,3),
+        type_ev: Faker::Number.between(0,1),
         date: Faker::Time.between(DateTime.now - 20, DateTime.now),
         frequence: Faker::Number.between(0,1),
         end_time: Faker::Time.between(DateTime.now, 2.days.from_now, :all),
         state: Faker::Number.between(0,1)
+    )
+end
+10.times do
+    Relationship.create(
+        follower_id: Faker::Number.between(1,10),
+        followed_id: Faker::Number.between(1,10)
     )
 end
 10.times do
@@ -89,7 +95,7 @@ end
         username: Faker::Internet.user_name,
         email: Faker::Internet.email,
         professional_profile: Faker::Lorem.sentence,
-        type: Faker::Number.between(0,1),
+        type_u: Faker::Number.between(0,1),
         phone: Faker::PhoneNumber.phone_number,
         office: Faker::Commerce.department,
         cvlac_link: Faker::Internet.url,
@@ -98,12 +104,13 @@ end
     )
 
 end
+
 10.times do
     UserResearchGroup.create(
         joining_date: Faker::Time.between(DateTime.now - 10, DateTime.now),
         end_joining_date: Faker::Time.between(DateTime.now, 2.days.from_now, :all),
         state: Faker::Number.between(0,1),
-        type: Faker::Number.between(0,1),
+        type_urg: Faker::Number.between(0,1),
         hours_per_week: Faker::Number.between(1,10),
         users_id: Faker::Number.between(1,10),
         research_groups_id: Faker::Number.between(1,10)
