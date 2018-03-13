@@ -93,12 +93,10 @@ ActiveRecord::Schema.define(version: 20180311005308) do
   end
 
   create_table "publications_research_groups", id: false, force: :cascade do |t|
-    t.integer "research_group_id", null: false
-    t.integer "publication_id", null: false
-    t.integer "research_group_id_id"
-    t.integer "publication_id_id"
-    t.index ["publication_id_id"], name: "index_publications_research_groups_on_publication_id_id"
-    t.index ["research_group_id_id"], name: "index_publications_research_groups_on_research_group_id_id"
+    t.integer "research_group_id"
+    t.integer "publication_id"
+    t.index ["publication_id"], name: "index_publications_research_groups_on_publication_id"
+    t.index ["research_group_id"], name: "index_publications_research_groups_on_research_group_id"
   end
 
   create_table "publications_users", id: false, force: :cascade do |t|
@@ -154,8 +152,8 @@ ActiveRecord::Schema.define(version: 20180311005308) do
   end
 
   create_table "schedules", force: :cascade do |t|
-    t.datetime "start", null: false
-    t.datetime "end", null: false
+    t.datetime "start_date", null: false
+    t.datetime "end_date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -183,6 +181,7 @@ ActiveRecord::Schema.define(version: 20180311005308) do
 
   create_table "users", force: :cascade do |t|
     t.string "name", limit: 100, null: false
+    t.string "lastname", limit: 100, null: false
     t.string "username", limit: 40, null: false
     t.string "email", limit: 100, null: false
     t.text "professional_profile", limit: 5000, null: false

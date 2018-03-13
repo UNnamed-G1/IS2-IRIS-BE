@@ -25,8 +25,88 @@ end
     )
 end
 10.times do
+    Schedule.create(
+        start_date: Faker::Time.between(DateTime.now - 1, DateTime.now),
+        end_date: Faker::Time.between(1.hour.from_now, 2.hours.from_now, :all)
+    
+    )
+end
+10.times do
     ResearchSubject.create(
         name: Faker::Lorem.words
+    )
+
+end
+10.times do
+    Photo.create(
+        link: Faker::Lorem.sentence,
+        imageable_type: Faker::Number.between(0,2)
+        
+    )
+end
+10.times do
+    ResearchGroup.create(
+        name: Faker::Lorem.sentence,
+        description: Faker::Lorem.sentence,
+        strategic_focus: Faker::Lorem.sentence,
+        research_priorities: Faker::Lorem.sentence,
+        foundation_date: Faker::Time.between(DateTime.now - 10, DateTime.now),
+        classification: Faker::Lorem.sentence,
+        date_classification: Faker::Time.between(DateTime.now - 20, DateTime.now),
+        url: Faker::Lorem.sentence,
+        photo_id: Faker::Number.between(1,10)
+    )
+
+end
+10.times do
+    Publication.create(
+        name: Faker::Lorem.sentence,
+        date: Faker::Time.between(DateTime.now - 10, DateTime.now),
+        abstract: Faker::Lorem.paragraph,
+        url: Faker::Internet.url,
+        brief_description: Faker::Lorem.sentence,
+        file_name: Faker::Lorem.sentence,
+        type: Faker::Number.between(0,5)
+    )
+
+end
+10.times do
+    Event.create(
+        research_group_id: Faker::Number.between(1, 10),
+        topic: Faker::Lorem.sentence,
+        description: Faker::Lorem.paragraph,
+        type: Faker::Number.between(0,3),
+        date: Faker::Time.between(DateTime.now - 20, DateTime.now),
+        frequence: Faker::Number.between(0,1),
+        end_time: Faker::Time.between(DateTime.now, 2.days.from_now, :all),
+        state: Faker::Number.between(0,1)
+    )
+end
+10.times do
+    User.create(
+        name: Faker::Name.first_name,
+        lastname: Faker::Name.last_name,
+        username: Faker::Internet.user_name,
+        email: Faker::Internet.email,
+        professional_profile: Faker::Lorem.sentence,
+        type: Faker::Number.between(0,1),
+        phone: Faker::PhoneNumber.phone_number,
+        office: Faker::Commerce.department,
+        cvlac_link: Faker::Internet.url,
+        career_id: Faker::Number.between(1,10),
+        photo_id: Faker::Number.between(1,10)
+    )
+
+end
+10.times do
+    UserResearchGroup.create(
+        joining_date: Faker::Time.between(DateTime.now - 10, DateTime.now),
+        end_joining_date: Faker::Time.between(DateTime.now, 2.days.from_now, :all),
+        state: Faker::Number.between(0,1),
+        type: Faker::Number.between(0,1),
+        hours_per_week: Faker::Number.between(1,10),
+        users_id: Faker::Number.between(1,10),
+        research_groups_id: Faker::Number.between(1,10)
     )
 
 end
