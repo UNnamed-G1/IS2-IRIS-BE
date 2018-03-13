@@ -4,8 +4,13 @@ class ResearchGroup < ApplicationRecord
     has_and_belongs_to_many :research_subjects
     has_many :events
     has_many :user_research_groups
+<<<<<<< HEAD
     has_many :members, class_name: "User", through: user_research_groups
     has_one :photo, as: :imageable, optional: true
+=======
+    has_many :members, class_name: "User", through: :user_research_groups
+    has_one :photo, as: :imageable
+>>>>>>> 240875a2d6eaf591163abdd0e6ebd07cb6e06e1f
 
     enum class_type: [:A, :B, :C, :D]
 

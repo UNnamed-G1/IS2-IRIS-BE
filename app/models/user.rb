@@ -7,8 +7,8 @@ class User < ApplicationRecord
   has_many :followers, class_name: "Relationship", foreign_key: "followed_id"
   has_many :user_research_groups
   has_many :research_groups, through: :user_research_groups
-  has_one :photo, as: :imageable, optional: true
-  belongs_to :career, optional: true
+  has_one :photo, as: :imageable
+  belongs_to :career
 
   enum type: [:miembro, :lider]
 
