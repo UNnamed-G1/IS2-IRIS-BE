@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 20180311005308) do
 
   create_table "careers", force: :cascade do |t|
     t.string "name", limit: 100, null: false
-    t.integer "snies_code", null: false
+    t.integer "snies_code", limit: 5, null: false
     t.integer "degree_type", default: 0, null: false
     t.integer "department_id"
     t.datetime "created_at", null: false
@@ -122,7 +122,7 @@ ActiveRecord::Schema.define(version: 20180311005308) do
     t.text "strategic_focus", null: false
     t.text "research_priorities", null: false
     t.date "foundation_date", null: false
-    t.integer "classification", limit: 5, null: false
+    t.integer "classification", null: false
     t.date "date_classification", null: false
     t.string "url", limit: 300
     t.integer "photo_id"
