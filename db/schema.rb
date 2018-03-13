@@ -10,10 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180311030450) do
+ActiveRecord::Schema.define(version: 20180311005308) do
 
   create_table "careers", force: :cascade do |t|
-     
+    t.string "name", limit: 100, null: false
+    t.integer "snies_code", null: false
+    t.integer "degree_type", default: 0, null: false
+    t.integer "department_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["department_id"], name: "index_careers_on_department_id"
@@ -35,16 +38,17 @@ ActiveRecord::Schema.define(version: 20180311030450) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.integer "id_event"
-    t.integer "id_group"
-    t.text "topic"
-    t.text "description_event"
-    t.integer "type_event"
-    t.datetime "date_time"
-    t.integer "frequence"
-    t.datetime "end_time_event"
+    t.integer "research_group_id"
+    t.text "topic", null: false
+    t.text "description", null: false
+    t.integer "type", null: false
+    t.datetime "date", null: false
+    t.integer "frequence", null: false
+    t.datetime "end_time", null: false
+    t.integer "state", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["research_group_id"], name: "index_events_on_research_group_id"
   end
 
   create_table "events_photos", id: false, force: :cascade do |t|
@@ -77,13 +81,13 @@ ActiveRecord::Schema.define(version: 20180311030450) do
   end
 
   create_table "publications", force: :cascade do |t|
-    t.integer "id_product"
-    t.date "publication_date"
-    t.text "abstract"
-    t.text "url"
-    t.text "little_desc"
-    t.text "file_name"
-    t.integer "publication_type"
+    t.string "name", limit: 255, null: false
+    t.date "date", null: false
+    t.text "abstract", null: false
+    t.string "url", limit: 300, null: false
+    t.string "brief_description", limit: 500, null: false
+    t.string "file_name", limit: 300
+    t.integer "type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -91,8 +95,10 @@ ActiveRecord::Schema.define(version: 20180311030450) do
   create_table "publications_research_groups", id: false, force: :cascade do |t|
     t.integer "research_group_id", null: false
     t.integer "publication_id", null: false
-    t.index ["publication_id"], name: "index_publications_research_groups_on_publication_id"
-    t.index ["research_group_id"], name: "index_publications_research_groups_on_research_group_id"
+    t.integer "research_group_id_id"
+    t.integer "publication_id_id"
+    t.index ["publication_id_id"], name: "index_publications_research_groups_on_publication_id_id"
+    t.index ["research_group_id_id"], name: "index_publications_research_groups_on_research_group_id_id"
   end
 
   create_table "publications_users", id: false, force: :cascade do |t|
@@ -113,18 +119,18 @@ ActiveRecord::Schema.define(version: 20180311030450) do
   end
 
   create_table "research_groups", force: :cascade do |t|
-    t.integer "id_group"
-    t.text "name_group"
-    t.text "description_group"
-    t.text "strategic_focus"
-    t.text "research_priorities"
-    t.date "foundation_date"
-    t.text "classification"
-    t.date "date_classification"
-    t.text "url_group"
-    t.integer "id_photo"
+    t.text "name", null: false
+    t.text "description", null: false
+    t.text "strategic_focus", null: false
+    t.text "research_priorities", null: false
+    t.date "foundation_date", null: false
+    t.string "classification", limit: 5, null: false
+    t.date "date_classification", null: false
+    t.string "url", limit: 300
+    t.integer "photo_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["photo_id"], name: "index_research_groups_on_photo_id"
   end
 
   create_table "research_groups_subjects", id: false, force: :cascade do |t|
@@ -135,28 +141,28 @@ ActiveRecord::Schema.define(version: 20180311030450) do
   end
 
   create_table "research_subjects", force: :cascade do |t|
-    t.string "name", limit: 100
+    t.string "name", limit: 200
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "research_subjects_users", id: false, force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "research_subject_id", null: false
+    t.integer "user_id"
+    t.integer "research_subject_id"
     t.index ["research_subject_id"], name: "index_research_subjects_users_on_research_subject_id"
     t.index ["user_id"], name: "index_research_subjects_users_on_user_id"
   end
 
   create_table "schedules", force: :cascade do |t|
-    t.datetime "start"
-    t.datetime "end"
+    t.datetime "start", null: false
+    t.datetime "end", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "schedules_users", id: false, force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "schedule_id", null: false
+    t.integer "user_id"
+    t.integer "schedule_id"
     t.index ["schedule_id"], name: "index_schedules_users_on_schedule_id"
     t.index ["user_id"], name: "index_schedules_users_on_user_id"
   end
@@ -176,15 +182,20 @@ ActiveRecord::Schema.define(version: 20180311030450) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name", limit: 100
-    t.string "username", limit: 30
-    t.string "professional_profile", limit: 5000
-    t.string "email", limit: 50
-    t.string "phone", limit: 15
-    t.string "office", limit: 15
+    t.string "name", limit: 100, null: false
+    t.string "username", limit: 40, null: false
+    t.string "email", limit: 100, null: false
+    t.text "professional_profile", limit: 5000, null: false
+    t.integer "type", null: false
+    t.string "phone", limit: 20
+    t.string "office", limit: 20
     t.string "cvlac_link", limit: 200
+    t.integer "career_id"
+    t.integer "photo_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["career_id"], name: "index_users_on_career_id"
+    t.index ["photo_id"], name: "index_users_on_photo_id"
   end
 
 end
