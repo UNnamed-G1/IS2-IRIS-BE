@@ -51,7 +51,7 @@ end
         strategic_focus: Faker::Lorem.sentence,
         research_priorities: Faker::Lorem.sentence,
         foundation_date: Faker::Time.between(DateTime.now - 10, DateTime.now),
-        classification: Faker::Lorem.sentence,
+        classification: Faker::Number.between(0,3),
         date_classification: Faker::Time.between(DateTime.now - 20, DateTime.now),
         url: Faker::Lorem.sentence,
         photo_id: Faker::Number.between(1,10)
