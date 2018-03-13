@@ -1,36 +1,12 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-<<<<<<< HEAD
-  id_group: 1
-  name_group: MyText
-  description_group: MyText
-  strategic_focus: MyText
-  research_priorities: MyText
-  foundation_date: 2018-03-10
-  classification: MyText
-  date_classification: 2018-03-10
-  url_group: MyText
-  id_photo: 1
-
-two:
-  id_group: 1
-  name_group: MyText
-  description_group: MyText
-  strategic_focus: MyText
-  research_priorities: MyText
-  foundation_date: 2018-03-10
-  classification: MyText
-  date_classification: 2018-03-10
-  url_group: MyText
-  id_photo: 1
-=======
   name: MyText
   description: MyText
   strategic_focus: MyText
   research_priorities: MyText
   foundation_date: 2018-03-11
-  classification: MyString
+  classification: 1
   date_classification: 2018-03-11
   url: MyString
 
@@ -40,7 +16,6 @@ two:
   strategic_focus: MyText
   research_priorities: MyText
   foundation_date: 2018-03-11
-  classification: MyString
+  classification: 1
   date_classification: 2018-03-11
   url: MyString
->>>>>>> da0d017d6b98af73f220b6150bb010914eca3ae9

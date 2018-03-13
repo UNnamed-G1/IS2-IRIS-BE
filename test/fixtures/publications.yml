@@ -1,24 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-<<<<<<< HEAD
-  id_product: 1
-  publication_date: 2018-03-10
-  abstract: MyText
-  url: MyText
-  little_desc: MyText
-  file_name: MyText
-  publication_type: 1
-
-two:
-  id_product: 1
-  publication_date: 2018-03-10
-  abstract: MyText
-  url: MyText
-  little_desc: MyText
-  file_name: MyText
-  publication_type: 1
-=======
   name: MyString
   date: 2018-03-11
   abstract: MyText
@@ -35,4 +17,3 @@ two:
   brief_description: MyString
   file_name: MyString
   type: 1
->>>>>>> da0d017d6b98af73f220b6150bb010914eca3ae9
