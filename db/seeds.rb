@@ -125,3 +125,34 @@ end
         research_group_id: Faker::Number.between(1,10)
     ) 
 end
+User.all.each do |msg|
+    research_subjects = 10.times { msg.research_subjects.create([
+        name: Faker::Hacker.say_something_smart
+    ])}
+    schedules = 10.times { msg.schedules.create([
+        start_date: Faker::Time.backward(1),
+        end_date: Faker::Time.between(1.hour.from_now, 2.hours.from_now)
+    ])}
+    publications = 10.times { msg.publications.create([
+        name: Faker::Hacker.abbreviation,
+        date: Faker::Time.backward(10),
+        abstract: Faker::Lorem.paragraph,
+        url: Faker::Internet.url,
+        brief_description: Faker::Hacker.say_something_smart,
+        file_name: Faker::Hacker.adjective,
+        type_pub: Faker::Number.between(0,5)
+    ])}
+    events = 10.times { msg.events.create([
+        research_group_id: Faker::Number.between(1, 10),
+        topic: Faker::Lorem.sentence,
+        description: Faker::Hacker.say_something_smart,
+        type_ev: Faker::Number.between(0,1),
+        date: Faker::Time.backward(20),
+        frequence: Faker::Number.between(0,1),
+        end_time: Faker::Time.forward(2),
+        state: Faker::Number.between(0,1)
+    ])}
+    
+    
+end
+
