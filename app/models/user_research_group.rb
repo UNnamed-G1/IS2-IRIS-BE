@@ -1,6 +1,6 @@
 class UserResearchGroup < ApplicationRecord
-  belongs_to :user
-  belongs_to :research_group
+  belongs_to :user, class_name: "User"
+  belongs_to :research_group, class_name: "ResearchGroup"
 
   enum state: [:retirado, :activo]
   enum type_urg: [:miembro, :lider]

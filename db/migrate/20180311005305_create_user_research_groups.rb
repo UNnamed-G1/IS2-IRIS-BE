@@ -4,8 +4,8 @@ class CreateUserResearchGroups < ActiveRecord::Migration[5.1]
       t.date :joining_date, :end_joining_date, null: false
       t.integer :state, :type_urg, :hours_per_week, default: 0, null: false
 
-      t.references :users, foreign_key: true
-      t.references :research_groups, foreign_key: true
+      t.references :user, foreign_key: true
+      t.references :research_group, foreign_key: true
 
       t.timestamps
     end

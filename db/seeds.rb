@@ -3,23 +3,23 @@
 #
 # Examples:
 #
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+#   movies = Movie.create!([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
+#   Character.create!(name: 'Luke', movie: movies.first)
 10.times do
-    Faculty.create(
+    Faculty.create!(
         name:  Faker::Educator.university
     )
 end
 
 10.times do
-    Department.create(
+    Department.create!(
         name: Faker::HarryPotter.house,
         faculty_id: Faker::Number.between(1,10)
     )
 end
 
 10.times do
-    Career.create(
+    Career.create!(
         name: Faker::Educator.course,
         snies_code: Faker::Number.number(5),
         degree_type: Faker::Number.between(0,2),
@@ -28,22 +28,22 @@ end
 end
 
 10.times do
-    Schedule.create(
+    Schedule.create!(
         start_date: Faker::Time.backward(1),
         end_date: Faker::Time.between(1.hour.from_now, 2.hours.from_now)
     )
 end
 
 10.times do
-    ResearchSubject.create(
+    ResearchSubject.create!(
         name: Faker::Hacker.say_something_smart
     )
 end
 
 10.times do
-    rg = ResearchGroup.create(
+    rg = ResearchGroup.create!(
         name: Faker::Name.name,
-        description: Faker::Lorem.paragraph,
+        description: Faker::Lorem.sentence,
         strategic_focus: Faker::Hacker.say_something_smart,
         research_priorities: Faker::Hacker.say_something_smart,
         foundation_date: Faker::Time.backward,
@@ -51,14 +51,15 @@ end
         date_classification: Faker::Time.backward(10),
         url: Faker::Internet.url
     )
-    rg.update(photo: Photo.create(
-        link: Faker::Internet.url
+    rg.update(photo: Photo.create!(
+        link: Faker::Internet.url,
+        imageable: rg
     ))
 end
 
 
 10.times do
-    Publication.create(
+    Publication.create!(
         name: Faker::Hacker.abbreviation,
         date: Faker::Time.backward(10),
         abstract: Faker::Lorem.paragraph,
@@ -70,7 +71,7 @@ end
 end
 
 10.times do
-    e = Event.create(
+    e = Event.create!(
         research_group_id: Faker::Number.between(1, 10),
         topic: Faker::Lorem.sentence,
         description: Faker::Hacker.say_something_smart,
@@ -81,14 +82,14 @@ end
         state: Faker::Number.between(0,1)
     )
     5.times do
-      e.photos.create(
+      e.photos.create!(
           link: Faker::Internet.url
       )
     end
 end
 
 10.times do
-    u = User.create(
+    u = User.create!(
         name: Faker::Name.first_name,
         lastname: Faker::Name.last_name,
         username: Faker::Internet.user_name,
@@ -98,25 +99,29 @@ end
         phone: Faker::PhoneNumber.cell_phone,
         office: Faker::Commerce.department(1),
         cvlac_link: Faker::Internet.url,
-        career_id: Faker::Number.between(0,9)
+        career_id: Faker::Number.between(1,10)
     )
-    u.update(photo: Photo.create(
-        link: Faker::Internet.url
+    u.update(photo: Photo.create!(
+        link: Faker::Internet.url,
+        imageable: u
     ))
-    UserResearchGroup.create!(
+end
+
+10.times do
+    Relationship.create!(
+        follower_id: Faker::Number.between(1,10),
+        followed_id: Faker::Number.between(1,10)
+    )
+end
+
+10.times do
+   UserResearchGroup.create!(
         joining_date: Faker::Time.backward(10),
         end_joining_date: Faker::Time.forward(2),
         state: Faker::Number.between(0,1),
         type_urg: Faker::Number.between(0,1),
         hours_per_week: Faker::Number.between(1,10),
-        users_id: u.id,
-        research_groups_id: ResearchGroup.take.id
-    )
-end
-
-10.times do
-    Relationship.create(
-        follower_id: Faker::Number.between(1,10),
-        followed_id: Faker::Number.between(1,10)
-    )
+        user_id: Faker::Number.between(1,10),
+        research_group_id: Faker::Number.between(1,10)
+    ) 
 end

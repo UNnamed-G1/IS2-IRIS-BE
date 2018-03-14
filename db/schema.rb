@@ -171,12 +171,12 @@ ActiveRecord::Schema.define(version: 20180311005308) do
     t.integer "state", default: 0, null: false
     t.integer "type_urg", default: 0, null: false
     t.integer "hours_per_week", default: 0, null: false
-    t.integer "users_id"
-    t.integer "research_groups_id"
+    t.integer "user_id"
+    t.integer "research_group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["research_groups_id"], name: "index_user_research_groups_on_research_groups_id"
-    t.index ["users_id"], name: "index_user_research_groups_on_users_id"
+    t.index ["research_group_id"], name: "index_user_research_groups_on_research_group_id"
+    t.index ["user_id"], name: "index_user_research_groups_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
