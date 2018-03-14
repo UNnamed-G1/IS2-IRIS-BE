@@ -10,8 +10,6 @@ class CreateResearchGroups < ActiveRecord::Migration[5.1]
       t.date :date_classification, null: false
       t.string :url, limit: 300
 
-      t.references :photo, foreign_key: true
-
       t.timestamps
     end
   end
