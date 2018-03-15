@@ -10,8 +10,11 @@ class PublicationsController < ApplicationController
 
   # GET /publications/1
   def show
-    render json: @publication
-  end
+    if @publication.errors.any?
+      render json: @publication.errors.messages
+    else
+      render json: @publication
+    end  end
 
   # POST /publications
   def create
@@ -35,8 +38,11 @@ class PublicationsController < ApplicationController
 
   # DELETE /publications/1
   def destroy
-    @publication.destroy
-  end
+    if @publication.destroy
+      render json: @publication
+    else
+      render json: @publication.errors, status: 500
+    end  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

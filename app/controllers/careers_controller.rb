@@ -10,7 +10,11 @@ class CareersController < ApplicationController
 
   # GET /careers/1
   def show
-    render json: @career
+    if @career.errors.any?
+      render json: @career.errors.messages
+    else
+      render json: @career
+    end
   end
 
   # POST /careers
@@ -35,7 +39,11 @@ class CareersController < ApplicationController
 
   # DELETE /careers/1
   def destroy
-    @career.destroy
+    if @career.destroy
+      render json: @career
+    else
+      render json: @career.errors, status: 500
+    end
   end
 
   private

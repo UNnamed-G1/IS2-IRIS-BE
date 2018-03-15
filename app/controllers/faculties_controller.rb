@@ -10,7 +10,11 @@ class FacultiesController < ApplicationController
 
   # GET /faculties/1
   def show
-    render json: @faculty
+    if @faculty.errors.any?
+      render json: @faculty.errors.messages
+    else
+      render json: @faculty
+    end
   end
 
   # POST /faculties
@@ -35,8 +39,11 @@ class FacultiesController < ApplicationController
 
   # DELETE /faculties/1
   def destroy
-    @faculty.destroy
-  end
+    if @faculty.destroy
+      render json: @faculty
+    else
+      render json: @faculty.errors, status: 500
+    end  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

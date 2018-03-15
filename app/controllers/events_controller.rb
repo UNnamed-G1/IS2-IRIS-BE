@@ -10,7 +10,11 @@ class EventsController < ApplicationController
 
   # GET /events/1
   def show
-    render json: @event
+    if @event.errors.any?
+      render json: @event.errors.messages
+    else
+      render json: @event
+    end
   end
 
   # POST /events
@@ -35,8 +39,11 @@ class EventsController < ApplicationController
 
   # DELETE /events/1
   def destroy
-    @event.destroy
-  end
+    if @event.destroy
+      render json: @event
+    else
+      render json: @event.errors, status: 500
+    end  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

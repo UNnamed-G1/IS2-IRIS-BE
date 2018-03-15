@@ -10,7 +10,11 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
-    render json: @user
+    if @user.errors.any?
+      render json: @user.errors.messages
+    else
+      render json: @user
+    end
   end
 
   # POST /users
@@ -35,7 +39,11 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   def destroy
-    @user.destroy
+    if @user.destroy
+      render json: @user
+    else
+      render json: @user.errors, status: 500
+    end
   end
 
   private

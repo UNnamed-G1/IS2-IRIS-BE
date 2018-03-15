@@ -10,13 +10,14 @@ class User < ApplicationRecord
   has_one :photo, as: :imageable
   belongs_to :career
 
-  enum type_u: [:miembro, :lider]
+  enum user_type: [:miembro, :lider]
 
-  validates :name, :lastname, :username, :professional_profile, :email, presence: true
+  validates :name, :lastname, :username, :professional_profile, :email, :type_u, presence: true
   validates :name, :lastname, length: { maximum: 100, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :username, length: { maximum: 40, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :professional_profile, length: { maximum: 5000, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :email, length: { maximum: 100, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :phone, :office, length: { maximum: 20, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :cvlac_link, length: { maximum: 200, too_long: "Se permiten máximo %´{count} caracteres" }
+  validates :type_u, inclusion: {in: user_types.values, message: "El tipo de usuario no es válido"}
 end

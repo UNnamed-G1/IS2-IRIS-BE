@@ -10,7 +10,11 @@ class ResearchSubjectsController < ApplicationController
 
   # GET /research_subjects/1
   def show
-    render json: @research_subject
+    if @research_subjects.errors.any?
+      render json: @research_subjects.errors.messages
+    else
+      render json: @research_subjects
+    end
   end
 
   # POST /research_subjects
@@ -35,7 +39,11 @@ class ResearchSubjectsController < ApplicationController
 
   # DELETE /research_subjects/1
   def destroy
-    @research_subject.destroy
+    if @research_subject.destroy
+      render json: @research_subject
+    else
+      render json: @research_subject.errors, status: 500
+    end
   end
 
   private

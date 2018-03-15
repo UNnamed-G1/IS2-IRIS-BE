@@ -10,8 +10,11 @@ class ResearchGroupsController < ApplicationController
 
   # GET /research_groups/1
   def show
-    render json: @research_group
-  end
+    if @research_groups.errors.any?
+      render json: @research_groups.errors.messages
+    else
+      render json: @research_groups
+    end  end
 
   # POST /research_groups
   def create
@@ -35,8 +38,11 @@ class ResearchGroupsController < ApplicationController
 
   # DELETE /research_groups/1
   def destroy
-    @research_group.destroy
-  end
+    if @research_group.destroy
+      render json: @research_group
+    else
+      render json: @research_group.errors, status: 500
+    end  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

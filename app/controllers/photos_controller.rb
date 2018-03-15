@@ -10,8 +10,11 @@ class PhotosController < ApplicationController
 
   # GET /photos/1
   def show
-    render json: @photo
-  end
+    if @photo.errors.any?
+      render json: @photo.errors.messages
+    else
+      render json: @photo
+    end  end
 
   # POST /photos
   def create
@@ -35,8 +38,11 @@ class PhotosController < ApplicationController
 
   # DELETE /photos/1
   def destroy
-    @photo.destroy
-  end
+    if @photo.destroy
+      render json: @photo
+    else
+      render json: @photo.errors, status: 500
+    end  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

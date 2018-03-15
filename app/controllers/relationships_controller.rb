@@ -10,8 +10,11 @@ class RelationshipsController < ApplicationController
 
   # GET /relationships/1
   def show
-    render json: @relationship
-  end
+    if @relationship.errors.any?
+      render json: @relationship.errors.messages
+    else
+      render json: @relationship
+    end  end
 
   # POST /relationships
   def create
@@ -35,8 +38,11 @@ class RelationshipsController < ApplicationController
 
   # DELETE /relationships/1
   def destroy
-    @relationship.destroy
-  end
+    if @relationship.destroy
+      render json: @relationship
+    else
+      render json: @relationship.errors, status: 500
+    end  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

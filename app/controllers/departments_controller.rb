@@ -10,7 +10,11 @@ class DepartmentsController < ApplicationController
 
   # GET /departments/1
   def show
-    render json: @department
+    if @department.errors.any?
+      render json: @department.errors.messages
+    else
+      render json: @department
+    end
   end
 
   # POST /departments
@@ -35,7 +39,11 @@ class DepartmentsController < ApplicationController
 
   # DELETE /departments/1
   def destroy
-    @department.destroy
+    if @department.destroy
+      render json: @department
+    else
+      render json: @department.errors, status: 500
+    end
   end
 
   private

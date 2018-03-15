@@ -11,7 +11,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :office, limit: 20
       t.string :cvlac_link, limit: 200
 
-      t.references :career, foreign_key: true
+      t.references :career, foreign_key: true, null: true
 
       t.timestamps
     end

@@ -10,7 +10,11 @@ class SchedulesController < ApplicationController
 
   # GET /schedules/1
   def show
-    render json: @schedule
+    if @schedule.errors.any?
+      render json: @schedule.errors
+    else
+      render json: @schedule
+    end
   end
 
   # POST /schedules
@@ -35,7 +39,11 @@ class SchedulesController < ApplicationController
 
   # DELETE /schedules/1
   def destroy
-    @schedule.destroy
+    if @schedule.destroy
+      render json: @schedule
+    else
+      render json: @schedule.errors, status: 500
+    end
   end
 
   private
