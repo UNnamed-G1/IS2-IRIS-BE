@@ -16,3 +16,4 @@
 - Implementación del modulo de registro e inicio de sesión
 - CRUD de Publicaciones, Usuarios, Eventos y demás entidades
 - Peticiones desde el frontend
+- Implementación de la función agenda
