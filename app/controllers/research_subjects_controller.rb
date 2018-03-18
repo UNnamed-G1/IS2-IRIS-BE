@@ -10,10 +10,10 @@ class ResearchSubjectsController < ApplicationController
 
   # GET /research_subjects/1
   def show
-    if @research_subjects.errors.any?
-      render json: @research_subjects.errors.messages
+    if @research_subject.errors.any?
+      render json: @research_subject.errors.messages
     else
-      render json: @research_subjects
+      render json: @research_subject
     end
   end
 

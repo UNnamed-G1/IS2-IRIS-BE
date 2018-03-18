@@ -10,10 +10,10 @@ class ResearchGroupsController < ApplicationController
 
   # GET /research_groups/1
   def show
-    if @research_groups.errors.any?
-      render json: @research_groups.errors.messages
+    if @research_group.errors.any?
+      render json: @research_group.errors.messages
     else
-      render json: @research_groups
+      render json: @research_group
     end  end
 
   # POST /research_groups

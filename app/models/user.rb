@@ -10,7 +10,7 @@ class User < ApplicationRecord
   has_one :photo, as: :imageable
   belongs_to :career
 
-  enum user_type: [:miembro, :lider]
+  enum user_type: [:estudiante, :profesor]
 
   validates :name, :lastname, :username, :professional_profile, :email, :type_u, presence: true
   validates :name, :lastname, length: { maximum: 100, too_long: "Se permiten máximo %´{count} caracteres" }
