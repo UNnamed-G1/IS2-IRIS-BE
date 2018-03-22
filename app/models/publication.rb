@@ -1,6 +1,8 @@
 class Publication < ApplicationRecord
-    has_and_belongs_to_many :research_groups
-    has_and_belongs_to_many :users
+    has_many :publication_research_groups
+    has_many :research_groups, through: :publication_research_groups
+    has_many :publication_users
+    has_many :users, through: :publication_users
 
     enum type_pub: [:software, :articulo, :tesis, :libro, :monografia, :patente]
 

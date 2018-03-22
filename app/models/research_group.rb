@@ -1,7 +1,11 @@
 class ResearchGroup < ApplicationRecord
-    has_and_belongs_to_many :publications
-    has_and_belongs_to_many :careers
-    has_and_belongs_to_many :research_subjects
+    has_many :research_subject_research_groups
+    has_many :research_subjects, through: :research_subject_research_groups
+    
+    has_many :publication_research_groups
+    has_many :publications, through: :publication_research_groups
+    has_many :career_research_groups
+    has_many :careers, through: :career_research_groups 
     has_many :events
     has_many :user_research_groups
     has_many :members, class_name: "User", through: :user_research_groups

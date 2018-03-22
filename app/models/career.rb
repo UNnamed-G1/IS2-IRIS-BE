@@ -1,5 +1,6 @@
 class Career < ApplicationRecord
-  has_and_belongs_to_many :research_groups
+  has_many :career_research_groups
+  has_many :research_groups, through: :career_research_groups 
   belongs_to :department
   has_many :users
 
