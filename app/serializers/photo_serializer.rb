@@ -3,5 +3,5 @@ class PhotoSerializer < ActiveModel::Serializer
 
   attributes :id, :link, :imageable_type, :imageable_id
 
-  belongs_to :imageable
+  belongs_to :imageable, polymorphic: true
 end

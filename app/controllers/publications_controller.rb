@@ -5,7 +5,7 @@ class PublicationsController < ApplicationController
   def index
     @publications = Publication.all
 
-    render json: @publications
+    render json: @publications, include: []
   end
 
   # GET /publications/1
@@ -13,7 +13,7 @@ class PublicationsController < ApplicationController
     if @publication.errors.any?
       render json: @publication.errors.messages
     else
-      render json: @publication
+      render json: @publication, include: []
     end  end
 
   # POST /publications
@@ -30,7 +30,7 @@ class PublicationsController < ApplicationController
   # PATCH/PUT /publications/1
   def update
     if @publication.update(publication_params)
-      render json: @publication
+      render json: @publication, include: []
     else
       render json: @publication.errors, status: :unprocessable_entity
     end
@@ -39,7 +39,7 @@ class PublicationsController < ApplicationController
   # DELETE /publications/1
   def destroy
     if @publication.destroy
-      render json: @publication
+      render json: @publication, include: []
     else
       render json: @publication.errors, status: 500
     end  end
