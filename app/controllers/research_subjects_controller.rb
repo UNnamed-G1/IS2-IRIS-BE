@@ -5,7 +5,7 @@ class ResearchSubjectsController < ApplicationController
   def index
     @research_subjects = ResearchSubject.all
 
-    render json: @research_subjects
+    render json: @research_subjects, include: []
   end
 
   # GET /research_subjects/1
@@ -13,7 +13,7 @@ class ResearchSubjectsController < ApplicationController
     if @research_subject.errors.any?
       render json: @research_subject.errors.messages
     else
-      render json: @research_subject
+      render json: @research_subject, include: []
     end
   end
 
@@ -22,7 +22,7 @@ class ResearchSubjectsController < ApplicationController
     @research_subject = ResearchSubject.new(research_subject_params)
 
     if @research_subject.save
-      render json: @research_subject, status: :created, location: @research_subject
+      render json: @research_subject, status: :created, location: @research_subject, include: []
     else
       render json: @research_subject.errors, status: :unprocessable_entity
     end
@@ -31,7 +31,7 @@ class ResearchSubjectsController < ApplicationController
   # PATCH/PUT /research_subjects/1
   def update
     if @research_subject.update(research_subject_params)
-      render json: @research_subject
+      render json: @research_subject, include: []
     else
       render json: @research_subject.errors, status: :unprocessable_entity
     end
@@ -40,7 +40,7 @@ class ResearchSubjectsController < ApplicationController
   # DELETE /research_subjects/1
   def destroy
     if @research_subject.destroy
-      render json: @research_subject
+      render json: @research_subject, include: []
     else
       render json: @research_subject.errors, status: 500
     end

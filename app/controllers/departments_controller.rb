@@ -5,7 +5,7 @@ class DepartmentsController < ApplicationController
   def index
     @departments = Department.all
 
-    render json: @departments
+    render json: @departments, include: []
   end
 
   # GET /departments/1
@@ -13,7 +13,7 @@ class DepartmentsController < ApplicationController
     if @department.errors.any?
       render json: @department.errors.messages
     else
-      render json: @department
+      render json: @department, include: []
     end
   end
 
@@ -22,7 +22,7 @@ class DepartmentsController < ApplicationController
     @department = Department.new(department_params)
 
     if @department.save
-      render json: @department, status: :created, location: @department
+      render json: @department, status: :created, location: @department, include: []
     else
       render json: @department.errors, status: :unprocessable_entity
     end
@@ -31,7 +31,7 @@ class DepartmentsController < ApplicationController
   # PATCH/PUT /departments/1
   def update
     if @department.update(department_params)
-      render json: @department
+      render json: @department, include: []
     else
       render json: @department.errors, status: :unprocessable_entity
     end
@@ -40,7 +40,7 @@ class DepartmentsController < ApplicationController
   # DELETE /departments/1
   def destroy
     if @department.destroy
-      render json: @department
+      render json: @department, include: []
     else
       render json: @department.errors, status: 500
     end

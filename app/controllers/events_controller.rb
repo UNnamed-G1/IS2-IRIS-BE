@@ -5,7 +5,7 @@ class EventsController < ApplicationController
   def index
     @events = Event.all
 
-    render json: @events
+    render json: @events, include: []
   end
 
   # GET /events/1
@@ -13,7 +13,7 @@ class EventsController < ApplicationController
     if @event.errors.any?
       render json: @event.errors.messages
     else
-      render json: @event
+      render json: @event, include: []
     end
   end
 
@@ -22,7 +22,7 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
 
     if @event.save
-      render json: @event, status: :created, location: @event
+      render json: @event, status: :created, location: @event,include: []
     else
       render json: @event.errors, status: :unprocessable_entity
     end
@@ -31,7 +31,7 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1
   def update
     if @event.update(event_params)
-      render json: @event
+      render json: @event, include: []
     else
       render json: @event.errors, status: :unprocessable_entity
     end
@@ -40,7 +40,7 @@ class EventsController < ApplicationController
   # DELETE /events/1
   def destroy
     if @event.destroy
-      render json: @event
+      render json: @event, include: []
     else
       render json: @event.errors, status: 500
     end  end

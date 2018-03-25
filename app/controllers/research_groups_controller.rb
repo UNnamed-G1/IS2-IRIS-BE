@@ -5,7 +5,7 @@ class ResearchGroupsController < ApplicationController
   def index
     @research_groups = ResearchGroup.all
 
-    render json: @research_groups
+    render json: @research_groups, include: []
   end
 
   # GET /research_groups/1
@@ -13,7 +13,7 @@ class ResearchGroupsController < ApplicationController
     if @research_group.errors.any?
       render json: @research_group.errors.messages
     else
-      render json: @research_group
+      render json: @research_group, include: ['users', 'members', 'members.user'] # This is an example of associations that are brought
     end  end
 
   # POST /research_groups
@@ -21,7 +21,7 @@ class ResearchGroupsController < ApplicationController
     @research_group = ResearchGroup.new(research_group_params)
 
     if @research_group.save
-      render json: @research_group, status: :created, location: @research_group
+      render json: @research_group, status: :created, location: @research_group, include: []
     else
       render json: @research_group.errors, status: :unprocessable_entity
     end
@@ -30,7 +30,7 @@ class ResearchGroupsController < ApplicationController
   # PATCH/PUT /research_groups/1
   def update
     if @research_group.update(research_group_params)
-      render json: @research_group
+      render json: @research_group, include: []
     else
       render json: @research_group.errors, status: :unprocessable_entity
     end
@@ -39,7 +39,7 @@ class ResearchGroupsController < ApplicationController
   # DELETE /research_groups/1
   def destroy
     if @research_group.destroy
-      render json: @research_group
+      render json: @research_group, include: []
     else
       render json: @research_group.errors, status: 500
     end  end
