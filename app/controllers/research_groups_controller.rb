@@ -1,4 +1,5 @@
 class ResearchGroupsController < ApplicationController
+  before_action :authenticate_user
   before_action :set_research_group, only: [:show, :update, :destroy]
 
   # GET /research_groups

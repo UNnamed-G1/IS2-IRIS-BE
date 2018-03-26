@@ -1,4 +1,5 @@
 class ResearchSubjectsController < ApplicationController
+  before_action :authenticate_user
   before_action :set_research_subject, only: [:show, :update, :destroy]
 
   # GET /research_subjects

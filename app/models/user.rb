@@ -29,6 +29,6 @@ class User < ApplicationRecord
   validates :type_u, inclusion: {in: user_types.values, message: "El tipo de usuario no es válido"}
   validates :email, uniqueness: true, format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/ }
 
-  validates_length_of       :password, minimum: 6 on: :create
+  validates_length_of       :password, minimum: 6, on: :create
   validates_confirmation_of :password, allow_blank: false, on: :create
 end
