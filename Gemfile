@@ -15,7 +15,7 @@ gem 'puma', '~> 3.7'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -24,6 +24,8 @@ gem 'puma', '~> 3.7'
 gem 'rack-cors', :require => 'rack/cors'
 
 gem 'faker', '~> 1.8', '>= 1.8.7'
+
+gem 'knock'
 
 # serializers gem
 gem 'active_model_serializers', '~> 0.10.0'

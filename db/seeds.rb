@@ -100,7 +100,8 @@ end
         office: Faker::Commerce.department(1),
         cvlac_link: Faker::Internet.url,
         career_id: Faker::Number.between(1,10),
-        password: Faker::Internet.password
+        password: 'password',
+        password_confirmation: 'password'
     )
     u.update(photo: Photo.create(
         link: Faker::Internet.url,
