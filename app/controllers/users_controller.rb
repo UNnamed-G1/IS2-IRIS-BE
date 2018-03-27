@@ -4,8 +4,6 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.all
-
     render json: @users, include: [] # This include is for select which associations bring in the JSON
   end
 

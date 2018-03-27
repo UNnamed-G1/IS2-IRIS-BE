@@ -22,7 +22,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors', :require => 'rack/cors'
-
+## Gemfile for Rails 3+, Sinatra, and Merb
+gem 'will_paginate', '~> 3.1.0'
 gem 'faker', '~> 1.8', '>= 1.8.7'
 
 gem 'knock'
@@ -37,6 +38,7 @@ end
 
 group :production do
   gem 'pg'
+  gem 'annotate'
 end
 
 group :development do

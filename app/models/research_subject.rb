@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: research_subjects
+#
+#  id         :integer          not null, primary key
+#  name       :string(200)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class ResearchSubject < ApplicationRecord
   has_many :research_subject_users
   has_many :users, through: :research_subject_users

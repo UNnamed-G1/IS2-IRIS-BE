@@ -4,7 +4,7 @@ class ResearchGroupsController < ApplicationController
 
   # GET /research_groups
   def index
-    @research_groups = ResearchGroup.all
+    @research_groups = ResearchGroup.paginate(:page => params[:page], :per_page => 5)
 
     render json: @research_groups, include: []
   end

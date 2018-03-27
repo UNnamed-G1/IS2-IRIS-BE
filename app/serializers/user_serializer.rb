@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                   :integer          not null, primary key
+#  name                 :string(100)
+#  lastname             :string(100)
+#  username             :string(40)
+#  email                :string           not null
+#  password_digest      :string           not null
+#  professional_profile :text(5000)
+#  type_u               :integer          not null
+#  phone                :string(20)
+#  office               :string(20)
+#  cvlac_link           :string
+#  career_id            :integer
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#
+
 class UserSerializer < ActiveModel::Serializer
   type :user
   
