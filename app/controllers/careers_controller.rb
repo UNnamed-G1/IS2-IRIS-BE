@@ -1,10 +1,9 @@
 class CareersController < ApplicationController
-  before_action :authenticate_user
   before_action :set_career, only: [:show, :update, :destroy]
 
   # GET /careers
   def index
-    @careers = Career.all
+    @careers = Career.paginate(:page => params[:page], :per_page => 5)
 
     render json: @careers, include: []
   end
