@@ -1,3 +1,5 @@
+
+
 Rails.application.routes.draw do
   resources :publications
   resources :research_groups
