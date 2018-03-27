@@ -5,20 +5,23 @@ class PhotosController < ApplicationController
   def index
     @photos = Photo.all
 
-    render json: @photos
+    render json: @photos, include: []
   end
 
   # GET /photos/1
   def show
-    render json: @photo
-  end
+    if @photo.errors.any?
+      render json: @photo.errors.messages
+    else
+      render json: @photo, include: []
+    end  end
 
   # POST /photos
   def create
     @photo = Photo.new(photo_params)
 
     if @photo.save
-      render json: @photo, status: :created, location: @photo
+      render json: @photo, status: :created, location: @photo, include: []
     else
       render json: @photo.errors, status: :unprocessable_entity
     end
@@ -27,7 +30,7 @@ class PhotosController < ApplicationController
   # PATCH/PUT /photos/1
   def update
     if @photo.update(photo_params)
-      render json: @photo
+      render json: @photo, include: []
     else
       render json: @photo.errors, status: :unprocessable_entity
     end
@@ -35,8 +38,11 @@ class PhotosController < ApplicationController
 
   # DELETE /photos/1
   def destroy
-    @photo.destroy
-  end
+    if @photo.destroy
+      render json: @photo, include: []
+    else
+      render json: @photo.errors, status: 500
+    end  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

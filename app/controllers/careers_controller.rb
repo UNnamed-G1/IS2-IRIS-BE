@@ -5,12 +5,16 @@ class CareersController < ApplicationController
   def index
     @careers = Career.all
 
-    render json: @careers
+    render json: @careers, include: []
   end
 
   # GET /careers/1
   def show
-    render json: @career
+    if @career.errors.any?
+      render json: @career.errors.messages
+    else
+      render json: @career, include: []
+    end
   end
 
   # POST /careers
@@ -18,7 +22,7 @@ class CareersController < ApplicationController
     @career = Career.new(career_params)
 
     if @career.save
-      render json: @career, status: :created, location: @career
+      render json: @career, status: :created, location: @career, include: []
     else
       render json: @career.errors, status: :unprocessable_entity
     end
@@ -27,7 +31,7 @@ class CareersController < ApplicationController
   # PATCH/PUT /careers/1
   def update
     if @career.update(career_params)
-      render json: @career
+      render json: @career, include: []
     else
       render json: @career.errors, status: :unprocessable_entity
     end
@@ -35,7 +39,11 @@ class CareersController < ApplicationController
 
   # DELETE /careers/1
   def destroy
-    @career.destroy
+    if @career.destroy
+      render json: @career, include: []
+    else
+      render json: @career.errors, status: 500
+    end
   end
 
   private

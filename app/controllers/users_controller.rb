@@ -5,12 +5,16 @@ class UsersController < ApplicationController
   def index
     @users = User.all
 
-    render json: @users
+    render json: @users, include: [] # This include is for select which associations bring in the JSON
   end
 
   # GET /users/1
   def show
-    render json: @user
+    if @user.errors.any?
+      render json: @user.errors.messages
+    else
+      render json: @user, include: []
+    end
   end
 
   # POST /users
@@ -18,7 +22,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      render json: @user, status: :created, location: @user
+      render json: @user, status: :created, location: @user, include: []
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -27,7 +31,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   def update
     if @user.update(user_params)
-      render json: @user
+      render json: @user, include: []
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -35,7 +39,11 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   def destroy
-    @user.destroy
+    if @user.destroy
+      render json: @user, include: []
+    else
+      render json: @user.errors, status: 500
+    end
   end
 
   private
@@ -46,6 +54,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:name, :lastname, :username, :professional_profile, :email, :phone, :office, :cvlac_link)
+      params.require(:user).permit(:name, :lastname, :username, :professional_profile, :email, :phone, :office, :cvlac_link, :career_id, :type_u, :password)
     end
 end

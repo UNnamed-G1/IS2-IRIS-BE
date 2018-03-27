@@ -5,12 +5,16 @@ class FacultiesController < ApplicationController
   def index
     @faculties = Faculty.all
 
-    render json: @faculties
+    render json: @faculties, include: []
   end
 
   # GET /faculties/1
   def show
-    render json: @faculty
+    if @faculty.errors.any?
+      render json: @faculty.errors.messages
+    else
+      render json: @faculty, include: []
+    end
   end
 
   # POST /faculties
@@ -18,7 +22,7 @@ class FacultiesController < ApplicationController
     @faculty = Faculty.new(faculty_params)
 
     if @faculty.save
-      render json: @faculty, status: :created, location: @faculty
+      render json: @faculty, status: :created, location: @faculty, include: []
     else
       render json: @faculty.errors, status: :unprocessable_entity
     end
@@ -27,7 +31,7 @@ class FacultiesController < ApplicationController
   # PATCH/PUT /faculties/1
   def update
     if @faculty.update(faculty_params)
-      render json: @faculty
+      render json: @faculty, include: []
     else
       render json: @faculty.errors, status: :unprocessable_entity
     end
@@ -35,8 +39,11 @@ class FacultiesController < ApplicationController
 
   # DELETE /faculties/1
   def destroy
-    @faculty.destroy
-  end
+    if @faculty.destroy
+      render json: @faculty, include: []
+    else
+      render json: @faculty.errors, status: 500
+    end  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

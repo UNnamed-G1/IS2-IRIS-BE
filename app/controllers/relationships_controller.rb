@@ -5,20 +5,23 @@ class RelationshipsController < ApplicationController
   def index
     @relationships = Relationship.all
 
-    render json: @relationships
+    render json: @relationships, include: []
   end
 
   # GET /relationships/1
   def show
-    render json: @relationship
-  end
+    if @relationship.errors.any?
+      render json: @relationship.errors.messages
+    else
+      render json: @relationship, include: []
+    end  end
 
   # POST /relationships
   def create
     @relationship = Relationship.new(relationship_params)
 
     if @relationship.save
-      render json: @relationship, status: :created, location: @relationship
+      render json: @relationship, status: :created, location: @relationship, include: []
     else
       render json: @relationship.errors, status: :unprocessable_entity
     end
@@ -27,7 +30,7 @@ class RelationshipsController < ApplicationController
   # PATCH/PUT /relationships/1
   def update
     if @relationship.update(relationship_params)
-      render json: @relationship
+      render json: @relationship, include: []
     else
       render json: @relationship.errors, status: :unprocessable_entity
     end
@@ -35,8 +38,11 @@ class RelationshipsController < ApplicationController
 
   # DELETE /relationships/1
   def destroy
-    @relationship.destroy
-  end
+    if @relationship.destroy
+      render json: @relationship, include: []
+    else
+      render json: @relationship.errors, status: 500
+    end  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

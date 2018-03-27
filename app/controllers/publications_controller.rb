@@ -5,13 +5,16 @@ class PublicationsController < ApplicationController
   def index
     @publications = Publication.all
 
-    render json: @publications
+    render json: @publications, include: []
   end
 
   # GET /publications/1
   def show
-    render json: @publication
-  end
+    if @publication.errors.any?
+      render json: @publication.errors.messages
+    else
+      render json: @publication, include: []
+    end  end
 
   # POST /publications
   def create
@@ -27,7 +30,7 @@ class PublicationsController < ApplicationController
   # PATCH/PUT /publications/1
   def update
     if @publication.update(publication_params)
-      render json: @publication
+      render json: @publication, include: []
     else
       render json: @publication.errors, status: :unprocessable_entity
     end
@@ -35,8 +38,11 @@ class PublicationsController < ApplicationController
 
   # DELETE /publications/1
   def destroy
-    @publication.destroy
-  end
+    if @publication.destroy
+      render json: @publication, include: []
+    else
+      render json: @publication.errors, status: 500
+    end  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -46,6 +52,6 @@ class PublicationsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def publication_params
-      params.require(:publication).permit(:name, :date, :abstract, :url, :brief_description, :file_name, :type)
+      params.require(:publication).permit(:name, :date, :abstract, :url, :brief_description, :file_name, :type_pub)
     end
 end

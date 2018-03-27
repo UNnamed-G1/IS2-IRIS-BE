@@ -1,5 +1,6 @@
 class Event < ApplicationRecord
-    has_and_belongs_to_many :users
+    has_many :event_users
+    has_many :users, through: :event_users
     has_many :photos, as: :imageable
     belongs_to :research_group
 
