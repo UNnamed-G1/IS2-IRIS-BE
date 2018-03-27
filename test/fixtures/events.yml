@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id_event: 1
+  id_group: 1
+  topic: MyText
+  description: MyText
+  type_event: 1
+  date_time: 2018-03-10 21:27:26
+  frequence: 1
+  end_time_event: 2018-03-10 21:27:26
+
+two:
+  id_event: 1
+  id_group: 1
+  topic: MyText
+  description: MyText
+  type_event: 1
+  date_time: 2018-03-10 21:27:26
+  frequence: 1
+  end_time_event: 2018-03-10 21:27:26
