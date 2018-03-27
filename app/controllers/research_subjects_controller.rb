@@ -5,7 +5,7 @@ class ResearchSubjectsController < ApplicationController
   # GET /research_subjects
   def index
     #Don't forget variable
-    @users = User.paginate(:page => params[:page], :per_page => 5)
+    @research_subjects = ResearchSubject.paginate(:page => params[:page], :per_page => 5)
     render json: @research_subjects, include: []
   end
 
