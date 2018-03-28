@@ -19,7 +19,7 @@ class User < ApplicationRecord
 
   enum user_type: [:estudiante, :profesor, :admin]
 
-  validates :password_digest, :email, :type_u, presence: true, on: :create
+  validates :password, :email, :type_u, presence: true, on: :create
   validates :name, :lastname, :username, :professional_profile, presence: true, on: :update
   
   validates :name, :lastname, length: { maximum: 100, too_long: "Se permiten máximo %´{count} caracteres" }
