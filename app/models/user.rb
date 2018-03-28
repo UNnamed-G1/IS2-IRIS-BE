@@ -19,7 +19,7 @@ class User < ApplicationRecord
 
   enum user_type: [:estudiante, :profesor, :admin]
 
-  validates :password, :email, :type_u, presence: true, on: :create
+  validates :password_digest, :email, :type_u, presence: true, on: :create
   validates :name, :lastname, :username, :professional_profile, presence: true, on: :update
   
   validates :name, :lastname, length: { maximum: 100, too_long: "Se permiten máximo %´{count} caracteres" }
@@ -30,8 +30,8 @@ class User < ApplicationRecord
   validates :email, uniqueness: true
   validates :email, format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/ }
 
-  validates_length_of       :password, minimum: 6, on: :create
-  validates_confirmation_of :password, allow_blank: false, on: :create
+  validates_length_of       :password_digest, minimum: 6, on: :create
+  validates_confirmation_of :password_digest, on: :create
 
   def self.create_or_find_google_user(data)
     newUser = find_by email: data['email'] 
