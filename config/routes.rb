@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   post 'user_token' => 'user_token#create'
+  post 'google_user_token' => 'google_user_token#create'
+  # post 'google_auth' => 'google_user_tockens#create'
+
   resources :publications
   resources :research_groups
   resources :events
