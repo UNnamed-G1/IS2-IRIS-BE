@@ -50,6 +50,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def current
+    fields = [:email, :username, :name, :lastname, :full_name, :user_type]
+    render json: current_user, fields: fields, include: []
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
