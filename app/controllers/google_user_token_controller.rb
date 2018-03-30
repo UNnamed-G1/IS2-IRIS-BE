@@ -2,7 +2,7 @@ class GoogleUserTokenController < ApplicationController
 
     # To login do a POST request to /google_user_token
     # where the json to receive has to be:
-    # { "auth": { "email": "email to authenticate" } }
+    # { "auth": { "access_token": "Token received from google" } }
     # This will return a 201 code is the authentication was 
     # correct and 404 if there was a problem with the autentication
     # (this error is by the side of the client - the data isn't correct)
