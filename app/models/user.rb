@@ -19,7 +19,7 @@ class User < ApplicationRecord
   
   belongs_to :career, optional: true
 
-  enum user_type: [:estudiante, :profesor, :admin]
+  enum type_u: [:estudiante, :profesor, :admin]
 
   validates :name, :lastname, :email, :type_u, presence: true, on: :create
   validates :name, :lastname, :username, :professional_profile, presence: true, on: :update
@@ -28,7 +28,7 @@ class User < ApplicationRecord
   validates :username, length: { maximum: 40, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :professional_profile, length: { maximum: 5000, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :phone, :office, length: { maximum: 20, too_long: "Se permiten máximo %´{count} caracteres" }
-  validates :type_u, inclusion: {in: user_types.values, message: "El tipo de usuario no es válido"}
+  validates :type_u, inclusion: {in: type_us.values, message: "El tipo de usuario no es válido"}
   validates :email, uniqueness: true
   validates :email, format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/ }
 
