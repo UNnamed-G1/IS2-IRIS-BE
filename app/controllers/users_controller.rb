@@ -53,7 +53,7 @@ class UsersController < ApplicationController
 
   def current
     fields = [:email, :username, :name, :lastname, :full_name, :user_type]
-    render json: current_user, fields: fields, include: []
+    render json: current_user, fields: fields, include: [:photo]
   end
 
   private
@@ -64,6 +64,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:name, :lastname, :username, :professional_profile, :email, :phone, :office, :cvlac_link, :career_id, :type_u, :password, :password_confirmation)
+      params.require(:user).permit(:name, :lastname, :username, :professional_profile, :email, :phone, :office, :cvlac_link, :career_id, :user_type, :password, :password_confirmation)
     end
 end
