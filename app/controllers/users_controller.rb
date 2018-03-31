@@ -52,7 +52,7 @@ class UsersController < ApplicationController
 
   def current
     fields = [:email, :username, :name, :lastname, :full_name, :user_type]
-    render json: current_user, fields: fields, include: []
+    render json: current_user, fields: fields, include: [:photo]
   end
 
   private

@@ -16,25 +16,25 @@ class User < ApplicationRecord
   has_many :user_research_groups
   has_many :research_groups, through: :user_research_groups
   has_one :photo, as: :imageable
-  
+
   belongs_to :career, optional: true
 
   enum type_u: [:estudiante, :profesor, :admin]
 
   validates :name, :lastname, :email, :type_u, presence: true, on: :create
   validates :name, :lastname, :username, :professional_profile, presence: true, on: :update
-  
+
   validates :name, :lastname, length: { maximum: 100, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :username, length: { maximum: 40, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :professional_profile, length: { maximum: 5000, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :phone, :office, length: { maximum: 20, too_long: "Se permiten máximo %´{count} caracteres" }
-  validates :type_u, inclusion: {in: type_us.values, message: "El tipo de usuario no es válido"}
+  validates :type_u, inclusion: {in: type_us, message: "El tipo de usuario no es válido"}
   validates :email, uniqueness: true
   validates :email, format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/ }
 
   def self.create_or_find_google_user(data)
-    newUser = find_by email: data['email'] 
-    if !newUser 
+    newUser = find_by email: data['email']
+    if !newUser
       newUser = create do |user|
         user.name = data["name"]
         user.lastname = data["last_name"]
@@ -52,6 +52,6 @@ class User < ApplicationRecord
   private
     def put_username
       username = self.email.split('@').first
-      self.update_columns(username: username) 
+      self.update_columns(username: username)
     end
 end
