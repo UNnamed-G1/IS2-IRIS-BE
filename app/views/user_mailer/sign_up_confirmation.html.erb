@@ -1,0 +1,18 @@
+<h1>Bienvenido a IRIS,
+    <%= @user.name + " " + @user.lastname %>
+</h1>
+<hr>
+<p>
+    Gracias por unirte a IRIS, applicación en la que podrás disfrutar de los grupos de investigación de la Universidad Nacional de Colombia sede Bogotá.
+</p>
+<br>
+<p>
+    Te has registrado satisfactoriamente en IRIS
+Recuerda actualizar tu información para ayudarte
+a encontrar los grupos de investigación que deseas
+</p>
+<p>
+    Dirigete al siguiente link para iniciar sesión:
+    <%= link_to @url, @url %>
+</p>
+<p>¡Ten un gran día!</p>

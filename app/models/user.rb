@@ -28,7 +28,7 @@ class User < ApplicationRecord
   validates :username, length: { maximum: 40, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :professional_profile, length: { maximum: 5000, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :phone, :office, length: { maximum: 20, too_long: "Se permiten máximo %´{count} caracteres" }
-  validates :type_u, inclusion: {in: type_us.values, message: "El tipo de usuario no es válido"}
+  validates :type_u, inclusion: {in: type_us.keys, message: "El tipo de usuario no es válido"}
   validates :email, uniqueness: true
   validates :email, format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/ }
 

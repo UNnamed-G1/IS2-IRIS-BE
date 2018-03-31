@@ -26,6 +26,7 @@ class UsersController < ApplicationController
     @user = User.new (user_params)
 
     if @user.save
+      UserMailer.sign_up_confirmation(@user).deliver_now
       render json: @user, status: :created, location: @user, include: []
     else
       render json: @user.errors, status: :unprocessable_entity
