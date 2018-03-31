@@ -49,6 +49,11 @@ class User < ApplicationRecord
     return newUser
   end
 
+  def is_admin?
+    puts  type_u == "admin"
+    return type_u == "admin"
+  end
+
   private
     def put_username
       username = self.email.split('@').first
