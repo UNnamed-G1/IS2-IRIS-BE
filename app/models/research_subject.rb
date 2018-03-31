@@ -17,4 +17,12 @@ class ResearchSubject < ApplicationRecord
 
   validates :name, presence: true
   validates :name, length: { maximum: 200, too_long: "Se permiten máximo %´{count} caracteres" }
+  
+  def search_subjects
+    subjects = ResearchSubject.all
+    subjects = subjects.select("research_subject.name")
+                       .where(["research_subject.name LIKE ?", name]) if name.present?
+    
+    return subjects
+  end
 end

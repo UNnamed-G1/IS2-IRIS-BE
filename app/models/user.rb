@@ -51,4 +51,14 @@ class User < ApplicationRecord
 
   validates_length_of       :password, minimum: 6, on: :create
   validates_confirmation_of :password, allow_blank: false, on: :create
+  
+  def search_users
+    users = User.all
+    
+    users = users.where("name LIKE ? ", "%#{keywords}%") if keywords.present?
+    users = users.select("user.name, user.lastname")
+                 .where(["user.email LIKE ?", email]) if email.present?
+    
+    return users
+  end
 end

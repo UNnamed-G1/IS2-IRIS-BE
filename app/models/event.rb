@@ -30,4 +30,12 @@ class Event < ApplicationRecord
     validates :type_ev, inclusion: {in: type_evs.keys, message: "Tipo de evento invalido."}
     validates :frequence, inclusion: {in: frequences.keys, message: "Frecuencia del evento invalida."}
     validates :state, inclusion: {in: states.keys, message: "Estado del evento invalido."}
+    
+    def search_events
+        events = Event.all
+        
+        events = events.select("event.name, event.topic, event.type_ev")
+                       .joins(:research_groups)
+                       .where(["research_group.name LIKE ?", name]) if name.present?
+    end
 end
