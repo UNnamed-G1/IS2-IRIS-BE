@@ -21,13 +21,14 @@ class User < ApplicationRecord
 
   validates :password_digest, :email, :type_u, presence: true, on: :create
   validates :name, :lastname, :username, :professional_profile, presence: true, on: :update
-  
+
   validates :name, :lastname, length: { maximum: 100, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :username, length: { maximum: 40, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :professional_profile, length: { maximum: 5000, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :phone, :office, length: { maximum: 20, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :type_u, inclusion: {in: user_types.values, message: "El tipo de usuario no es válido"}
-  validates :email, uniqueness: true, format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/ }
+  validates :email, uniqueness: true
+  validates :email, format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/ }
 
   validates_length_of       :password, minimum: 6, on: :create
   validates_confirmation_of :password, allow_blank: false, on: :create
