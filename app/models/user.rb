@@ -44,7 +44,7 @@ class User < ApplicationRecord
   
   validates :name, :lastname, length: { maximum: 100, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :username, length: { maximum: 40, too_long: "Se permiten máximo %´{count} caracteres" }
-  validates :professional_profile, length: { maximum: 5000, too_long: "Se permiten máximo %´{count} caracteres" }
+  validates :professional_profile, length: { maximum: 5000, too_long: "Se permiten máximo %{count} caracteres" }
   validates :phone, :office, length: { maximum: 20, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :type_u, inclusion: {in: user_types.values, message: "El tipo de usuario no es válido"}
   validates :email, uniqueness: true, format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/ }
@@ -52,13 +52,9 @@ class User < ApplicationRecord
   validates_length_of       :password, minimum: 6, on: :create
   validates_confirmation_of :password, allow_blank: false, on: :create
   
-  def search_users
-    users = User.all
-    
-    users = users.where("name LIKE ? ", "%#{keywords}%") if keywords.present?
-    users = users.select("user.name, user.lastname")
-                 .where(["user.email LIKE ?", email]) if email.present?
-    
-    return users
+  def self.search_users_by_research_group(group_id)
+    select(:id, :name, :lastname, :email, :type_u).joins(:research_groups)
+                                                  .where('research_groups.id': group_id) if group_id.present?
   end
+      
 end

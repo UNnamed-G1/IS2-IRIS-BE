@@ -24,4 +24,6 @@ class UserResearchGroup < ApplicationRecord
   validates :state, inclusion: {in: states.keys, message: "El estado no es valido"}
   validates :type_urg, inclusion: {in: type_urgs.keys, message: "Tipo de usuario no valido"}
   validates :hours_per_week, numericality: {only_integer: true}
+  
+  
 end
