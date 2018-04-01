@@ -50,8 +50,8 @@ class User < ApplicationRecord
   end
 
   def is_admin?
-    puts  type_u == "admin"
-    return type_u == "admin"
+    puts  user_type == "admin"
+    return user_type == "admin"
   end
 
   private
