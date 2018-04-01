@@ -5,7 +5,7 @@ class UserSerializer < ActiveModel::Serializer
   attributes :professional_profile, :phone, :office, :cvlac_link
   attributes :full_name
 
-  attribute :user_type, key: :user_type 
+  attribute :user_type
 
   has_many :events
   has_many :research_subjects
