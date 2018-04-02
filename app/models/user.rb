@@ -72,7 +72,9 @@ class User < ApplicationRecord
   def self.search_users_by_event(ev_id)
     select(:id, :name, :lastname, :email, :type_u).joins(:events)
                                                   .where('events.id': ev_id) if ev_id.present?
-  end 
+  end
+  
+  
   ##Queries for statistics
   
   def self.num_users_by_rg(group_id)

@@ -25,4 +25,6 @@ class UserResearchGroup < ApplicationRecord
   validates :type_urg, inclusion: {in: type_urgs.keys, message: "Tipo de usuario no valido"}
   validates :hours_per_week, numericality: {only_integer: true}
   
+  scope :active, ->{where(state: :activo)}
+  scope :active_member, ->{where(state: :activo, type_ur: :miembro)}
 end

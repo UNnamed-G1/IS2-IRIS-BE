@@ -49,7 +49,7 @@ class ResearchGroup < ApplicationRecord
     def self.search_rgs_by_class(cl_type)
         select(:id, :name).where(classification: cl_type) if cl_type.present?
     end
-       
+    
     def self.search_rgs_by_department(dep_id)
         select(:id, :name).joins(:careers)
                           .where('careers.department_id': dep_id) if dep_id.present?
