@@ -45,6 +45,11 @@ class ResearchGroupsController < ApplicationController
       render json: @research_group.errors, status: 500
     end  end
 
+  def news
+    @research_groups = ResearchGroup.news
+    render json: @research_groups, include: []
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_research_group
