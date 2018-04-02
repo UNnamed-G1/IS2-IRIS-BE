@@ -17,4 +17,9 @@ class ResearchGroup < ApplicationRecord
     validates :name, :url, length: {maximum: 100, too_long: "Se permiten máimo %{count} caracteres"}
     validates :description, :strategic_focus, :research_priorities, length: { maximum: 1000, too_long: "Se permiten maximo %{count} caracteres" }
     validates :classification, inclusion: { in: classifications, message: "El tipo de clasificación no es válido"}
+
+    def member_is_lider?(member)
+        m = user_research_groups.find_by(user_id: member.id)
+        return m.type_urg == "lider" 
+    end
 end

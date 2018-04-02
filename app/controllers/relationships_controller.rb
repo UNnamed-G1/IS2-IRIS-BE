@@ -1,5 +1,6 @@
 class RelationshipsController < ApplicationController
   before_action :authenticate_user
+  before_action :authorize_as_admin, only: [:index, :delete]
   before_action :set_relationship, only: [:show, :update, :destroy]
 
   # GET /relationships

@@ -61,6 +61,26 @@ class User < ApplicationRecord
     return user_type == "profesor"
   end
 
+  def is_member_of_research_group?(group_id)
+    if User.joins(:research_groups).where("user_id = ? AND research_group_id = ?", id, group_id).first
+      return true
+    else
+      return false
+    end
+  end
+
+  def is_lider_of_research_group?(group_id)
+    return false unless is_member_of_research_group?(group_id)
+
+    retrived_user = User.joins(:research_groups).where("user_id = ? AND research_group_id = ?", id, group_id).first
+
+    if retrived_user.user_research_groups.lider 
+      return true
+    else
+      return false
+    end
+  end
+
   private
     def put_username
       username = self.email.split('@').first
