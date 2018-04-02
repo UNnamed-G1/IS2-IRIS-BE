@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   post 'user_token' => 'user_token#create'
 
+  get 'users/current' => 'users#current'
   get 'research_groups_news' => 'research_groups#news'
   get 'events_news' => 'events#news'
   
