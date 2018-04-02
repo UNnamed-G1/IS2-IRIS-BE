@@ -33,7 +33,23 @@ class Event < ApplicationRecord
     
     ###Queries for searching
     
-    def self.search_events_by_research_group(id_e)
-        select(:name, :topic, :type_ev).where(research_group_id: id_e) if id_e.present?
+    def self.search_events_by_rg(ev_id)
+        select(:id, :name, :topic, :type_ev).where(research_group_id: ev_id) if ev_id.present?
+    end
+    
+    def self.search_events_by_user(usr_id)
+        select(:id, :name, :topic, :type_ev).joins(:users).where('users.id': usr_id) if usr_id.present?
+    end 
+    
+    def self.search_events_by_state(status)
+        select(:id, :name, :topic, :type_ev).where(state: status) if status.present?
+    end
+    
+    def self.search_events_by_freq(freq)
+        select(:id, :name, :topic, :type_ev).where(frequence: freq) if freq.present?
+    end
+    
+    def self.search_events_by_type(type)
+        select(:id, :name, :topic, :type_ev).where(type_ev: type) if type.present?
     end
 end

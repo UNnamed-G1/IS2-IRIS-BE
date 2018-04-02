@@ -30,13 +30,13 @@ class Publication < ApplicationRecord
     
     ###Queries for seaching
     
-    def self.search_publications_by_research_group(group_id)
-        select(:id, :name).joins(:research_groups)
-                          .where('research_groups.id': group_id) if group_id.present?
+    def self.search_publications_by_rg(rg_id)
+        select(:id, :name, :type_pub).joins(:research_groups)
+                          .where('research_groups.id': rg_id) if rg_id.present?
     end
     
     def self.search_publications_by_user(usr_id)
-        select(:id, :name).joins(:users)
+        select(:id, :name, :type_pub).joins(:users)
                           .where('users.id': usr_id) if usr_id.present?
     end
     
@@ -44,21 +44,20 @@ class Publication < ApplicationRecord
         where(type_pub: type) if type.present?
     end
     
-    def self.search_p_by_rg_and_type(group_id, type)
-        search_publications_by_research_group(group_id).search_publications_by_type(type)
+    def self.search_p_by_rg_and_type(rg_id, type)
+        search_publications_by_research_group(rg_id).search_publications_by_type(type)
     end
     
     ###Queries for statistics
     
-    def self.num_publications_by_rg(group_id)
-        joins(:research_groups).where('research_groups.id': group_id).count if group_id.present?
+    def self.num_publications_by_rg(rg_id)
+        joins(:research_groups).where('research_groups.id': rg_id).count if rg_id.present?
     end
     
     def self.num_publications_by_user(usr_id)
         joins(:users).where('users.id': usr_id).count if usr_id.present?
     end
     
-       
     def self.num_publications_by_type(type)
         where(type_pub: type).count if type.present?
     end

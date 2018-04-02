@@ -15,4 +15,5 @@ class Photo < ApplicationRecord
 
   validates :link, :imageable_type, presence: true
   validates :link, length: { maximum: 300, too_long: "Se permiten maximo %{count} caracteres" }
+  
 end
