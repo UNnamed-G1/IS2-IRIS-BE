@@ -26,18 +26,17 @@ class Publication < ApplicationRecord
     validates :name, length: { maximum: 255, too_long: "Se permiten maximo %{count} caracteres" }
     validates :url, :file_name, length: { maximum: 300, too_long: "Se permiten maximo %{count} caracteres" }
     validates :brief_description, length: { maximum: 500, too_long: "Se permiten maximo %{count} caracteres" }
-    validates :type_pub, inclusion: {in: type_pubs.keys, message: "Tipo de publicacion no valida"}
-    
+    validates :type_pub, inclusion: {in: type_pubs, message: "Tipo de publicacion no valida"}    
     ###Queries for seaching
     
     def self.search_publications_by_rg(rg_id)
         select(:id, :name, :type_pub).joins(:research_groups)
-                          .where('research_groups.id': rg_id) if rg_id.present?
+                          .where('research_groups.id', rg_id) if rg_id.present?
     end
     
     def self.search_publications_by_user(usr_id)
         select(:id, :name, :type_pub).joins(:users)
-                          .where('users.id': usr_id) if usr_id.present?
+                          .where('users.id', usr_id) if usr_id.present?
     end
     
     def self.search_publications_by_type(type)
@@ -51,11 +50,11 @@ class Publication < ApplicationRecord
     ###Queries for statistics
     
     def self.num_publications_by_rg(rg_id)
-        joins(:research_groups).where('research_groups.id': rg_id).count if rg_id.present?
+        joins(:research_groups).where('research_groups.id', rg_id).count if rg_id.present?
     end
     
     def self.num_publications_by_user(usr_id)
-        joins(:users).where('users.id': usr_id).count if usr_id.present?
+        joins(:users).where('users.id', usr_id).count if usr_id.present?
     end
     
     def self.num_publications_by_type(type)
@@ -63,6 +62,7 @@ class Publication < ApplicationRecord
     end
     
     def self.num_publications_by_rg_and_type(rg_id, type)
-        joins(:research_groups).where('research_groups.id': rg_id, type_pub: type).count
+        joins(:research_groups).where('research_groups.id', rg_id, type_pub: type).count
     end
+
 end

@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   post 'user_token' => 'user_token#create'
+  post 'google_user_token' => 'google_user_token#create'
+
+  get 'users/current' => 'users#current'
+
   resources :publications
   resources :research_groups
   resources :events

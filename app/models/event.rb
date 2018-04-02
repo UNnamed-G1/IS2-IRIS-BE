@@ -27,9 +27,9 @@ class Event < ApplicationRecord
 
     validates :topic, :description, :state, presence: true
     validates :type_ev, :date, :frequence, :end_time, presence: true
-    validates :type_ev, inclusion: {in: type_evs.keys, message: "Tipo de evento invalido."}
-    validates :frequence, inclusion: {in: frequences.keys, message: "Frecuencia del evento invalida."}
-    validates :state, inclusion: {in: states.keys, message: "Estado del evento invalido."}
+    validates :type_ev, inclusion: {in: type_evs, message: "Tipo de evento invalido."}
+    validates :frequence, inclusion: {in: frequences, message: "Frecuencia del evento invalida."}
+    validates :state, inclusion: {in: states, message: "Estado del evento invalido."}
     
     ###Queries for searching
     
@@ -38,7 +38,7 @@ class Event < ApplicationRecord
     end
     
     def self.search_events_by_user(usr_id)
-        select(:id, :name, :topic, :type_ev).joins(:users).where('users.id': usr_id) if usr_id.present?
+        select(:id, :name, :topic, :type_ev).joins(:users).where('users.id', usr_id) if usr_id.present?
     end 
     
     def self.search_events_by_state(status)
@@ -52,4 +52,5 @@ class Event < ApplicationRecord
     def self.search_events_by_type(type)
         select(:id, :name, :topic, :type_ev).where(type_ev: type) if type.present?
     end
+
 end
