@@ -95,7 +95,7 @@ end
         username: Faker::Internet.user_name,
         email: Faker::Internet.email,
         professional_profile: Faker::Lorem.paragraph,
-        type_u: Faker::Number.between(0,1),
+        user_type: Faker::Number.between(0,1),
         phone: Faker::PhoneNumber.cell_phone,
         office: Faker::Commerce.department(1),
         cvlac_link: Faker::Internet.url,

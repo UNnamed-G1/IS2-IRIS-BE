@@ -7,7 +7,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :email, null: false
       t.string :password_digest
       t.text :professional_profile, limit: 5000
-      t.integer :type_u, null: false, default: 0
+      t.integer :user_type, null: false, default: 0
       t.string :phone, limit: 20
       t.string :office, limit: 20
       t.string :cvlac_link

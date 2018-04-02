@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   # has to follow the next format: { "user": { Here goes the info of the new user } }
 
   before_action :authenticate_user, except: :create
+  # before_action :authorize_as_admin, except: [:create, :current]
   before_action :set_user, only: [:show, :update, :destroy]
 
   # GET /users
@@ -53,7 +54,7 @@ class UsersController < ApplicationController
 
   def current
     fields = [:email, :username, :name, :lastname, :full_name, :user_type]
-    render json: current_user, fields: fields, include: []
+    render json: current_user, fields: fields, include: [:photo]
   end
 
   private
@@ -64,6 +65,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:name, :lastname, :username, :professional_profile, :email, :phone, :office, :cvlac_link, :career_id, :type_u, :password, :password_confirmation)
+      params.require(:user).permit(:name, :lastname, :username, :professional_profile, :email, :phone, :office, :cvlac_link, :career_id, :user_type, :password, :password_confirmation)
     end
 end
