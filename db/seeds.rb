@@ -27,10 +27,10 @@ end
     )
 end
 
-10.times do
+100.times do
     Schedule.create(
-        start_date: Faker::Time.backward(1),
-        end_date: Faker::Time.between(1.hour.from_now, 2.hours.from_now)
+        start_date: Faker::Date.between(1.days.from_now, 4.days.from_now),
+        end_date: Faker::Date.between(6.days.from_now, 9.days.from_now)
     )
 end
 

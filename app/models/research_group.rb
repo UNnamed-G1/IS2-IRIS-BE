@@ -35,10 +35,17 @@ class ResearchGroup < ApplicationRecord
     validates :description, :strategic_focus, :research_priorities, length: { maximum: 1000, too_long: "Se permiten maximo %{count} caracteres" }
     validates :classification, inclusion: { in: classifications.values, message: "El tipo de clasificación no es válido"}
     
+    ##Queries for searching
+    
     def self.search_groups_by_career(career_id)
         select(:id, :name).joins(:careers)
                           .where('careers.id': career_id) if career_id.present?
     end
+       
+    def self.search_groups_by_department(dep_id)
+        select(:id, :name).joins(:careers)
+                          .where('careers.department_id': dep_id) if dep_id.present?
+    end  
     
     
 end

@@ -23,4 +23,16 @@ class Career < ApplicationRecord
   validates :name, length: {maximum: 100, too_long: "Se permiten máximo %´{count} caracteres."}
   validates :degree_type, inclusion: {in: deg_types.values, message: "El tipo de carrera no es válido"}
   validates :snies_code, length: {maximum: 5, too_long: "Código SNIES inválido"}, uniqueness: {message: "Codigo SNIES ya ha sido usado en otro registro."}, numericality: { only_integer: true }
+  
+  ###Queries for searching
+  
+  def self.search_careers_by_research_group(rg_id)
+    select(:id, :name).joins(:research_groups)
+                      .where('research_groups.id': rg_id) if rg_id.present?
+  end
+  
+  def self.search_careers_by_department(dep_id)
+    select(:id, :name).where(department_id: dep_id) if dep_id.present?
+  end  
+  
 end

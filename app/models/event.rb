@@ -31,6 +31,8 @@ class Event < ApplicationRecord
     validates :frequence, inclusion: {in: frequences.keys, message: "Frecuencia del evento invalida."}
     validates :state, inclusion: {in: states.keys, message: "Estado del evento invalido."}
     
+    ###Queries for searching
+    
     def self.search_events_by_research_group(id_e)
         select(:name, :topic, :type_ev).where(research_group_id: id_e) if id_e.present?
     end

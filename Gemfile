@@ -25,7 +25,6 @@ gem 'rack-cors', :require => 'rack/cors'
 ## Gemfile for Rails 3+, Sinatra, and Merb
 gem 'will_paginate', '~> 3.1.0'
 gem 'faker', '~> 1.8', '>= 1.8.7'
-
 gem 'knock'
 
 # serializers gem

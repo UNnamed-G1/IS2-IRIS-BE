@@ -4,8 +4,8 @@ class PublicationsController < ApplicationController
 
   # GET /publications
   def index
-    @publications = Publication.all
-
+    @publications = Publication.paginate(:page => params[:page], :per_page => 5)
+    
     render json: @publications, include: []
   end
 

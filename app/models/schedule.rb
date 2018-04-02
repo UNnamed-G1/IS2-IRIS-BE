@@ -14,4 +14,13 @@ class Schedule < ApplicationRecord
   has_many :users, through: :schedule_users
 
   validates :start_date, :end_date, presence: true
+  
+  ###Queries for searching
+  
+  def self.find_schedules_by_user(usr_id)
+    select(:start_date).joins(:users)
+                       .where('users.id': usr_id) if usr_id.present?
+  
+  end  
+  
 end

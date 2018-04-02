@@ -52,9 +52,17 @@ class User < ApplicationRecord
   validates_length_of       :password, minimum: 6, on: :create
   validates_confirmation_of :password, allow_blank: false, on: :create
   
+  ###Queries for searching
+  
   def self.search_users_by_research_group(group_id)
     select(:id, :name, :lastname, :email, :type_u).joins(:research_groups)
                                                   .where('research_groups.id': group_id) if group_id.present?
   end
-      
+  
+  ##Queries for statistics
+  
+  def self.num_users_by_rg(group_id)
+    joins(:research_groups).where('research_groups.id': group_id).count if group_id.present?
+  end
+  
 end
