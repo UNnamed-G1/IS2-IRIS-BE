@@ -7,4 +7,11 @@ class UserMailer < ApplicationMailer
         email_with_name = %("#{full_name}" <#{@user.email}>)
         mail(to: email_with_name, subject: "Bienvenido a IRIS " + full_name + "!")
     end
+
+    def welcome_mail(user)
+        @user = user
+        full_name = @user.name + " " + @user.lastname
+        email_with_name = %("#{full_name}" <#{@user.email}>)
+        mail(to: email_with_name, subject: "Bienvenido a IRIS " + full_name + "!")
+    end
 end

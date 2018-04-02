@@ -45,8 +45,21 @@ class User < ApplicationRecord
         link: data['photo'],
         imageable: newUser
       ))
+      UserMailer.welcome_mail(newUser).deliver_now
     end
     return newUser
+  end
+
+  def is_admin?
+    return user_type == "admin"
+  end
+
+  def is_student?
+    return user_type == "estudiante"
+  end
+  
+  def is_profesor?
+    return user_type == "profesor"
   end
 
   private

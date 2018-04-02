@@ -33,7 +33,7 @@ class GoogleUserTokenController < ApplicationController
         @entity ||= 
             if GoogleService.valid_token?(auth_params[:access_token])
                 data = GoogleService.fetch_data(auth_params[:access_token])
-                User.create_or_find_google_user(data)
+                User.create_or_find_google_user(data)                
             end
     end
   
