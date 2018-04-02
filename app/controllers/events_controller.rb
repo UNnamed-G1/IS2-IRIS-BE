@@ -45,6 +45,11 @@ class EventsController < ApplicationController
       render json: @event.errors, status: 500
     end  end
 
+  def news
+    @events = Event.news
+    render json: @events, include: []
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event

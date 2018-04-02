@@ -52,4 +52,8 @@ class Event < ApplicationRecord
     def self.search_events_by_type(type)
         select(:id, :name, :topic, :type_ev).where(type_ev: type) if type.present?
     end
+
+    def self.news
+        self.order(:date).first(3)
+    end 
 end

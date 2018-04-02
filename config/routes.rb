@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   post 'user_token' => 'user_token#create'
+
+  get 'research_groups_news' => 'research_groups#news'
+  get 'events_news' => 'events#news'
+  
   resources :publications
   resources :research_groups
   resources :events
