@@ -22,7 +22,7 @@ class ResearchSubject < ApplicationRecord
   
   def self.search_rs_by_rg(rg_id)
     select(:id, :name).joins(:research_groups)
-                      .where('research_groups.id': rg_id) if rg_id.present?
+                      .where('research_groups.id' => rg_id) if rg_id.present?
   end
   
   def self.search_rs_by_name(keywords)
@@ -31,17 +31,17 @@ class ResearchSubject < ApplicationRecord
   
   def self.search_rs_by_user(usr_id)
     select(:id, :name).joins(:users)
-                      .where('users.id': usr_id) if usr_id.present?
+                      .where('users.id' => usr_id) if usr_id.present?
   end
   
   ###Queries for statistics
   
   def self.num_rs_by_rg(rg_id)
-    joins(:research_groups).where('research_groups.id': rg_id).count if rg_id.present?
+    joins(:research_groups).where('research_groups.id' => rg_id).count if rg_id.present?
   end
   
   def self.num_rs_by_user(usr_id)
-    joins(:users).where('users.id': usr_id).count if usr_id.present?
+    joins(:users).where('users.id' => usr_id).count if usr_id.present?
   end 
   
 end

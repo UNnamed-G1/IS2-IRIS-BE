@@ -38,7 +38,7 @@ class Event < ApplicationRecord
     end
     
     def self.search_events_by_user(usr_id)
-        select(:id, :name, :topic, :type_ev).joins(:users).where('users.id', usr_id) if usr_id.present?
+        select(:id, :name, :topic, :type_ev).joins(:users).where('users.id' => usr_id) if usr_id.present?
     end 
     
     def self.search_events_by_state(status)

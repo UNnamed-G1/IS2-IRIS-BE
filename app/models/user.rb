@@ -85,41 +85,41 @@ class User < ApplicationRecord
   
   def self.search_users_by_rg(rg_id)
     select(:id, :name, :lastname, :email, :type_u).joins(:research_groups)
-                                                  .where('research_groups.id': rg_id) if rg_id.present?
+                                                  .where('research_groups.id' => rg_id) if rg_id.present?
   end
   
   def self.search_users_by_publ(publ_id)
     select(:id, :name, :lastname, :email, :type_u).joins(:publications)
-                                                  .where('publications.id': publ_id) if publ_id.present?
+                                                  .where('publications.id' => publ_id) if publ_id.present?
   end
   
   def self.search_users_by_rs(rs_id)
     select(:id, :name, :lastname, :email, :type_u).joins(:research_subjects)
-                                                  .where('research_subjects.id': rs_id) if rs_id.present?
+                                                  .where('research_subjects.id' => rs_id) if rs_id.present?
   end
   
   def self.search_users_by_event(ev_id)
     select(:id, :name, :lastname, :email, :type_u).joins(:events)
-                                                  .where('events.id': ev_id) if ev_id.present?
+                                                  .where('events.id' => ev_id) if ev_id.present?
   end
   
   
   ##Queries for statistics
   
   def self.num_users_by_rg(group_id)
-    joins(:research_groups).where('research_groups.id': group_id).count if group_id.present?
+    joins(:research_groups).where('research_groups.id' => group_id).count if group_id.present?
   end
   
   def self.num_users_by_publ(publ_id)
-    joins(:publications).where('publications.id': publ_id).count if publ_id.present?
+    joins(:publications).where('publications.id' => publ_id).count if publ_id.present?
   end
   
   def self.num_users_by_rs(rs_id)
-    joins(:research_subjects).where('research_subjects.id': rs_id).count if rs_id.present?
+    joins(:research_subjects).where('research_subjects.id' => rs_id).count if rs_id.present?
   end
   
   def self.num_users_by_event(ev_id)
-    joins(:events).where('events.id': ev_id).count if ev_id.present?
+    joins(:events).where('events.id' => ev_id).count if ev_id.present?
   end
   
   private

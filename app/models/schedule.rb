@@ -19,7 +19,7 @@ class Schedule < ApplicationRecord
   
   def self.find_schedules_by_user(usr_id)
     select(:start_date).joins(:users)
-                       .where('users.id': usr_id) if usr_id.present?
+                       .where('users.id' => usr_id) if usr_id.present?
   
   end  
   

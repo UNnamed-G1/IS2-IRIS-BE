@@ -31,7 +31,7 @@ class ResearchGroup < ApplicationRecord
     enum classification: [:A, :B, :C, :D]
 
     validates :name, :description, :strategic_focus, :research_priorities, :foundation_date, :classification, :date_classification, presence: true
-    validates :name, :url, length: {maximum: 100, too_long: "Se permiten máimo %{count} caracteres"}
+    validates :name, :url, length: {maximum: 100, too_long: "Se permiten máximo %{count} caracteres"}
     validates :description, :strategic_focus, :research_priorities, length: { maximum: 1000, too_long: "Se permiten maximo %{count} caracteres" }
     validates :classification, inclusion: { in: classifications, message: "El tipo de clasificación no es válido"}
     
@@ -39,7 +39,7 @@ class ResearchGroup < ApplicationRecord
     
     def self.search_rgs_by_career(career_id)
         select(:id, :name).joins(:careers)
-                          .where('careers.id', career_id) if career_id.present?
+                          .where('careers.id' => career_id) if career_id.present?
     end
     
     def self.search_rgs_by_name(keywords)
@@ -50,9 +50,9 @@ class ResearchGroup < ApplicationRecord
         select(:id, :name).where(classification: cl_type) if cl_type.present?
     end
     
-    def self.search_rgs_by_department(dep_id)
+    def self.search_rgs_by_dept(dep_id)
         select(:id, :name).joins(:careers)
-                          .where('careers.department_id', dep_id) if dep_id.present?
+                          .where('careers.department_id' => dep_id) if dep_id.present?
     end  
     
 end
