@@ -45,9 +45,34 @@ class EventsController < ApplicationController
       render json: @event.errors, status: 500
     end  end
 
+  def search_events_by_rg
+    @events_by_rg = Event.search_events_by_rg(params[:id])
+    reder json: events_by_rg, fields: [:id, :name, :topic, :type_ev], include: []
+  end
+
+  def search_events_by_user
+    @events_by_user = Event.search_events_by_user(params[:id])
+    reder json: events_by_user, fields: [:id, :name, :topic, :type_ev], include: []
+  end
+
+  def search_events_by_state
+    @events_by_state = Event.search_events_by_state(params[:status])
+    reder json: events_by_state, fields: [:id, :name, :topic, :type_ev], include: []
+  end
+
+  def search_events_by_freq
+    @events_by_freq = Event.search_events_by_freq(params[:freq])
+    reder json: events_by_freq, fields: [:id, :name, :topic, :type_ev], include: []
+  end
+
+  def search_events_by_type
+    @events_by_type = Event.search_events_by_type(params[:type])
+    reder json: events_by_type, fields: [:id, :name, :topic, :type_ev], include: []
+  end
+
   def news
     @events = Event.news
-    render json: @events, include: []
+    render json: @events, include: [:photo]
   end
 
   private

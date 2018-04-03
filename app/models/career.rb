@@ -27,13 +27,11 @@ class Career < ApplicationRecord
   ###Queries for searching
   
   def self.search_careers_by_rg(rg_id)
-    select(:id, :name).joins(:research_groups)
-                      .where('research_groups.id': rg_id) if rg_id.present?
+    select(:id, :name).joins(:research_groups).where('research_groups.id': rg_id) if rg_id.present?
   end
   
   def self.search_careers_by_user(usr_id)
-    select(:id, :name).joins(:users)
-                      .where('users.id': usr_id) if usr_id.present?
+    select(:id, :name).joins(:users).where('users.id': usr_id) if usr_id.present?
   end
   
   def self.search_careers_by_dept(dept_id)
