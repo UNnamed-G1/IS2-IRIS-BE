@@ -34,7 +34,7 @@ class Career < ApplicationRecord
   def self.search_careers_by_user(usr_id)
     select(:id, :name).joins(:users)
                       .where('users.id' => usr_id) if usr_id.present?
-  end
+  end                    
   
   def self.search_careers_by_dept(dept_id)
     select(:id, :name).where(department_id => dept_id) if dept_id.present?

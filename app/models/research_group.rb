@@ -54,5 +54,9 @@ class ResearchGroup < ApplicationRecord
         select(:id, :name).joins(:careers)
                           .where('careers.department_id' => dep_id) if dep_id.present?
     end  
+
+    def self.news
+        self.order(:updated_at).last(3)
+    end 
     
 end

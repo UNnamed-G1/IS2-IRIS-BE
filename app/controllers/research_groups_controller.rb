@@ -45,6 +45,31 @@ class ResearchGroupsController < ApplicationController
       render json: @research_group.errors, status: 500
     end  end
 
+  def search_rgs_by_career
+    @rgs_by_career = ResearchGroup.search_rgs_by_career(params[:id])
+    render json: rgs_by_career, fields: [:id, :name], include: []
+  end
+
+  def search_rgs_by_name
+    @rgs_by_name = ResearchGroup.search_rgs_by_name(params[:keywords])
+    render json: rgs_by_name, fields: [:id, :name], include: []
+  end
+
+  def search_rgs_by_class
+    @rgs_by_class = ResearchGroup.search_rgs_by_class(params[:cl_type])
+    render json: rgs_by_class, fields: [:id, :name], include: []
+  end
+
+  def search_rgs_by_department
+    @rgs_by_department = ResearchGroup.search_rgs_by_department(params[:id])
+    render json: rgs_by_department, fields: [:id, :name], include: []
+  end
+
+  def news
+    @research_groups = ResearchGroup.news
+    render json: @research_groups, include: [:photo]
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_research_group
