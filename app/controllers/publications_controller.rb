@@ -1,7 +1,7 @@
 class PublicationsController < ApplicationController
-  before_action :authenticate_user, except: [:show]
-  before_action :authorize_as_admin, only: [:index]
-  before_action :authorize_as_lider, only: [:create, :update, :delete]
+  before_action :authenticate_user, except: [:show, :index]
+  before_action :authorize_as_lider, only: [:create, :destroy]
+  before_action :authorize_update, only: [:update]
   before_action :set_publication, only: [:show, :update, :destroy]
 
   # GET /publications
@@ -62,7 +62,22 @@ class PublicationsController < ApplicationController
 
     def authorize_as_lider
       unless current_user.is_lider_of_research_group?(params[:id])
-        render json: [unauthorized_msg], status: :unauthorized
+        render_unauthorize
+      end
+    end
+
+    def authorize_update
+      group_ids = Publication.get_research_groups(params[:id])
+      is_lider = false
+      for group in group_ids
+
+        if current_user.is_lider_of_research_group?(group)
+          is_lider = true
+          break
+        end
+      end
+      unless current_user.is_author_publication?(params[:id]) || is_lider
+        render_unauthorize
       end
     end
 end

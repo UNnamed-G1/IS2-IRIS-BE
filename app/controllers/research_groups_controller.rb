@@ -1,6 +1,7 @@
 class ResearchGroupsController < ApplicationController
   before_action :authenticate_user, except: [:index, :show]
   before_action :authorize_as_admin, only: [:destroy, :create]
+  before_action :authorize_update, only: [:update]
   before_action :set_research_group, only: [:show, :update, :destroy]
 
   # GET /research_groups
@@ -59,4 +60,9 @@ class ResearchGroupsController < ApplicationController
       params.require(:research_group).permit(:name, :description, :strategic_focus, :research_priorities, :foundation_date, :classification, :date_classification, :url)
     end
 
+    def authorize_update
+      unless current_user.is_lider_of_research_group?(params[:id]) || current_user.is_admin?
+        render_unauthorize
+      end
+    end
 end

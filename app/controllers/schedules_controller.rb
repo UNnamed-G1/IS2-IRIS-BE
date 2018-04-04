@@ -1,6 +1,6 @@
 class SchedulesController < ApplicationController
   before_action :authenticate_user
-  before_action :authorize_as_admin, only: [:create, :update, :destroy]
+  before_action :authorize_as_admin, only: [:create, :destroy]
   before_action :set_schedule, only: [:show, :update, :destroy]
 
   # GET /schedules
