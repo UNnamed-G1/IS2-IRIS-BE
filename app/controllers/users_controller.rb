@@ -2,7 +2,8 @@ class UsersController < ApplicationController
   # The json to be received when the user will be created
   # has to follow the next format: { "user": { Here goes the info of the new user } }
 
-  #before_action :authenticate_user, except: :create
+  before_action :authenticate_user, except: :create
+  # before_action :authorize_as_admin, except: [:create, :current]
   before_action :set_user, only: [:show, :update, :destroy]
 
   # GET /users
