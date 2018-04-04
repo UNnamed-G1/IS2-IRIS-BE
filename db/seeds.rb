@@ -128,6 +128,14 @@ end
     )
 end
 
+30.times do
+    EventUser.create(
+        type_user_event: Faker::Number::between(0, 2),
+        user_id: Faker::Number.between(1,10),
+        event_id: Faker::Number.between(1,10)
+    )
+end
+
 User.all.each do |usr|
     usr.schedules = Schedule.all.sample(rand(0..3))
 end
@@ -149,9 +157,14 @@ ResearchSubject.all.each do |rs|
 end
 
 User.all.each do |usr|
-    usr.events = Event.all.sample(rand(0..3))
-end
-
-User.all.each do |usr|
     usr.publications = Publication.all.sample(rand(0..3))
 end
+
+User.create(
+    name: "admin",
+    lastname: "admin",
+    email: "admin@iris.com",
+    password: 'admin',
+    password_confirmation: 'admin',
+    user_type: 'admin'
+)

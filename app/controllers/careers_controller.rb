@@ -1,5 +1,6 @@
 class CareersController < ApplicationController
   before_action :authenticate_user
+  before_action :authorize_as_admin, except: [:index,:show]
   before_action :set_career, only: [:show, :update, :destroy]
 
   # GET /careers

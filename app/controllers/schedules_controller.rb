@@ -1,5 +1,6 @@
 class SchedulesController < ApplicationController
   before_action :authenticate_user
+  before_action :authorize_as_admin, only: [:create, :destroy]
   before_action :set_schedule, only: [:show, :update, :destroy]
 
   # GET /schedules
@@ -55,6 +56,6 @@ class SchedulesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def schedule_params
-      params.require(:schedule).permit(:start, :end)
+      params.require(:schedule).permit(:start_date, :end_date)
     end
 end

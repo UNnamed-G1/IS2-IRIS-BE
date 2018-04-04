@@ -1,5 +1,7 @@
 class ResearchGroupsController < ApplicationController
-  #before_action :authenticate_user
+  before_action :authenticate_user, except: [:index, :show]
+  before_action :authorize_as_admin, only: [:destroy, :create]
+  before_action :authorize_update, only: [:update]
   before_action :set_research_group, only: [:show, :update, :destroy]
 
   # GET /research_groups
@@ -15,7 +17,8 @@ class ResearchGroupsController < ApplicationController
       render json: @research_group.errors.messages
     else
       render json: @research_group, include: ['users', 'members', 'members.user'] # This is an example of associations that are brought
-    end  end
+    end
+  end
 
   # POST /research_groups
   def create
@@ -43,7 +46,8 @@ class ResearchGroupsController < ApplicationController
       render json: @research_group, include: []
     else
       render json: @research_group.errors, status: 500
-    end  end
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -54,5 +58,11 @@ class ResearchGroupsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def research_group_params
       params.require(:research_group).permit(:name, :description, :strategic_focus, :research_priorities, :foundation_date, :classification, :date_classification, :url)
+    end
+
+    def authorize_update
+      unless current_user.is_lider_of_research_group?(params[:id]) || current_user.is_admin?
+        render_unauthorize
+      end
     end
 end
