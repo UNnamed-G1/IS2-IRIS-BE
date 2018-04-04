@@ -46,7 +46,11 @@ class ResearchGroupsController < ApplicationController
       render json: @research_group, include: []
     else
       render json: @research_group.errors, status: 500
+<<<<<<< HEAD
     end
+=======
+    end
+>>>>>>> 21526a70d3615be5c07e81c3bc743d8010bf605d
   end
 
   private
