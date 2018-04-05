@@ -25,18 +25,18 @@ class ResearchGroupsController < ApplicationController
     @research_group = ResearchGroup.new(research_group_params)
 
     if @research_group.save
-      render json: @research_group, status: :created, location: @research_group, include: []
+      render json: research_group, status: :created, location: @research_group, include: []
     else
-      render json: @research_group.errors, status: :unprocessable_entity
+      render json: research_group.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /research_groups/1
   def update
     if @research_group.update(research_group_params)
-      render json: @research_group, include: []
+      render json: research_group, include: []
     else
-      render json: @research_group.errors, status: :unprocessable_entity
+      render json: research_group.errors, status: :unprocessable_entity
     end
   end
 
@@ -50,28 +50,28 @@ class ResearchGroupsController < ApplicationController
   end
 
   def search_rgs_by_career
-    @rgs_by_career = ResearchGroup.search_rgs_by_career(params[:id])
+    rgs_by_career = ResearchGroup.search_rgs_by_career(params[:id])
     render json: rgs_by_career, fields: [:id, :name], include: []
   end
 
   def search_rgs_by_name
-    @rgs_by_name = ResearchGroup.search_rgs_by_name(params[:keywords])
+    rgs_by_name = ResearchGroup.search_rgs_by_name(params[:keywords])
     render json: rgs_by_name, fields: [:id, :name], include: []
   end
 
   def search_rgs_by_class
-    @rgs_by_class = ResearchGroup.search_rgs_by_class(params[:cl_type])
+    rgs_by_class = ResearchGroup.search_rgs_by_class(params[:cl_type])
     render json: rgs_by_class, fields: [:id, :name], include: []
   end
 
   def search_rgs_by_department
-    @rgs_by_department = ResearchGroup.search_rgs_by_department(params[:id])
+    rgs_by_department = ResearchGroup.search_rgs_by_dept(params[:id])
     render json: rgs_by_department, fields: [:id, :name], include: []
   end
 
   def news
-    @research_groups = ResearchGroup.news
-    render json: @research_groups, include: [:photo]
+    research_groups = ResearchGroup.news
+    render json: research_groups, include: [:photo]
   end
 
   private
