@@ -88,22 +88,22 @@ class User < ApplicationRecord
   ###Queries for searching
   
   def self.search_users_by_rg(rg_id)
-    select(:id, :name, :lastname, :email, :type_u).joins(:research_groups)
+    select(:id, :name, :lastname, :email, :user_type).joins(:research_groups)
                                                   .where('research_groups.id' => rg_id) if rg_id.present?
   end
   
   def self.search_users_by_publ(publ_id)
-    select(:id, :name, :lastname, :email, :type_u).joins(:publications)
+    select(:id, :name, :lastname, :email, :user_type).joins(:publications)
                                                   .where('publications.id' => publ_id) if publ_id.present?
   end
   
   def self.search_users_by_rs(rs_id)
-    select(:id, :name, :lastname, :email, :type_u).joins(:research_subjects)
+    select(:id, :name, :lastname, :email, :user_type).joins(:research_subjects)
                                                   .where('research_subjects.id' => rs_id) if rs_id.present?
   end
   
   def self.search_users_by_event(ev_id)
-    select(:id, :name, :lastname, :email, :type_u).joins(:events)
+    select(:id, :name, :lastname, :email, :user_type).joins(:events)
                                                   .where('events.id' => ev_id) if ev_id.present?
   end
   
