@@ -2,7 +2,7 @@ class PublicationSerializer < ActiveModel::Serializer
   type :publication
   
   attributes :id, :name, :date, :abstract, :url
-  attributes :brief_description, :file_name
+  attributes :brief_description
 
   attribute :type_pub, key: :publication_type
 
