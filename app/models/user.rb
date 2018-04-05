@@ -167,6 +167,8 @@ class User < ApplicationRecord
     else
       return false
     end
+  end
+  
   def self.find_by_email(email)
     return User.find_by email: email 
   end
