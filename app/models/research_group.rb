@@ -30,10 +30,19 @@ class ResearchGroup < ApplicationRecord
 
     enum classification: [:A, :B, :C, :D]
 
-    validates :name, :description, :strategic_focus, :research_priorities, :foundation_date, :classification, :date_classification, presence: true
-    validates :name, :url, length: {maximum: 100, too_long: "Se permiten máximo %{count} caracteres"}
-    validates :description, :strategic_focus, :research_priorities, length: { maximum: 1000, too_long: "Se permiten maximo %{count} caracteres" }
-    validates :classification, inclusion: { in: classifications, message: "El tipo de clasificación no es válido"}
+    validates :name, presence: { message: Proc.new { ApplicationRecord.presence_msg("nombre") } }
+    validates :description, presence: { message: Proc.new { ApplicationRecord.presence_msg("descripción") } }
+    validates :strategic_focus, presence: { message: Proc.new { ApplicationRecord.presence_msg("enfoque estratégico") } }
+    validates :research_priorities, presence: { message: Proc.new { ApplicationRecord.presence_msg("prioridades de investigación") } }
+    validates :foundation_date, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha de creación") } }
+    validates :classification, presence: { message: Proc.new { ApplicationRecord.presence_msg("clasificación") } }
+    validates :date_classification, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha de clasificación") } }
+    
+    validates :name, length: {maximum: 100, too_long: "Se permiten máximo %{count} caracteres para el campo nombre."}
+    validates :description, length: { maximum: 1000, too_long: "Se permiten maximo %{count} caracteres para el campo descripción." }
+    validates :strategic_focus, length: { maximum: 1000, too_long: "Se permiten maximo %{count} caracteres para el campo enfoque estratégico." } 
+    validates :research_priorities, length: { maximum: 1000, too_long: "Se permiten maximo %{count} caracteres para el campo prioridades de investigación." } 
+    validates :classification, inclusion: { in: classifications, message: "El tipo de clasificación no es válido."}
 
     
     ##Queries for searching

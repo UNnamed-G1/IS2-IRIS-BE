@@ -29,11 +29,16 @@ class Event < ApplicationRecord
     enum frequence: [:unico, :repetitivo]
     enum state: [:activo, :inactivo]
 
-    validates :topic, :description, :state, presence: true
-    validates :type_ev, :date, :frequence, :end_time, presence: true
-    validates :type_ev, inclusion: {in: type_evs, message: "Tipo de evento invalido."}
-    validates :frequence, inclusion: {in: frequences, message: "Frecuencia del evento invalida."}
-    validates :state, inclusion: {in: states, message: "Estado del evento invalido."}
+    validates :topic, presence: { message: Proc.new { ApplicationRecord.presence_msg("tema") } }
+    validates :description, presence: { message: Proc.new { ApplicationRecord.presence_msg("descripción") } }
+    validates :state, presence: { message: Proc.new { ApplicationRecord.presence_msg("estado") } }
+    validates :type_ev, presence: { message: Proc.new { ApplicationRecord.presence_msg("tipo de evento") } }
+    validates :date, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha") } }
+    validates :frequence, presence: { message: Proc.new { ApplicationRecord.presence_msg("frecuencia") } }
+    validates :end_time, presence: { message: Proc.new { ApplicationRecord.presence_msg("hora de finalización") } }
+    validates :type_ev, inclusion: {in: type_evs, message: "El tipo de evento seleccionado no es valido."}
+    validates :frequence, inclusion: {in: frequences, message: "El tipo de evento seleccionada no es valida."}
+    validates :state, inclusion: {in: states, message: "El estado seleccionado no es valido."}
 
     def self.get_group_id(event_id)
         return Event.find(event_id).research_group_id
