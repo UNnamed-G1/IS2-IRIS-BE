@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   post 'google_user_token' => 'google_user_token#create'
 
   get 'users/current' => 'users#current'
-
+ 
   get 'users/current' => 'users#current'
   get 'research_groups_news' => 'research_groups#news'
   get 'events_news' => 'events#news'
@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get 'events_by_state#status=:status' => 'events#search_events_by_state'
   get 'events_by_freq#freq=:freq' => 'events#search_events_by_freq'
   get 'events_by_type#type=:type' => 'events#search_events_by_type'
+  get 'events_evs_by_usr_and_type#id=:id' => 'events#evs_by_usr_and_type'
   get 'publications_by_rg#rg_id=:id' => 'publications#search_publications_by_rg'
   get 'publications_by_user#usr_id=:id' => 'publications#search_publications_by_user'
   get 'publications_by_type#type=:type' => 'publications#search_publications_by_type'
@@ -31,7 +32,7 @@ Rails.application.routes.draw do
   get 'rs_by_user#usr_id=:id' => 'research_subjects#search_rs_by_user'
   get 'find_schedules_by_user#usr_id=:id' => 'schedules#find_schedules_by_user'
 
-#Stadistics
+#Statistics
   # Nota el simbolo '#' se traduce a la ruta como '%23'
   get 'num_publications_by_rg#rg_id=:id' => 'publications#num_publications_by_rg'
   get 'num_publications_by_user#usr_id=:id' => 'publications#num_publications_by_user'

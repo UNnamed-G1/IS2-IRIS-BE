@@ -58,5 +58,4 @@ class ResearchGroup < ApplicationRecord
     def self.news
         self.order(:updated_at).last(3)
     end 
-    
 end

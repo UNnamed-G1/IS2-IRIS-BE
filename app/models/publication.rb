@@ -45,7 +45,7 @@ class Publication < ApplicationRecord
     end
     
     def self.search_p_by_rg_and_type(rg_id, type)
-        search_publications_by_research_group(rg_id).search_publications_by_type(type)
+        search_publications_by_rg(rg_id).search_publications_by_type(type)
     end
     
     ###Queries for statistics

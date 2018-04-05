@@ -38,7 +38,8 @@ class Event < ApplicationRecord
     end
     
     def self.search_events_by_user(usr_id)
-        select(:id, :name, :topic, :type_ev).joins(:users).where('users.id' => usr_id) if usr_id.present?
+        select(:id, :name, :topic, :type_ev).joins(:users)
+                                            .where('users.id' => usr_id) if usr_id.present?
     end 
     
     def self.search_events_by_state(status)
@@ -52,7 +53,16 @@ class Event < ApplicationRecord
     def self.search_events_by_type(type)
         select(:id, :name, :topic, :type_ev).where(type_ev: type) if type.present?
     end
-
+    
+    scope :public_evs, -> (usr_id){select(:id, :name, :topic, :type_ev).where(type_ev: 1)}
+        
+    scope :private_evs_by_user, -> (usr_id){select(:id, :name, :topic, :type_ev).joins(:users)
+                                            .where('users.id': usr_id, type_ev: 0)}    
+    
+    def self.evs_by_usr_and_type(usr_id)
+        public_evs + private_evs_by_user(usr_id)
+    end    
+    
     def self.news
         self.order(:date).first(3)
     end 
