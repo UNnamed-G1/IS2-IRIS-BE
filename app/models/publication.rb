@@ -14,9 +14,9 @@
 #
 
 class Publication < ApplicationRecord
-    has_many :publication_research_groups
+    has_many :publication_research_groups, dependent: :delete_all
     has_many :research_groups, through: :publication_research_groups
-    has_many :publication_users
+    has_many :publication_users, dependent: :delete_all
     has_many :users, through: :publication_users
 
     enum type_pub: [:software, :articulo, :tesis, :libro, :monografia, :patente]

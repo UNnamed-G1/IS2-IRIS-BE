@@ -16,10 +16,10 @@
 #
 
 class Career < ApplicationRecord
-  has_many :career_research_groups
+  has_many :career_research_groups, dependent: :delete_all
   has_many :research_groups, through: :career_research_groups
+  has_many :users, dependent: :delete_all
   belongs_to :department
-  has_many :users
 
   enum degree_type: [ :pregado, :maestria, :doctorado]
 

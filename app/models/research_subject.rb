@@ -9,10 +9,10 @@
 #
 
 class ResearchSubject < ApplicationRecord
-  has_many :research_subject_users
+  has_many :research_subject_users, dependent: :delete_all
   has_many :users, through: :research_subject_users
 
-  has_many :research_subject_research_groups
+  has_many :research_subject_research_groups, dependent: :delete_all
   has_many :research_groups, through: :research_subject_research_groups
 
   validates :name, presence: { message: Proc.new { ApplicationRecord.presence_msg("nombre") } }

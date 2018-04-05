@@ -16,15 +16,15 @@
 #
 
 class ResearchGroup < ApplicationRecord
-    has_many :research_subject_research_groups
+    has_many :research_subject_research_groups, dependent: :delete_all
     has_many :research_subjects, through: :research_subject_research_groups
 
-    has_many :publication_research_groups
+    has_many :publication_research_groups, dependent: :delete_all
     has_many :publications, through: :publication_research_groups
-    has_many :career_research_groups
+    has_many :career_research_groups, dependent: :delete_all
     has_many :careers, through: :career_research_groups
-    has_many :events
-    has_many :user_research_groups
+    has_many :events, dependent: :delete_all
+    has_many :user_research_groups, dependent: :delete_all
     has_many :members, class_name: "User", through: :user_research_groups
     has_one :photo, as: :imageable
 

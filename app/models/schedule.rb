@@ -10,7 +10,7 @@
 #
 
 class Schedule < ApplicationRecord
-  has_many :schedule_users
+  has_many :schedule_users, dependent: :delete_all
   has_many :users, through: :schedule_users
 
   validates :start_date, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha de inicio") } }

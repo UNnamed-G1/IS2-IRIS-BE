@@ -20,7 +20,7 @@
 #
 
 class Event < ApplicationRecord
-    has_many :event_users
+    has_many :event_users, dependent: :delete_all
     has_many :users, through: :event_users
     has_many :photos, as: :imageable
     belongs_to :research_group

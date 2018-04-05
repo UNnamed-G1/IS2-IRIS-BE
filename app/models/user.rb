@@ -27,17 +27,17 @@ class User < ApplicationRecord
 
   after_create :put_username
 
-  has_many :research_subject_users
+  has_many :research_subject_users, dependent: :delete_all
   has_many :research_subjects, through: :research_subject_users
-  has_many :event_users
+  has_many :event_users, dependent: :delete_all
   has_many :events, through: :event_users
-  has_many :publication_users
+  has_many :publication_users, dependent: :delete_all
   has_many :publications, through: :publication_users
-  has_many :schedule_users
+  has_many :schedule_users, dependent: :delete_all
   has_many :schedules, through: :schedule_users
-  has_many :following, class_name: "Relationship", foreign_key: "follower_id"
-  has_many :followers, class_name: "Relationship", foreign_key: "followed_id"
-  has_many :user_research_groups
+  has_many :following, class_name: "Relationship", foreign_key: "follower_id", dependent: :delete_all
+  has_many :followers, class_name: "Relationship", foreign_key: "followed_id", dependent: :delete_all
+  has_many :user_research_groups, dependent: :delete_all
   has_many :research_groups, through: :user_research_groups
   has_one :photo, as: :imageable
 

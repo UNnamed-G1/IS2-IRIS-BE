@@ -14,7 +14,7 @@
 #
 
 class Department < ApplicationRecord
-  has_many :careers
+  has_many :careers, dependent: :delete_all
   belongs_to :faculty
 
   validates :name, presence: { message: Proc.new { ApplicationRecord.presence_msg("nombre") } }
