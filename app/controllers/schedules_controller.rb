@@ -5,8 +5,7 @@ class SchedulesController < ApplicationController
 
   # GET /schedules
   def index
-    @schedules = Schedule.all
-
+    @schedules = Schedule.paginate(:page => params[:page], :per_page => 5)
     render json: @schedules, include: []
   end
 
@@ -46,6 +45,11 @@ class SchedulesController < ApplicationController
     else
       render json: @schedule.errors, status: 500
     end
+  end
+
+  def find_schedules_by_user
+    find_schedules_by_user = Schedule.find_schedules_by_user(params[:id])
+    render json: find_schedules_by_user, fields: [:start_date], include: []
   end
 
   private

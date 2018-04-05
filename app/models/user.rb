@@ -1,3 +1,27 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                   :integer          not null, primary key
+#  name                 :string(100)      not null
+#  lastname             :string(100)      not null
+#  username             :string(40)
+#  email                :string           not null
+#  password_digest      :string
+#  professional_profile :text(5000)
+#  user_type            :integer          default("estudiante"), not null
+#  phone                :string(20)
+#  office               :string(20)
+#  cvlac_link           :string
+#  career_id            :integer
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#
+# Indexes
+#
+#  index_users_on_career_id  (career_id)
+#
+
 class User < ApplicationRecord
   has_secure_password
 
@@ -26,7 +50,7 @@ class User < ApplicationRecord
 
   validates :name, :lastname, length: { maximum: 100, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :username, length: { maximum: 40, too_long: "Se permiten máximo %´{count} caracteres" }
-  validates :professional_profile, length: { maximum: 5000, too_long: "Se permiten máximo %´{count} caracteres" }
+  validates :professional_profile, length: { maximum: 5000, too_long: "Se permiten máximo %{count} caracteres" }
   validates :phone, :office, length: { maximum: 20, too_long: "Se permiten máximo %´{count} caracteres" }
   validates :user_type, inclusion: {in: user_types.keys, message: "El tipo de usuario no es válido"}
   validates :email, uniqueness: true
@@ -61,6 +85,47 @@ class User < ApplicationRecord
     return user_type == "profesor"
   end
 
+  ###Queries for searching
+  
+  def self.search_users_by_rg(rg_id)
+    select(:id, :name, :lastname, :email, :user_type).joins(:research_groups)
+                                                  .where('research_groups.id' => rg_id) if rg_id.present?
+  end
+  
+  def self.search_users_by_publ(publ_id)
+    select(:id, :name, :lastname, :email, :user_type).joins(:publications)
+                                                  .where('publications.id' => publ_id) if publ_id.present?
+  end
+  
+  def self.search_users_by_rs(rs_id)
+    select(:id, :name, :lastname, :email, :user_type).joins(:research_subjects)
+                                                  .where('research_subjects.id' => rs_id) if rs_id.present?
+  end
+  
+  def self.search_users_by_event(ev_id)
+    select(:id, :name, :lastname, :email, :user_type).joins(:events)
+                                                  .where('events.id' => ev_id) if ev_id.present?
+  end
+  
+  
+  ##Queries for statistics
+  
+  def self.num_users_by_rg(group_id)
+    joins(:research_groups).where('research_groups.id' => group_id).count if group_id.present?
+  end
+  
+  def self.num_users_by_publ(publ_id)
+    joins(:publications).where('publications.id' => publ_id).count if publ_id.present?
+  end
+  
+  def self.num_users_by_rs(rs_id)
+    joins(:research_subjects).where('research_subjects.id' => rs_id).count if rs_id.present?
+  end
+  
+  def self.num_users_by_event(ev_id)
+    joins(:events).where('events.id' => ev_id).count if ev_id.present?
+  end
+  
   def is_member_of_research_group?(group_id)
     if User.joins(:research_groups).where("user_id = ? AND research_group_id = ?", id, group_id).first
       return true

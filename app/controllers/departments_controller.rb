@@ -1,11 +1,11 @@
 class DepartmentsController < ApplicationController
   before_action :authenticate_user
-  before_action :authorize_as_admin, except: [:index,:show, :by_faculty]
+  before_action :authorize_as_admin, except: [:index,:show, :search_deps_by_faculty]
   before_action :set_department, only: [:show, :update, :destroy]
 
   # GET /departments
   def index
-    @departments = Department.all
+    @departments = Department.paginate(:page => params[:page], :per_page => 5)
 
     render json: @departments, include: []
   end
@@ -48,9 +48,9 @@ class DepartmentsController < ApplicationController
     end
   end
 
-  def by_faculty
-    departments = Department.get_by_faculty(params[:faculty_id])
-    render json: departments
+  def search_deps_by_faculty
+    deps_by_faculty = Department.search_deps_by_faculty(params[:id])
+    render json: deps_by_faculty, fields: [:id, :name], include: []
   end
 
   private

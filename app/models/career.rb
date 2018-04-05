@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: careers
+#
+#  id            :integer          not null, primary key
+#  name          :string(100)      not null
+#  snies_code    :integer          not null
+#  degree_type   :integer          default("pregado"), not null
+#  department_id :integer
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+# Indexes
+#
+#  index_careers_on_department_id  (department_id)
+#
+
 class Career < ApplicationRecord
   has_many :career_research_groups
   has_many :research_groups, through: :career_research_groups
@@ -11,7 +28,20 @@ class Career < ApplicationRecord
   validates :degree_type, inclusion: {in: degree_types, message: "El tipo de carrera no es válido"}
   validates :snies_code, length: {maximum: 5, too_long: "Código SNIES inválido"}, uniqueness: {message: "Codigo SNIES ya ha sido usado en otro registro."}, numericality: { only_integer: true }
 
-  def self.get_by_department(department_id)
-    where(department_id: department_id)
+  ###Queries for searching
+
+  def self.search_careers_by_rg(rg_id)
+    select(:id, :name).joins(:research_groups)
+                      .where('research_groups.id' => rg_id) if rg_id.present?
   end
+
+  def self.search_careers_by_user(usr_id)
+    select(:id, :name).joins(:users)
+                      .where('users.id' => usr_id) if usr_id.present?
+  end
+
+  def self.search_careers_by_dept(dept_id)
+    select(:id, :name).where(department_id: dept_id) if dept_id.present?
+  end
+
 end

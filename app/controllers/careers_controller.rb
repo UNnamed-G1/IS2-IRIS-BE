@@ -1,11 +1,12 @@
 class CareersController < ApplicationController
+
   before_action :authenticate_user
-  before_action :authorize_as_admin, except: [:index,:show, :by_department]
+  before_action :authorize_as_admin, except: [:index,:show, :search_careers_by_dept]
   before_action :set_career, only: [:show, :update, :destroy]
 
   # GET /careers
   def index
-    @careers = Career.all
+    @careers = Career.paginate(:page => params[:page], :per_page => 5)
 
     render json: @careers, include: []
   end
@@ -48,9 +49,19 @@ class CareersController < ApplicationController
     end
   end
 
-  def by_department
-    careers = Career.get_by_department(params[:department_id])
-    render json: careers
+  def search_careers_by_rg
+    careers_by_rg = Career.search_careers_by_rg(params[:id])
+    render json: careers_by_rg, fields: [:id, :name], include: []
+  end
+
+  def search_careers_by_user
+    careers_by_user = Career.search_careers_by_user(params[:id])
+    render json: careers_by_user, fields: [:id, :name], include: []
+  end
+
+  def search_careers_by_dept
+    careers_by_dept = Career.search_careers_by_dept(params[:id])
+    render json: careers_by_dept, fields: [:id, :name], include: []
   end
 
   private
