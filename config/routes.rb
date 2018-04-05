@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   post 'google_user_token' => 'google_user_token#create'
 
   get 'users/current' => 'users#current'
+  post 'comments' => 'incoming_mails#receive_comments'
 
   get 'research_groups_news' => 'research_groups#news'
   get 'events_news' => 'events#news'

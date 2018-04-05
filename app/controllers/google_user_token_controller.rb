@@ -33,7 +33,12 @@ class GoogleUserTokenController < ApplicationController
         @entity ||= 
             if GoogleService.valid_token?(auth_params[:access_token])
                 data = GoogleService.fetch_data(auth_params[:access_token])
-                User.create_or_find_google_user(data)
+                retrieved_user = User.find_by_email(data["email"])            
+                if !retrieved_user
+                  retrieved_user = User.create_google_user(data)
+                  UserMailer.welcome_mail(retrieved_user).deliver_now
+                end
+                retrieved_user
             end
     end
   

@@ -65,7 +65,6 @@ end
         abstract: Faker::Lorem.paragraph,
         url: Faker::Internet.url,
         brief_description: Faker::Hacker.say_something_smart,
-        file_name: Faker::Hacker.adjective,
         type_pub: Faker::Number.between(0,5)
     )
 end

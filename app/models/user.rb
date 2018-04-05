@@ -27,17 +27,17 @@ class User < ApplicationRecord
 
   after_create :put_username
 
-  has_many :research_subject_users
+  has_many :research_subject_users, dependent: :delete_all
   has_many :research_subjects, through: :research_subject_users
-  has_many :event_users
+  has_many :event_users, dependent: :delete_all
   has_many :events, through: :event_users
-  has_many :publication_users
+  has_many :publication_users, dependent: :delete_all
   has_many :publications, through: :publication_users
-  has_many :schedule_users
+  has_many :schedule_users, dependent: :delete_all
   has_many :schedules, through: :schedule_users
-  has_many :following, class_name: "Relationship", foreign_key: "follower_id"
-  has_many :followers, class_name: "Relationship", foreign_key: "followed_id"
-  has_many :user_research_groups
+  has_many :following, class_name: "Relationship", foreign_key: "follower_id", dependent: :delete_all
+  has_many :followers, class_name: "Relationship", foreign_key: "followed_id", dependent: :delete_all
+  has_many :user_research_groups, dependent: :delete_all
   has_many :research_groups, through: :user_research_groups
   has_one :photo, as: :imageable
 
@@ -45,18 +45,22 @@ class User < ApplicationRecord
 
   enum user_type: [:estudiante, :profesor, :admin]
 
-  validates :name, :lastname, :email, :user_type, presence: true, on: :create
-  validates :name, :lastname, :username, :professional_profile, presence: true, on: :update
+  validates :name, presence: { message: Proc.new { ApplicationRecord.presence_msg("nombre") } }, on: [:create, :update]
+  validates :lastname, presence: { message: Proc.new { ApplicationRecord.presence_msg("apellido") } }, on: [:create, :update]
+  validates :email, presence: { message: Proc.new { ApplicationRecord.presence_msg("email") } }, on: :create
+  validates :user_type, presence: true, on: :create
+  validates :professional_profile, presence: { message: Proc.new { ApplicationRecord.presence_msg("perfil profesional") } }, on: :update
 
-  validates :name, :lastname, length: { maximum: 100, too_long: "Se permiten máximo %´{count} caracteres" }
-  validates :username, length: { maximum: 40, too_long: "Se permiten máximo %´{count} caracteres" }
-  validates :professional_profile, length: { maximum: 5000, too_long: "Se permiten máximo %{count} caracteres" }
-  validates :phone, :office, length: { maximum: 20, too_long: "Se permiten máximo %´{count} caracteres" }
-  validates :user_type, inclusion: {in: user_types.keys, message: "El tipo de usuario no es válido"}
-  validates :email, uniqueness: true
-  validates :email, format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/ }
+  validates :name, length: { maximum: 100, too_long: "Se permiten máximo %{count} caracteres en el campo nombre." }
+  validates :lastname, length: { maximum: 100, too_long: "Se permiten máximo %{count} caracteres en el campo apellido." }
+  validates :professional_profile, length: { maximum: 5000, too_long: "Se permiten máximo %{count} caracteres en el campo perfíl profesional." }
+  validates :phone, length: { maximum: 20, too_long: "Se permiten máximo %{count} caracteres en el campo teléfono." }
+  validates :office, length: { maximum: 20, too_long: "Se permiten máximo %{count} caracteres en el campo oficina." }
+  validates :user_type, inclusion: {in: user_types.keys, message: "El tipo de usuario no es válido."}
+  validates :email, uniqueness: {message: "El email ingresado ya ha sido tomado."}
+  validates_format_of :email, with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/, message: "El correo ingresado no es valido."
 
-  def self.create_or_find_google_user(data)
+  def self.create_google_user(data)
     newUser = find_by email: data['email']
     if !newUser
       newUser = create do |user|
@@ -163,6 +167,10 @@ class User < ApplicationRecord
     else
       return false
     end
+  end
+  
+  def self.find_by_email(email)
+    return User.find_by email: email 
   end
 
   private
