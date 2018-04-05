@@ -70,7 +70,7 @@ class Event < ApplicationRecord
         select(:id, :name, :topic, :type_ev).where(type_ev: type) if type.present?
     end
     
-    scope :public_evs, -> (usr_id){select(:id, :name, :topic, :type_ev).where(type_ev: 1)}
+    scope :public_evs, -> {select(:id, :name, :topic, :type_ev).where(type_ev: 1)}
         
     scope :private_evs_by_user, -> (usr_id){select(:id, :name, :topic, :type_ev).joins(:users)
                                             .where('users.id': usr_id, type_ev: 0)}    
