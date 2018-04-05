@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   post 'google_user_token' => 'google_user_token#create'
 
   get 'users/current' => 'users#current'
+  post 'comments' => 'incoming_mails#receive_comments'
 
   resources :publications
   resources :research_groups

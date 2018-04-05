@@ -62,6 +62,10 @@ class User < ApplicationRecord
     return user_type == "profesor"
   end
 
+  def self.find_by_email(email)
+    return User.find_by email: email 
+  end
+
   private
     def put_username
       username = self.email.split('@').first

@@ -14,4 +14,11 @@ class UserMailer < ApplicationMailer
         email_with_name = %("#{full_name}" <#{@user.email}>)
         mail(to: email_with_name, subject: "Bienvenido a IRIS " + full_name + "!")
     end
+
+    def receive_comments_mail(subject, remitent, comments)
+        @remitent = remitent
+        @comments = comments
+        @subject = subject
+        mail(to: 'iris.investigationgroups@gmail.com', subject: subject)
+      end
 end
