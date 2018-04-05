@@ -1,6 +1,6 @@
 class CareersController < ApplicationController
   before_action :authenticate_user
-  before_action :authorize_as_admin, except: [:index,:show]
+  before_action :authorize_as_admin, except: [:index,:show, :by_department]
   before_action :set_career, only: [:show, :update, :destroy]
 
   # GET /careers
@@ -46,6 +46,11 @@ class CareersController < ApplicationController
     else
       render json: @career.errors, status: 500
     end
+  end
+
+  def by_department
+    careers = Career.get_by_department(params[:department_id])
+    render json: careers
   end
 
   private

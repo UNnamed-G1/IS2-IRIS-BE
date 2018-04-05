@@ -1,6 +1,6 @@
 class DepartmentsController < ApplicationController
   before_action :authenticate_user
-  before_action :authorize_as_admin, except: [:index,:show]
+  before_action :authorize_as_admin, except: [:index,:show, :by_faculty]
   before_action :set_department, only: [:show, :update, :destroy]
 
   # GET /departments
@@ -46,6 +46,11 @@ class DepartmentsController < ApplicationController
     else
       render json: @department.errors, status: 500
     end
+  end
+
+  def by_faculty
+    departments = Department.get_by_faculty(params[:faculty_id])
+    render json: departments
   end
 
   private

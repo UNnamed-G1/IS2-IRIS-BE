@@ -62,7 +62,7 @@ class EventsController < ApplicationController
     def authorize_as_author_or_lider
       group_id = Event.get_group_id(params[:id])
       unless current_user.is_author_event?(params[:id]) || current_user.is_lider_of_research_group?(group_id)
-        render_unauthorized
+        render_unauthorize
       end
     end
 

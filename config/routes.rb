@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   post 'google_user_token' => 'google_user_token#create'
 
   get 'users/current' => 'users#current'
+  get 'departments_by_faculty/:faculty_id', to: 'departments#by_faculty'
+  get 'careers_by_department/:department_id', to: 'careers#by_department'
 
   resources :publications
   resources :research_groups

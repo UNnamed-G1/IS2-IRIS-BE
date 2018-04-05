@@ -93,7 +93,7 @@ end
         name: Faker::Name.first_name,
         lastname: Faker::Name.last_name,
         username: Faker::Internet.user_name,
-        email: Faker::Internet.email,
+        email: Faker::Internet.user_name+"@unal.edu.co",
         professional_profile: Faker::Lorem.paragraph,
         user_type: Faker::Number.between(0,1),
         phone: Faker::PhoneNumber.cell_phone,
@@ -163,7 +163,7 @@ end
 User.create(
     name: "admin",
     lastname: "admin",
-    email: "admin@iris.com",
+    email: "admin@unal.edu.co",
     password: 'admin',
     password_confirmation: 'admin',
     user_type: 'admin'

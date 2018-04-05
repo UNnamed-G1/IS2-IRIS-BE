@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     if @user.errors.any?
       render json: @user.errors.messages
     else
-      render json: @user, include: []
+      render json: @user, include: [:photo, :career, :research_groups, :events, :publications, :research_subjects]
     end
   end
 
@@ -53,7 +53,7 @@ class UsersController < ApplicationController
   end
 
   def current
-    fields = [:email, :username, :name, :lastname, :full_name, :user_type]
+    fields = [:id, :email, :username, :name, :lastname, :full_name, :user_type]
     render json: current_user, fields: fields, include: [:photo]
   end
 
