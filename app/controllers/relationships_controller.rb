@@ -1,12 +1,11 @@
 class RelationshipsController < ApplicationController
-  before_action :authenticate_user, except: [:index, :show]
+  before_action :authenticate_user, except: %i[index show]
   before_action :authorize_as_admin, only: [:delete]
-  before_action :set_relationship, only: [:show, :update, :destroy]
+  before_action :set_relationship, only: %i[show update destroy]
 
   # GET /relationships
   def index
-    @relationships = Relationship.paginate(:page => params[:page], :per_page => 5)
-
+    @relationships = Relationship.all
     render json: @relationships, include: []
   end
 
@@ -16,7 +15,8 @@ class RelationshipsController < ApplicationController
       render json: @relationship.errors.messages
     else
       render json: @relationship, include: []
-    end  end
+    end
+  end
 
   # POST /relationships
   def create
@@ -44,16 +44,23 @@ class RelationshipsController < ApplicationController
       render json: @relationship, include: []
     else
       render json: @relationship.errors, status: 500
-    end  end
+    end
+  end
+
+  def paginate
+    relationships = Relationship.paginate(page: params[:page], per_page: 5)
+    render json: relationships, include: []
+  end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_relationship
-      @relationship = Relationship.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def relationship_params
-      params.require(:relationship).permit(:follower_id, :followed_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_relationship
+    @relationship = Relationship.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def relationship_params
+    params.require(:relationship).permit(:follower_id, :followed_id)
+  end
 end

@@ -9,7 +9,7 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.paginate(:page => params[:page], :per_page => 5)
+    @users = User.all
     render json: @users, include: [] # This include is for select which associations bring in the JSON
   end
 
@@ -49,6 +49,11 @@ class UsersController < ApplicationController
     else
       render json: @user.errors, status: 500
     end
+  end
+
+  def paginate
+    users = User.paginate(:page => params[:page], :per_page => 5)
+    render json: users, include: []
   end
 
   def current

@@ -1,13 +1,12 @@
 class PublicationsController < ApplicationController
-  before_action :authenticate_user, except: [:show, :index]
-  before_action :authorize_as_lider, only: [:create, :destroy]
+  before_action :authenticate_user, except: %i[show index]
+  before_action :authorize_as_lider, only: %i[create destroy]
   before_action :authorize_update, only: [:update]
-  before_action :set_publication, only: [:show, :update, :destroy]
+  before_action :set_publication, only: %i[show update destroy]
 
   # GET /publications
   def index
-    @publications = Publication.paginate(:page => params[:page], :per_page => 5)
-    
+    @publications = Publication.all
     render json: @publications, include: []
   end
 
@@ -17,7 +16,7 @@ class PublicationsController < ApplicationController
       render json: @publication.errors.messages
     else
       render json: @publication, include: []
-    end  
+    end
   end
 
   # POST /publications
@@ -46,17 +45,22 @@ class PublicationsController < ApplicationController
       render json: @publication, include: []
     else
       render json: @publication.errors, status: 500
-    end  
+    end
+  end
+
+  def paginate
+    publications = Publication.paginate(page: params[:page], per_page: 5)
+    render json: publications, include: []
   end
 
   def search_publications_by_rg
     publications_by_rg = Publication.search_publications_by_rg(params[:id])
-    render json: publications_by_rg, fields: [:id, :name, :type_pub], include: []
+    render json: publications_by_rg, fields: %i[id name type_pub], include: []
   end
 
   def search_publications_by_user
     publications_by_user = Publication.search_publications_by_user(params[:id])
-    render json: publications_by_user, fields: [:id, :name, :type_pub], include: []
+    render json: publications_by_user, fields: %i[id name type_pub], include: []
   end
 
   def search_publications_by_type
@@ -66,9 +70,8 @@ class PublicationsController < ApplicationController
 
   def search_p_by_rg_and_type
     p_by_rg_and_type = Publication.search_p_by_rg_and_type(params[:id], params[:type])
-    render json: p_by_rg_and_type, fields: [:id, :name, :type_pub], include: []
+    render json: p_by_rg_and_type, fields: %i[id name type_pub], include: []
   end
-
 
   def num_publications_by_rg
     num_publications_by_rg = Publication.num_publications_by_rg(params[:id])
@@ -91,34 +94,35 @@ class PublicationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_publication
-      @publication = Publication.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def publication_params
-      params.require(:publication).permit(:name, :date, :abstract, :url, :brief_description, :file_name, :type_pub)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_publication
+    @publication = Publication.find(params[:id])
+  end
 
-    def authorize_as_lider
-      unless current_user.is_lider_of_research_group?(params[:id])
-        render_unauthorize
+  # Only allow a trusted parameter "white list" through.
+  def publication_params
+    params.require(:publication).permit(:name, :date, :abstract, :url, :brief_description, :file_name, :type_pub)
+  end
+
+  def authorize_as_lider
+    unless current_user.is_lider_of_research_group?(params[:id])
+      render_unauthorize
+    end
+  end
+
+  def authorize_update
+    group_ids = Publication.get_research_groups(params[:id])
+    is_lider = false
+    for group in group_ids
+
+      if current_user.is_lider_of_research_group?(group)
+        is_lider = true
+        break
       end
     end
-
-    def authorize_update
-      group_ids = Publication.get_research_groups(params[:id])
-      is_lider = false
-      for group in group_ids
-
-        if current_user.is_lider_of_research_group?(group)
-          is_lider = true
-          break
-        end
-      end
-      unless current_user.is_author_publication?(params[:id]) || is_lider
-        render_unauthorize
-      end
+    unless current_user.is_author_publication?(params[:id]) || is_lider
+      render_unauthorize
     end
+  end
 end
