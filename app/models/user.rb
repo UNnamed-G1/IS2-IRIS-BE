@@ -3,19 +3,23 @@
 # Table name: users
 #
 #  id                   :integer          not null, primary key
-#  name                 :string(100)
-#  lastname             :string(100)
+#  name                 :string(100)      not null
+#  lastname             :string(100)      not null
 #  username             :string(40)
 #  email                :string           not null
-#  password_digest      :string           not null
+#  password_digest      :string
 #  professional_profile :text(5000)
-#  type_u               :integer          not null
+#  user_type            :integer          default("estudiante"), not null
 #  phone                :string(20)
 #  office               :string(20)
 #  cvlac_link           :string
 #  career_id            :integer
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
+#
+# Indexes
+#
+#  index_users_on_career_id  (career_id)
 #
 
 class User < ApplicationRecord
@@ -84,22 +88,22 @@ class User < ApplicationRecord
   ###Queries for searching
   
   def self.search_users_by_rg(rg_id)
-    select(:id, :name, :lastname, :email, :type_u).joins(:research_groups)
+    select(:id, :name, :lastname, :email, :user_type).joins(:research_groups)
                                                   .where('research_groups.id' => rg_id) if rg_id.present?
   end
   
   def self.search_users_by_publ(publ_id)
-    select(:id, :name, :lastname, :email, :type_u).joins(:publications)
+    select(:id, :name, :lastname, :email, :user_type).joins(:publications)
                                                   .where('publications.id' => publ_id) if publ_id.present?
   end
   
   def self.search_users_by_rs(rs_id)
-    select(:id, :name, :lastname, :email, :type_u).joins(:research_subjects)
+    select(:id, :name, :lastname, :email, :user_type).joins(:research_subjects)
                                                   .where('research_subjects.id' => rs_id) if rs_id.present?
   end
   
   def self.search_users_by_event(ev_id)
-    select(:id, :name, :lastname, :email, :type_u).joins(:events)
+    select(:id, :name, :lastname, :email, :user_type).joins(:events)
                                                   .where('events.id' => ev_id) if ev_id.present?
   end
   
@@ -122,6 +126,45 @@ class User < ApplicationRecord
     joins(:events).where('events.id' => ev_id).count if ev_id.present?
   end
   
+  def is_member_of_research_group?(group_id)
+    if User.joins(:research_groups).where("user_id = ? AND research_group_id = ?", id, group_id).first
+      return true
+    else
+      return false
+    end
+  end
+
+  def is_lider_of_research_group?(group_id)
+    return false unless is_member_of_research_group?(group_id)
+
+    result = user_research_groups.where("user_id = ? AND research_group_id = ?", id, group_id).lider.first
+
+    if result
+      return true
+    else
+      return false
+    end
+  end
+
+  def is_author_publication?(publication_id)
+    retrived_user = User.joins(:publications).where("user_id = ? AND publication_id = ?", id, publication_id).first
+    if retrived_user
+      return true
+    else
+      return false
+    end
+  end
+
+  def is_author_event?(event_id)
+    result = event_users.where("user_id = ? AND event_id = ?", id, event_id).author.first
+
+    if result 
+      return true
+    else
+      return false
+    end
+  end
+
   private
     def put_username
       username = self.email.split('@').first

@@ -5,10 +5,14 @@
 #  id            :integer          not null, primary key
 #  name          :string(100)      not null
 #  snies_code    :integer          not null
-#  degree_type   :integer          default(0), not null
+#  degree_type   :integer          default("pregado"), not null
 #  department_id :integer
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#
+# Indexes
+#
+#  index_careers_on_department_id  (department_id)
 #
 
 class Career < ApplicationRecord
