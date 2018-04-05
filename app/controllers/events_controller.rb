@@ -1,5 +1,7 @@
 class EventsController < ApplicationController
   before_action :authenticate_user
+  before_action :authorize_as_author_or_lider, only: [:destroy, :update]
+  before_action :authorize_create, only: [:create]
   before_action :set_event, only: [:show, :update, :destroy]
 
   # GET /events
@@ -89,5 +91,18 @@ class EventsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def event_params
       params.require(:event).permit(:topic, :description, :type_ev, :date, :frequence, :end_time, :state, :research_group_id)
+    end
+
+    def authorize_as_author_or_lider
+      group_id = Event.get_group_id(params[:id])
+      unless current_user.is_author_event?(params[:id]) || current_user.is_lider_of_research_group?(group_id)
+        render_unauthorized
+      end
+    end
+
+    def authorize_create
+      group_id = Event.get_group_id(params[:id])
+      unless current_user.is_lider_of_research_group?(group_id)
+      end
     end
 end

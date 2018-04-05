@@ -26,6 +26,9 @@ class Publication < ApplicationRecord
     validates :name, length: { maximum: 255, too_long: "Se permiten maximo %{count} caracteres" }
     validates :url, :file_name, length: { maximum: 300, too_long: "Se permiten maximo %{count} caracteres" }
     validates :brief_description, length: { maximum: 500, too_long: "Se permiten maximo %{count} caracteres" }
+    validates :type_pub, inclusion: {in: type_pubs, message: "Tipo de publicacion no valida"}
+
+    
     validates :type_pub, inclusion: {in: type_pubs, message: "Tipo de publicacion no valida"}    
     
     ###Queries for seaching
@@ -48,6 +51,9 @@ class Publication < ApplicationRecord
         search_publications_by_rg(rg_id).search_publications_by_type(type)
     end
     
+    def self.get_research_groups(publication_id)
+        return find(publication_id).research_groups.pluck(:id)
+    end
     ###Queries for statistics
     
     def self.num_publications_by_rg(rg_id)

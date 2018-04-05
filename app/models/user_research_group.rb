@@ -22,6 +22,8 @@ class UserResearchGroup < ApplicationRecord
   belongs_to :user, class_name: "User"
   belongs_to :research_group, class_name: "ResearchGroup"
 
+  scope :lider, ->{ where(type_urg: :lider) }
+  
   enum state: [:retirado, :activo]
   enum type_urg: [:miembro, :lider]
 
