@@ -46,43 +46,43 @@ class PublicationsController < ApplicationController
     end  end
 
   def search_publications_by_rg
-    @publications_by_rg = Publication.search_publications_by_rg(params[:id])
+    publications_by_rg = Publication.search_publications_by_rg(params[:id])
     render json: publications_by_rg, fields: [:id, :name, :type_pub], include: []
   end
 
   def search_publications_by_user
-    @publications_by_user = Publication.search_publications_by_user(params[:id])
+    publications_by_user = Publication.search_publications_by_user(params[:id])
     render json: publications_by_user, fields: [:id, :name, :type_pub], include: []
   end
 
   def search_publications_by_type
-    @publications_by_type = Publication.search_publications_by_type(params[:type])
+    publications_by_type = Publication.search_publications_by_type(params[:type])
     render json: publications_by_type, include: []
   end
 
   def search_p_by_rg_and_type
-    @p_by_rg_and_type = Publication.search_p_by_rg_and_type(params[:id, :type])
+    p_by_rg_and_type = Publication.search_p_by_rg_and_type(params[:id], params[:type])
     render json: p_by_rg_and_type, fields: [:id, :name, :type_pub], include: []
   end
 
 
   def num_publications_by_rg
-    @num_publications_by_rg = Publication.num_publications_by_rg(params[:id])
+    num_publications_by_rg = Publication.num_publications_by_rg(params[:id])
     render json: num_publications_by_rg, include: []
   end
 
   def num_publications_by_user
-    @num_publications_by_user = Publication.num_publications_by_user(params[:id])
+    num_publications_by_user = Publication.num_publications_by_user(params[:id])
     render json: num_publications_by_user, include: []
   end
 
   def num_publications_by_type
-    @num_publications_by_type = Publication.num_publications_by_type(params[:type])
+    num_publications_by_type = Publication.num_publications_by_type(params[:type])
     render json: num_publications_by_type, include: []
   end
 
   def num_publications_by_rg_and_type
-    @num_publications_by_rg_and_type = Publication.num_publications_by_rg_and_type(params[:id, :type])
+    num_publications_by_rg_and_type = Publication.num_publications_by_rg_and_type(params[:id], params[:type])
     render json: num_publications_by_rg_and_type, include: []
   end
 

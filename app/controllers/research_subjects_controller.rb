@@ -48,28 +48,28 @@ class ResearchSubjectsController < ApplicationController
   end
 
   def search_rs_by_rg
-    @rs_by_rg = ResearchSubject.search_rs_by_rg(params[:id])
+    rs_by_rg = ResearchSubject.search_rs_by_rg(params[:id])
     render json: rs_by_rg, fields: [:id, :name], include: []
   end
 
   def search_rs_by_name
-    @rs_by_name = ResearchSubject.search_rs_by_name(params[:keywords])
+    rs_by_name = ResearchSubject.search_rs_by_name(params[:keywords])
     render json: rs_by_name, fields: [:id, :name], include: []
   end
 
   def search_rs_by_user
-    @rs_by_user = ResearchSubject.search_rs_by_user(params[:id])
+    rs_by_user = ResearchSubject.search_rs_by_user(params[:id])
     render json: rs_by_user, fields: [:id, :name], include: []
   end
 
 
   def num_rs_by_rg
-    @num_rs_by_rg = ResearchSubject.num_rs_by_rg(params[:id])
+    num_rs_by_rg = ResearchSubject.num_rs_by_rg(params[:id])
     render json: num_rs_by_rg, include: []
   end
 
   def num_rs_by_user
-    @num_rs_by_user = ResearchSubject.num_rs_by_user(params[:id])
+    num_rs_by_user = ResearchSubject.num_rs_by_user(params[:id])
     render json: num_rs_by_user, include: []
   end
 

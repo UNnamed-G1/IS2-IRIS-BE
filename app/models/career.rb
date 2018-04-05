@@ -37,7 +37,7 @@ class Career < ApplicationRecord
   end                    
   
   def self.search_careers_by_dept(dept_id)
-    select(:id, :name).where(department_id => dept_id) if dept_id.present?
+    select(:id, :name).where(department_id: dept_id) if dept_id.present?
   end  
   
 end
