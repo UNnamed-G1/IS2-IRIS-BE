@@ -1,9 +1,10 @@
 class RelationshipsController < ApplicationController
+  before_action :authenticate_user
   before_action :set_relationship, only: [:show, :update, :destroy]
 
   # GET /relationships
   def index
-    @relationships = Relationship.all
+    @relationships = Relationship.paginate(:page => params[:page], :per_page => 5)
 
     render json: @relationships, include: []
   end

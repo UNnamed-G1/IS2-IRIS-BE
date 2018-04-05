@@ -18,7 +18,7 @@ end
     )
 end
 
-10.times do
+50.times do
     Career.create(
         name: Faker::Educator.course,
         snies_code: Faker::Number.number(5),
@@ -27,20 +27,20 @@ end
     )
 end
 
-10.times do
+100.times do
     Schedule.create(
-        start_date: Faker::Time.backward(1),
-        end_date: Faker::Time.between(1.hour.from_now, 2.hours.from_now)
+        start_date: Faker::Date.between(1.days.from_now, 4.days.from_now),
+        end_date: Faker::Date.between(6.days.from_now, 9.days.from_now)
     )
 end
 
-10.times do
+50.times do
     ResearchSubject.create(
         name: Faker::Hacker.say_something_smart
     )
 end
 
-10.times do
+50.times do
     rg = ResearchGroup.create(
         name: Faker::Name.name,
         description: Faker::Lorem.sentence,
@@ -58,7 +58,7 @@ end
 end
 
 
-10.times do
+100.times do
     Publication.create(
         name: Faker::Hacker.abbreviation,
         date: Faker::Time.backward(10),
@@ -70,9 +70,9 @@ end
     )
 end
 
-10.times do
+50.times do
     e = Event.create(
-        research_group_id: Faker::Number.between(1, 10),
+        research_group_id: Faker::Number.between(1, 50),
         topic: Faker::Lorem.sentence,
         description: Faker::Hacker.say_something_smart,
         type_ev: Faker::Number.between(0,1),
@@ -88,19 +88,20 @@ end
     end
 end
 
-10.times do
+100.times do
     u = User.create(
         name: Faker::Name.first_name,
         lastname: Faker::Name.last_name,
         username: Faker::Internet.user_name,
         email: Faker::Internet.email,
         professional_profile: Faker::Lorem.paragraph,
-        type_u: Faker::Number.between(0,1),
+        user_type: Faker::Number.between(0,1),
         phone: Faker::PhoneNumber.cell_phone,
         office: Faker::Commerce.department(1),
         cvlac_link: Faker::Internet.url,
-        career_id: Faker::Number.between(1,10),
-        password: Faker::Internet.password
+        career_id: Faker::Number.between(1,50),
+        password: 'password',
+        password_confirmation: 'password'
     )
     u.update(photo: Photo.create(
         link: Faker::Internet.url,
@@ -108,22 +109,22 @@ end
     ))
 end
 
-10.times do
+100.times do
     Relationship.create(
-        follower_id: Faker::Number.between(1,10),
-        followed_id: Faker::Number.between(1,10)
+        follower_id: Faker::Number.between(1,100),
+        followed_id: Faker::Number.between(1,100)
     )
 end
 
-10.times do
+100.times do
    UserResearchGroup.create(
         joining_date: Faker::Time.backward(10),
         end_joining_date: Faker::Time.forward(2),
         state: Faker::Number.between(0,1),
         type_urg: Faker::Number.between(0,1),
         hours_per_week: Faker::Number.between(1,10),
-        user_id: Faker::Number.between(1,10),
-        research_group_id: Faker::Number.between(1,10)
+        user_id: Faker::Number.between(1,100),
+        research_group_id: Faker::Number.between(1,50)
     )
 end
 

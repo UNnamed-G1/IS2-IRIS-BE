@@ -1,9 +1,10 @@
 class PhotosController < ApplicationController
+  before_action :authenticate_user
   before_action :set_photo, only: [:show, :update, :destroy]
 
   # GET /photos
   def index
-    @photos = Photo.all
+    @photos = Photo.paginate(:page => params[:page], :per_page => 5)
 
     render json: @photos, include: []
   end

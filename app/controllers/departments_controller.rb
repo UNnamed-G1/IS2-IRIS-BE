@@ -1,9 +1,10 @@
 class DepartmentsController < ApplicationController
+  before_action :authenticate_user
   before_action :set_department, only: [:show, :update, :destroy]
 
   # GET /departments
   def index
-    @departments = Department.all
+    @departments = Department.paginate(:page => params[:page], :per_page => 5)
 
     render json: @departments, include: []
   end

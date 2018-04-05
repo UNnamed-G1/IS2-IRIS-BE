@@ -7,10 +7,11 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins '/\Alocalhost:4200\z/', '/\Ahttps:\/\/is2-iris-fe.herokuapp.com\z/'
+    origins 'localhost:4200', 'is2-iris-fe.herokuapp.com'
 
     resource '*',
       headers: :any,
-      methods: [:get, :post, :put, :patch, :delete]
+      expose: ['access_token', 'expiry', 'token-type', 'uid', 'client'],
+      methods: [:get, :post, :put, :patch, :delete, :options, :head]
   end
 end

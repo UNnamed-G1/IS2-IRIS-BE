@@ -1,9 +1,10 @@
 class FacultiesController < ApplicationController
+  before_action :authenticate_user
   before_action :set_faculty, only: [:show, :update, :destroy]
 
   # GET /faculties
   def index
-    @faculties = Faculty.all
+    @faculties = Faculty.paginate(:page => params[:page], :per_page => 5)
 
     render json: @faculties, include: []
   end
