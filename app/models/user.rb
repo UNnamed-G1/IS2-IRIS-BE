@@ -56,7 +56,7 @@ class User < ApplicationRecord
   validates :email, uniqueness: true
   validates :email, format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/ }
 
-  def self.create_or_find_google_user(data)
+  def self.create_google_user(data)
     newUser = find_by email: data['email']
     if !newUser
       newUser = create do |user|
@@ -163,6 +163,8 @@ class User < ApplicationRecord
     else
       return false
     end
+  def self.find_by_email(email)
+    return User.find_by email: email 
   end
 
   private
