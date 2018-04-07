@@ -27,18 +27,18 @@ class ResearchGroupsController < ApplicationController
     @research_group = ResearchGroup.new(research_group_params)
 
     if @research_group.save
-      render json: research_group, status: :created, location: @research_group, include: []
+      render json: @research_group, status: :created, location: @research_group, include: []
     else
-      render json: research_group.errors, status: :unprocessable_entity
+      render json: @research_group.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /research_groups/1
   def update
     if @research_group.update(research_group_params)
-      render json: research_group, include: []
+      render json: @research_group, include: []
     else
-      render json: research_group.errors, status: :unprocessable_entity
+      render json: @research_group.errors, status: :unprocessable_entity
     end
   end
 
