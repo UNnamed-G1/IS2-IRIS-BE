@@ -82,9 +82,9 @@ class EventsController < ApplicationController
   end
 
   def news
-    @events = Event.news
+    events = Event.news
     fields = %i[topic description date]
-    render json: @events, fields: fields, include: [:photo]
+    render json: events, fields: fields, include: [:photo]
   end
 
   private

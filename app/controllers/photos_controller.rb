@@ -49,11 +49,6 @@ class PhotosController < ApplicationController
     end
   end
 
-  def paginate
-    photo = Photo.paginate(page: params[:page], per_page: 5)
-    render json: photo, include: []
-  end
-
   private
 
   # Use callbacks to share common setup or constraints between actions.

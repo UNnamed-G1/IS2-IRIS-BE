@@ -18,7 +18,7 @@
 class ResearchGroupSerializer < ActiveModel::Serializer
   type :research_group
 
-  attributes :id, :name, :description, :strategic_focus,
+  attributes :id, :name, :description, :strategic_focus
   attributes :research_priorities, :foundation_date, :classification
   attributes :date_classification, :url, :updated_at
 

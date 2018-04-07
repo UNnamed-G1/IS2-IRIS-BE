@@ -52,7 +52,7 @@ end
         url: Faker::Internet.url
     )
     rg.update(photo: Photo.create(
-        link: Faker::Internet.url,
+        link: Faker::Avatar.image,
         imageable: rg
     ))
 end
@@ -103,7 +103,7 @@ end
         password_confirmation: 'password'
     )
     u.update(photo: Photo.create(
-        link: Faker::Internet.url,
+        link: Faker::Avatar.image,
         imageable: u
     ))
 end

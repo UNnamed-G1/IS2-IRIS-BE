@@ -51,11 +51,6 @@ class PublicationsController < ApplicationController
     end
   end
 
-  def paginate
-    publications = Publication.paginate(page: params[:page], per_page: 5)
-    render json: publications, include: []
-  end
-
   def search_publications_by_rg
     publications_by_rg = Publication.search_publications_by_rg(params[:id])
     render json: publications_by_rg, fields: %i[id name type_pub], include: []
