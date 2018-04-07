@@ -59,29 +59,29 @@ class Event < ApplicationRecord
     ###Queries for searching
 
     def self.search_events_by_rg(ev_id)
-        select(:id, :name, :topic, :type_ev).where(research_group_id: ev_id) if ev_id.present?
+        select(:id, :topic, :type_ev).where(research_group_id: ev_id) if ev_id.present?
     end
 
     def self.search_events_by_user(usr_id)
-        select(:id, :name, :topic, :type_ev).joins(:users)
+        select(:id, :topic, :type_ev).joins(:users)
                                             .where('users.id' => usr_id) if usr_id.present?
     end
 
     def self.search_events_by_state(status)
-        select(:id, :name, :topic, :type_ev).where(state: status) if status.present?
+        select(:id, :topic, :type_ev).where(state: status) if status.present?
     end
 
     def self.search_events_by_freq(freq)
-        select(:id, :name, :topic, :type_ev).where(frequence: freq) if freq.present?
+        select(:id, :topic, :type_ev).where(frequence: freq) if freq.present?
     end
 
     def self.search_events_by_type(type)
-        select(:id, :name, :topic, :type_ev).where(type_ev: type) if type.present?
+        select(:id, :topic, :type_ev).where(type_ev: type) if type.present?
     end
 
-    scope :public_evs, ->{select(:id, :name, :topic, :type_ev, :description, :date, :frequence, :end_time, :state, :research_group_id).where(type_ev: 1)}
+    scope :public_evs, ->{select(:id, :topic, :type_ev, :description, :date, :frequence, :end_time, :state, :research_group_id).where(type_ev: 1)}
 
-    scope :private_evs_by_user, -> (usr_id){select(:id, :name, :topic, :type_ev, :description, :date, :frequence, :end_time, :state, :research_group_id)
+    scope :private_evs_by_user, -> (usr_id){select(:id, :topic, :type_ev, :description, :date, :frequence, :end_time, :state, :research_group_id)
                                             .joins(:users)
                                             .where('users.id': usr_id, type_ev: 0)}
 
@@ -90,6 +90,6 @@ class Event < ApplicationRecord
     end
 
     def self.news
-        self.order(:date).first(3)
+        select(:topic, :description, :date).order(:date).first(3)
     end
 end

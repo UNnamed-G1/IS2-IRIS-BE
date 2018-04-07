@@ -47,7 +47,7 @@ class ResearchGroup < ApplicationRecord
     def self.items(p)
       paginate(page: p, per_page: 12)
     end
-    
+
     ##Queries for searching
 
     def self.search_rgs_by_career(career_id)
@@ -69,7 +69,7 @@ class ResearchGroup < ApplicationRecord
     end
 
     def self.news
-        self.order(:updated_at).last(3)
+        select(:name, :description, :updated_at).order(:updated_at).last(3)
     end
 
     def member_is_lider?(member)

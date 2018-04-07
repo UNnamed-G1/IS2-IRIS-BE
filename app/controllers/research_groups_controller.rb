@@ -1,5 +1,5 @@
 class ResearchGroupsController < ApplicationController
-  before_action :authenticate_user, except: %i[index show]
+  before_action :authenticate_user, except: %i[index show news]
   before_action :authorize_as_admin, only: %i[destroy create]
   before_action :authorize_update, only: [:update]
   before_action :set_research_group, only: %i[show update destroy]
@@ -73,7 +73,8 @@ class ResearchGroupsController < ApplicationController
 
   def news
     research_groups = ResearchGroup.news
-    render json: research_groups, include: [:photo]
+    fields = %i[name description updated_at]
+    render json: research_groups, fields: fields, include: [:photo]
   end
 
   private
