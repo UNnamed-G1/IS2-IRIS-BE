@@ -1,13 +1,16 @@
 class EventsController < ApplicationController
-  before_action :authenticate_user
+  before_action :authenticate_user, except: [:index]
   before_action :authorize_as_author_or_lider, only: %i[destroy update]
   before_action :authorize_create, only: [:create]
   before_action :set_event, only: %i[show update destroy]
 
   # GET /events
   def index
-    @events = Event.all
-    render json: @events, include: []
+    @events = Event.items(params[:page])
+    render json: {
+      events: @events,
+      total_pages: @events.total_pages
+    }, include: []
   end
 
   # GET /events/1
@@ -46,11 +49,6 @@ class EventsController < ApplicationController
     else
       render json: @event.errors, status: 500
     end
-  end
-
-  def paginate
-    events = Event.paginate(page: params[:page], per_page: 5)
-    render json: events, include: []
   end
 
   def search_events_by_rg

@@ -31,46 +31,50 @@ class Publication < ApplicationRecord
     validates :brief_description, length: { maximum: 500, too_long: "Se permiten maximo %{count} caracteres para el campo descripción breve." }
     validates :type_pub, inclusion: {in: type_pubs, message: "El tipo de publicación seleccionado no es valida."}
 
-    
-    validates :type_pub, inclusion: {in: type_pubs, message: "Tipo de publicacion no valida"}    
+
+    validates :type_pub, inclusion: {in: type_pubs, message: "Tipo de publicacion no valida"}
+
+    def self.items(p)
+      paginate(page: p, per_page: 12)
+    end
     
     ###Queries for seaching
-    
+
     def self.search_publications_by_rg(rg_id)
         select(:id, :name, :type_pub).joins(:research_groups)
                           .where('research_groups.id' => rg_id) if rg_id.present?
     end
-    
+
     def self.search_publications_by_user(usr_id)
         select(:id, :name, :type_pub).joins(:users)
                           .where('users.id' => usr_id) if usr_id.present?
     end
-    
+
     def self.search_publications_by_type(type)
         where(type_pub: type) if type.present?
     end
-    
+
     def self.search_p_by_rg_and_type(rg_id, type)
         search_publications_by_rg(rg_id).search_publications_by_type(type)
     end
-    
+
     def self.get_research_groups(publication_id)
         return find(publication_id).research_groups.pluck(:id)
     end
     ###Queries for statistics
-    
+
     def self.num_publications_by_rg(rg_id)
         joins(:research_groups).where('research_groups.id' => rg_id).count if rg_id.present?
     end
-    
+
     def self.num_publications_by_user(usr_id)
         joins(:users).where('users.id' => usr_id).count if usr_id.present?
     end
-    
+
     def self.num_publications_by_type(type)
         where(type_pub: type).count if type.present?
     end
-    
+
     def self.num_publications_by_rg_and_type(rg_id, type)
         joins(:research_groups).where('research_groups.id' => rg_id, type_pub: type).count
     end

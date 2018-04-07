@@ -48,11 +48,6 @@ class ResearchSubjectsController < ApplicationController
     end
   end
 
-  def paginate
-    research_subjects = ResearchSubject.paginate(page: params[:page], per_page: 5)
-    render json: research_subjects, include: []
-  end
-
   def search_rs_by_rg
     rs_by_rg = ResearchSubject.search_rs_by_rg(params[:id])
     render json: rs_by_rg, fields: %i[id name], include: []

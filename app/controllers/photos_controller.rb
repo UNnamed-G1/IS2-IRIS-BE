@@ -4,8 +4,11 @@ class PhotosController < ApplicationController
 
   # GET /photos
   def index
-    @photos = Photo.all
-    render json: @photos, include: []
+    @photos = Photo.items(params[:page])
+    render json: {
+      photos: @photos,
+      total_pages: @photos.total_pages
+    }, include: []
   end
 
   # GET /photos/1

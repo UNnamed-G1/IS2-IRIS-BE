@@ -6,8 +6,11 @@ class PublicationsController < ApplicationController
 
   # GET /publications
   def index
-    @publications = Publication.all
-    render json: @publications, include: []
+    @publications = Publication.items(params[:page])
+    render json: {
+      publications: @publications,
+      total_pages: @publications.total_pages
+    }, include: []
   end
 
   # GET /publications/1

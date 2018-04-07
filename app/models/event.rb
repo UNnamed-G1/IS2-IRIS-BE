@@ -40,8 +40,12 @@ class Event < ApplicationRecord
     validates :frequence, inclusion: {in: frequences, message: "El tipo de evento seleccionada no es valida."}
     validates :state, inclusion: {in: states, message: "El estado seleccionado no es valido."}
 
+    def self.items(p)
+      paginate(page: p, per_page: 12)
+    end
+
     def self.get_group_id(event_id)
-        return Event.find(event_id).research_group_id
+        return self.find(event_id).research_group_id
     end
 
     def is_public?
@@ -51,41 +55,41 @@ class Event < ApplicationRecord
     def is_private?
         return type_ev == "private"
     end
-    
+
     ###Queries for searching
-    
+
     def self.search_events_by_rg(ev_id)
         select(:id, :name, :topic, :type_ev).where(research_group_id: ev_id) if ev_id.present?
     end
-    
+
     def self.search_events_by_user(usr_id)
         select(:id, :name, :topic, :type_ev).joins(:users)
                                             .where('users.id' => usr_id) if usr_id.present?
-    end 
-    
+    end
+
     def self.search_events_by_state(status)
         select(:id, :name, :topic, :type_ev).where(state: status) if status.present?
     end
-    
+
     def self.search_events_by_freq(freq)
         select(:id, :name, :topic, :type_ev).where(frequence: freq) if freq.present?
     end
-    
+
     def self.search_events_by_type(type)
         select(:id, :name, :topic, :type_ev).where(type_ev: type) if type.present?
     end
-    
+
     scope :public_evs, ->{select(:id, :name, :topic, :type_ev, :description, :date, :frequence, :end_time, :state, :research_group_id).where(type_ev: 1)}
-        
+
     scope :private_evs_by_user, -> (usr_id){select(:id, :name, :topic, :type_ev, :description, :date, :frequence, :end_time, :state, :research_group_id)
                                             .joins(:users)
-                                            .where('users.id': usr_id, type_ev: 0)}    
-    
+                                            .where('users.id': usr_id, type_ev: 0)}
+
     def self.evs_by_usr_and_type(usr_id)
         public_evs + private_evs_by_user(usr_id)
-    end    
-    
+    end
+
     def self.news
         self.order(:date).first(3)
-    end 
+    end
 end

@@ -6,8 +6,11 @@ class ResearchGroupsController < ApplicationController
 
   # GET /research_groups
   def index
-    @research_groups = ResearchGroup.all
-    render json: @research_groups, include: []
+    @research_groups = ResearchGroup.items(params[:page])
+    render json: {
+      research_groups: @research_groups,
+      total_pages: @research_groups.total_pages
+    }, include: []
   end
 
   # GET /research_groups/1
@@ -46,12 +49,6 @@ class ResearchGroupsController < ApplicationController
     else
       render json: @research_group.errors, status: 500
     end
-  end
-
-  def paginate
-    research_groups = ResearchGroup.paginate(page: params[:page], per_page: 5)
-    puts research_groups.total_pages
-    render json: research_groups, include: []
   end
 
   def search_rgs_by_career
