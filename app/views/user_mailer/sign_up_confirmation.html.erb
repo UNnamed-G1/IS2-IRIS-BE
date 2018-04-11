@@ -1,0 +1,18 @@
+<h1>Bienvenido a IRIS,
+    <%= @user.name + " " + @user.lastname %>
+</h1>
+<hr>
+<h4>
+    GRACIAS POR UNIRTE A IRIS
+</h4>
+<p>
+    Te has registrado satisfactoriamente en IRIS.
+    <br>
+Recuerda actualizar tu información para ayudarte
+a a buscar los grupos de investigación de tu interes.
+</p>
+<p>
+    Dirigete al siguiente link para 
+    <%= link_to 'confirmar tu cuenta', @url %>
+</p>
+<p>¡Ten un gran día!</p>

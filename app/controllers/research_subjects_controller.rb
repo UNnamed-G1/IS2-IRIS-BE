@@ -1,12 +1,12 @@
 class ResearchSubjectsController < ApplicationController
-  before_action :authenticate_user, except: [:index, :show]
-  before_action :authorize_as_admin, only: [:update, :destroy, :create]
-  before_action :set_research_subject, only: [:show, :update, :destroy]
+  before_action :authenticate_user, except: %i[index show]
+  before_action :authorize_as_admin, only: %i[update destroy create]
+  before_action :set_research_subject, only: %i[show update destroy]
 
   # GET /research_subjects
   def index
+    # Don't forget variable
     @research_subjects = ResearchSubject.all
-
     render json: @research_subjects, include: []
   end
 
@@ -48,14 +48,45 @@ class ResearchSubjectsController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_research_subject
-      @research_subject = ResearchSubject.find(params[:id])
-    end
+  def paginate
+    research_subjects = ResearchSubject.paginate(page: params[:page], per_page: 5)
+    render json: research_subjects, include: []
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def research_subject_params
-      params.require(:research_subject).permit(:name)
-    end
+  def search_rs_by_rg
+    rs_by_rg = ResearchSubject.search_rs_by_rg(params[:id])
+    render json: rs_by_rg, fields: %i[id name], include: []
+  end
+
+  def search_rs_by_name
+    rs_by_name = ResearchSubject.search_rs_by_name(params[:keywords])
+    render json: rs_by_name, fields: %i[id name], include: []
+  end
+
+  def search_rs_by_user
+    rs_by_user = ResearchSubject.search_rs_by_user(params[:id])
+    render json: rs_by_user, fields: %i[id name], include: []
+  end
+
+  def num_rs_by_rg
+    num_rs_by_rg = ResearchSubject.num_rs_by_rg(params[:id])
+    render json: num_rs_by_rg, include: []
+  end
+
+  def num_rs_by_user
+    num_rs_by_user = ResearchSubject.num_rs_by_user(params[:id])
+    render json: num_rs_by_user, include: []
+  end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_research_subject
+    @research_subject = ResearchSubject.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def research_subject_params
+    params.require(:research_subject).permit(:name)
+  end
 end

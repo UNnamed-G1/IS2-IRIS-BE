@@ -10,7 +10,6 @@ class UsersController < ApplicationController
   # GET /users
   def index
     @users = User.all
-
     render json: @users, include: [] # This include is for select which associations bring in the JSON
   end
 
@@ -19,7 +18,7 @@ class UsersController < ApplicationController
     if @user.errors.any?
       render json: @user.errors.messages
     else
-      render json: @user, include: []
+      render json: @user, include: [:photo, :career, :research_groups, :events, :publications, :research_subjects]
     end
   end
 
@@ -28,6 +27,7 @@ class UsersController < ApplicationController
     @user = User.new (user_params)
 
     if @user.save
+      UserMailer.sign_up_confirmation(@user).deliver_now
       render json: @user, status: :created, location: @user, include: []
     else
       render json: @user.errors, status: :unprocessable_entity
@@ -52,8 +52,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def paginate
+    users = User.paginate(:page => params[:page], :per_page => 5)
+    render json: users, include: []
+  end
+
   def current
-    fields = [:email, :username, :name, :lastname, :full_name, :user_type]
+    fields = [:id, :email, :username, :name, :lastname, :full_name, :user_type]
     render json: current_user, fields: fields, include: [:photo]
   end
 

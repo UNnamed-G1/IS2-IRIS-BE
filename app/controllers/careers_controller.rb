@@ -1,12 +1,11 @@
 class CareersController < ApplicationController
   before_action :authenticate_user
-  before_action :authorize_as_admin, except: [:index,:show]
-  before_action :set_career, only: [:show, :update, :destroy]
+  before_action :authorize_as_admin, except: %i[index show search_careers_by_dept]
+  before_action :set_career, only: %i[show update destroy]
 
   # GET /careers
   def index
     @careers = Career.all
-
     render json: @careers, include: []
   end
 
@@ -48,14 +47,35 @@ class CareersController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_career
-      @career = Career.find(params[:id])
-    end
+  def paginate
+    careers = Career.paginate(page: params[:page], per_page: 5)
+    render json: careers, include: []
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def career_params
-      params.require(:career).permit(:name, :snies_code, :degree_type)
-    end
+  def search_careers_by_rg
+    careers_by_rg = Career.search_careers_by_rg(params[:id])
+    render json: careers_by_rg, fields: %i[id name], include: []
+  end
+
+  def search_careers_by_user
+    careers_by_user = Career.search_careers_by_user(params[:id])
+    render json: careers_by_user, fields: %i[id name], include: []
+  end
+
+  def search_careers_by_dept
+    careers_by_dept = Career.search_careers_by_dept(params[:id])
+    render json: careers_by_dept, fields: %i[id name], include: []
+  end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_career
+    @career = Career.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def career_params
+    params.require(:career).permit(:name, :snies_code, :degree_type)
+  end
 end

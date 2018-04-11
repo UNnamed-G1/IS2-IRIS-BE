@@ -1,0 +1,15 @@
+<h3>
+    Has recibido un comentario por parte de
+    <%= @remitent.name + " " + @remitent.lastname %> &lt;<%= @remitent.email %>&gt;
+</h3>
+<hr>
+<div>
+    <p>
+        <b>Asunto:</b>
+        <%= @subject %>
+    </p>
+    <p>
+        <b>Comentarios:</b>
+        <%= @comments %>
+    </p>
+</div>
