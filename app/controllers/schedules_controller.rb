@@ -47,11 +47,6 @@ class SchedulesController < ApplicationController
     end
   end
 
-  def paginate
-    schedules = Schedule.paginate(page: params[:page], per_page: 5)
-    render json: schedules, include: []
-  end
-
   def find_schedules_by_user
     find_schedules_by_user = Schedule.find_schedules_by_user(params[:id])
     render json: find_schedules_by_user, fields: [:start_date], include: []

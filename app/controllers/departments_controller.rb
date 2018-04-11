@@ -47,11 +47,6 @@ class DepartmentsController < ApplicationController
     end
   end
 
-  def paginate
-    departments = Department.paginate(page: params[:page], per_page: 5)
-    render json: departments, include: []
-  end
-
   def search_deps_by_faculty
     deps_by_faculty = Department.search_deps_by_faculty(params[:id])
     render json: deps_by_faculty, fields: %i[id name], include: []

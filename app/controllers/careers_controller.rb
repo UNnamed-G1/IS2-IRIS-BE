@@ -47,11 +47,6 @@ class CareersController < ApplicationController
     end
   end
 
-  def paginate
-    careers = Career.paginate(page: params[:page], per_page: 5)
-    render json: careers, include: []
-  end
-
   def search_careers_by_rg
     careers_by_rg = Career.search_careers_by_rg(params[:id])
     render json: careers_by_rg, fields: %i[id name], include: []

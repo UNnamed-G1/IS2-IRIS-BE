@@ -4,8 +4,11 @@ class PhotosController < ApplicationController
 
   # GET /photos
   def index
-    @photos = Photo.all
-    render json: @photos, include: []
+    @photos = Photo.items(params[:page])
+    render json: {
+      photos: @photos,
+      total_pages: @photos.total_pages
+    }, include: []
   end
 
   # GET /photos/1
@@ -44,11 +47,6 @@ class PhotosController < ApplicationController
     else
       render json: @photo.errors, status: 500
     end
-  end
-
-  def paginate
-    photo = Photo.paginate(page: params[:page], per_page: 5)
-    render json: photo, include: []
   end
 
   private

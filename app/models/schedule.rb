@@ -15,13 +15,13 @@ class Schedule < ApplicationRecord
 
   validates :start_date, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha de inicio") } }
   validates :end_date, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha de inicio") } }
-  
+
   ###Queries for searching
-  
+
   def self.find_schedules_by_user(usr_id)
     select(:start_date).joins(:users)
                        .where('users.id' => usr_id) if usr_id.present?
-  
-  end  
-  
+
+  end
+
 end

@@ -17,5 +17,9 @@
 class Photo < ApplicationRecord
   belongs_to :imageable, polymorphic: true
 
-  validates :link, :imageable_type, presence: true  
+  validates :link, :imageable_type, presence: true
+
+  def self.items(p)
+    paginate(page: p, per_page: 12)
+  end
 end
