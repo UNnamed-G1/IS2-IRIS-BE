@@ -69,10 +69,6 @@ class User < ApplicationRecord
         user.email = data['email']
         user.password = 'google-authorized account'
       end
-      newUser.update(photo: Photo.create(
-        link: data['photo'],
-        imageable: newUser
-      ))
     end
     return newUser
   end

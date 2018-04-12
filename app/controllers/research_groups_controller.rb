@@ -24,18 +24,22 @@ class ResearchGroupsController < ApplicationController
     @research_group = ResearchGroup.new(research_group_params)
 
     if @research_group.save
-      render json: research_group, status: :created, location: @research_group, include: []
+      pic = params[:picture] 
+      # puts pic
+      @research_group.update(photo: Photo.create_photo(pic, @research_group)) if pic
+      render json: @research_group, status: :created, location: @research_group, include: []
     else
-      render json: research_group.errors, status: :unprocessable_entity
+      render json: @research_group.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /research_groups/1
   def update
     if @research_group.update(research_group_params)
-      render json: research_group, include: []
+      @research_group.photo.update(picture: params[:picture])
+      render json: @research_group, include: [:photo]
     else
-      render json: research_group.errors, status: :unprocessable_entity
+      render json: @research_group.errors, status: :unprocessable_entity
     end
   end
 
@@ -88,7 +92,7 @@ class ResearchGroupsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def research_group_params
-    params.require(:research_group).permit(:name, :description, :strategic_focus, :research_priorities, :foundation_date, :classification, :date_classification, :url)
+    params.require(:research_group).permit(:name, :description, :strategic_focus, :research_priorities, :foundation_date, :classification, :date_classification, :url, :picture)
   end
 
   def authorize_update

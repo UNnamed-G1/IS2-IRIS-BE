@@ -52,7 +52,6 @@ end
         url: Faker::Internet.url
     )
     rg.update(photo: Photo.create(
-        link: Faker::Internet.url,
         imageable: rg
     ))
 end
@@ -81,7 +80,6 @@ end
     )
     5.times do
       e.photos.create(
-          link: Faker::Internet.url
       )
     end
 end
@@ -102,7 +100,6 @@ end
         password_confirmation: 'password'
     )
     u.update(photo: Photo.create(
-        link: Faker::Internet.url,
         imageable: u
     ))
 end
