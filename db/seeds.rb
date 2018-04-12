@@ -63,7 +63,6 @@ end
         name: Faker::Hacker.abbreviation,
         date: Faker::Time.backward(10),
         abstract: Faker::Lorem.paragraph,
-        url: Faker::Internet.url,
         brief_description: Faker::Hacker.say_something_smart,
         type_pub: Faker::Number.between(0,5)
     )
