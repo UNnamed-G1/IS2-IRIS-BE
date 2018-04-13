@@ -37,7 +37,7 @@ class Publication < ApplicationRecord
     def self.items(p)
       paginate(page: p, per_page: 12)
     end
-    
+
     ###Queries for seaching
 
     def self.search_publications_by_rg(rg_id)
