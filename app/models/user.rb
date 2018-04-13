@@ -8,7 +8,7 @@
 #  username             :string(40)
 #  email                :string           not null
 #  password_digest      :string
-#  professional_profile :text(5000)
+#  professional_profile :text
 #  user_type            :integer          default("estudiante"), not null
 #  phone                :string(20)
 #  office               :string(20)
@@ -19,7 +19,7 @@
 #
 # Indexes
 #
-#  index_users_on_career_id  (career_id)
+# index_users_on_career_id  (career_id)
 #
 
 class User < ApplicationRecord
@@ -63,7 +63,7 @@ class User < ApplicationRecord
   def self.items(p)
     paginate(page: p, per_page: 12)
   end
-  
+
   def self.create_google_user(data)
     newUser = find_by email: data['email']
     if !newUser
