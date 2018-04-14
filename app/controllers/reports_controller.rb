@@ -6,8 +6,8 @@ class  ReportsController  <  ActionController::Base
 	   @reports_users = User.all
   end
   def show
-    #user_history
-    group_history
+    user_history
+    #group_history
     respond_to do |format|
       format.html
       format.pdf do
