@@ -1,17 +1,17 @@
 class  ReportsController  <  ActionController::Base
-  def user_history
-	   @reports = ResearchGroup.all
-  end
   def group_history
-	   #@reports = Publication.search_publications_by_rg(params[:id])
+	   @reports_rgs = ResearchGroup.all
+  end
+  def user_history
+	   @reports_users = User.all
   end
   def show
-    user_history
-    #group_history
+    #user_history
+    group_history
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: User.first.name, template: "../views/reports/rgs_report", layout: "pdf.html"
+        render pdf: User.first.name, template: "../views/reports/users_report", layout: "pdf.html"
       end
     end
   end
