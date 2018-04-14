@@ -16,8 +16,8 @@ ActiveRecord::Schema.define(version: 20180322060224) do
   enable_extension "plpgsql"
 
   create_table "career_research_groups", force: :cascade do |t|
-    t.integer "career_id"
-    t.integer "research_group_id"
+    t.bigint "career_id"
+    t.bigint "research_group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["career_id"], name: "index_career_research_groups_on_career_id"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20180322060224) do
     t.string "name", limit: 100, null: false
     t.bigint "snies_code", null: false
     t.integer "degree_type", default: 0, null: false
-    t.integer "department_id"
+    t.bigint "department_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["department_id"], name: "index_careers_on_department_id"
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20180322060224) do
 
   create_table "departments", force: :cascade do |t|
     t.string "name", limit: 100
-    t.integer "faculty_id"
+    t.bigint "faculty_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["faculty_id"], name: "index_departments_on_faculty_id"
@@ -44,8 +44,8 @@ ActiveRecord::Schema.define(version: 20180322060224) do
 
   create_table "event_users", force: :cascade do |t|
     t.integer "type_user_event", default: 0, null: false
-    t.integer "user_id"
-    t.integer "event_id"
+    t.bigint "user_id"
+    t.bigint "event_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_event_users_on_event_id"
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20180322060224) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.integer "research_group_id"
+    t.bigint "research_group_id"
     t.text "topic", null: false
     t.text "description", null: false
     t.integer "type_ev", null: false
@@ -75,15 +75,15 @@ ActiveRecord::Schema.define(version: 20180322060224) do
   create_table "photos", force: :cascade do |t|
     t.text "link"
     t.string "imageable_type"
-    t.integer "imageable_id"
+    t.bigint "imageable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["imageable_type", "imageable_id"], name: "index_photos_on_imageable_type_and_imageable_id"
   end
 
   create_table "publication_research_groups", force: :cascade do |t|
-    t.integer "publication_id"
-    t.integer "research_group_id"
+    t.bigint "publication_id"
+    t.bigint "research_group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["publication_id"], name: "index_publication_research_groups_on_publication_id"
@@ -91,8 +91,8 @@ ActiveRecord::Schema.define(version: 20180322060224) do
   end
 
   create_table "publication_users", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "publication_id"
+    t.bigint "user_id"
+    t.bigint "publication_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["publication_id"], name: "index_publication_users_on_publication_id"
@@ -134,8 +134,8 @@ ActiveRecord::Schema.define(version: 20180322060224) do
   end
 
   create_table "research_subject_research_groups", force: :cascade do |t|
-    t.integer "research_subject_id"
-    t.integer "research_group_id"
+    t.bigint "research_subject_id"
+    t.bigint "research_group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["research_group_id"], name: "index_research_subject_research_groups_on_research_group_id"
@@ -143,8 +143,8 @@ ActiveRecord::Schema.define(version: 20180322060224) do
   end
 
   create_table "research_subject_users", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "research_subject_id"
+    t.bigint "user_id"
+    t.bigint "research_subject_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["research_subject_id"], name: "index_research_subject_users_on_research_subject_id"
@@ -158,8 +158,8 @@ ActiveRecord::Schema.define(version: 20180322060224) do
   end
 
   create_table "schedule_users", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "schedule_id"
+    t.bigint "user_id"
+    t.bigint "schedule_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["schedule_id"], name: "index_schedule_users_on_schedule_id"
@@ -179,8 +179,8 @@ ActiveRecord::Schema.define(version: 20180322060224) do
     t.integer "state", default: 0, null: false
     t.integer "type_urg", default: 0, null: false
     t.integer "hours_per_week", default: 0, null: false
-    t.integer "user_id"
-    t.integer "research_group_id"
+    t.bigint "user_id"
+    t.bigint "research_group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["research_group_id"], name: "index_user_research_groups_on_research_group_id"
@@ -198,10 +198,30 @@ ActiveRecord::Schema.define(version: 20180322060224) do
     t.string "phone", limit: 20
     t.string "office", limit: 20
     t.string "cvlac_link"
-    t.integer "career_id"
+    t.bigint "career_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["career_id"], name: "index_users_on_career_id"
   end
 
+  add_foreign_key "career_research_groups", "careers"
+  add_foreign_key "career_research_groups", "research_groups"
+  add_foreign_key "careers", "departments"
+  add_foreign_key "departments", "faculties"
+  add_foreign_key "event_users", "events"
+  add_foreign_key "event_users", "users"
+  add_foreign_key "events", "research_groups"
+  add_foreign_key "publication_research_groups", "publications"
+  add_foreign_key "publication_research_groups", "research_groups"
+  add_foreign_key "publication_users", "publications"
+  add_foreign_key "publication_users", "users"
+  add_foreign_key "research_subject_research_groups", "research_groups"
+  add_foreign_key "research_subject_research_groups", "research_subjects"
+  add_foreign_key "research_subject_users", "research_subjects"
+  add_foreign_key "research_subject_users", "users"
+  add_foreign_key "schedule_users", "schedules"
+  add_foreign_key "schedule_users", "users"
+  add_foreign_key "user_research_groups", "research_groups"
+  add_foreign_key "user_research_groups", "users"
+  add_foreign_key "users", "careers"
 end

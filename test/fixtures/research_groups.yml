@@ -1,0 +1,38 @@
+# == Schema Information
+#
+# Table name: research_groups
+#
+#  id                  :integer          not null, primary key
+#  name                :text             not null
+#  description         :text             not null
+#  strategic_focus     :text             not null
+#  research_priorities :text             not null
+#  foundation_date     :date             not null
+#  classification      :integer          not null
+#  date_classification :date             not null
+#  url                 :string
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyText
+  description: MyText
+  strategic_focus: MyText
+  research_priorities: MyText
+  foundation_date: 2018-03-11
+  classification: 1
+  date_classification: 2018-03-11
+  url: MyString
+
+two:
+  name: MyText
+  description: MyText
+  strategic_focus: MyText
+  research_priorities: MyText
+  foundation_date: 2018-03-11
+  classification: 1
+  date_classification: 2018-03-11
+  url: MyString

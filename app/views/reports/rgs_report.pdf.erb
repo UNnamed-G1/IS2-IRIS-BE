@@ -1,0 +1,24 @@
+<h1>
+  Reporte de Cantidad de publicaciones por grupos de investigación
+</h1>
+<table class="table">
+  <tr>
+    <th>Id</th>
+    <th>Nombre</th>
+    <th>Cantidad de publicaciones</th>
+    <th>Porcentaje de participacion</th>
+  </tr>
+
+  <tbody>
+    <% @reports.each do |post| %>
+      <% num_p_by_rg = Publication.num_publications_by_rg(post.id)%>
+      <% perc = (num_p_by_rg * 100 / Publication.all.count) %>
+      <tr>
+        <td><%= post.id %></td>
+        <td><%= post.name %></td>
+        <td><%= num_p_by_rg %></td>
+        <td><%= "#{perc}%" %></td>
+      </tr>
+    <%end%>
+  </tbody>
+</table>
