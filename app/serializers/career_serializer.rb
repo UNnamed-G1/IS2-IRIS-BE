@@ -14,6 +14,10 @@
 #
 #  index_careers_on_department_id  (department_id)
 #
+# Foreign Keys
+#
+#  fk_rails_...  (department_id => departments.id)
+#
 
 class CareerSerializer < ActiveModel::Serializer
   type :career

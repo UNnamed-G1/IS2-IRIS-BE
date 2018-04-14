@@ -11,6 +11,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :phone, limit: 20
       t.string :office, limit: 20
       t.string :cvlac_link
+      t.boolean :google_sign_up
 
       t.references :career, foreign_key: true, null: true
 

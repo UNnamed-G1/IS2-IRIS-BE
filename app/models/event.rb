@@ -18,6 +18,10 @@
 #
 #  index_events_on_research_group_id  (research_group_id)
 #
+# Foreign Keys
+#
+#  fk_rails_...  (research_group_id => research_groups.id)
+#
 
 class Event < ApplicationRecord
     has_many :event_users, dependent: :delete_all

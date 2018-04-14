@@ -56,7 +56,7 @@ class UsersController < ApplicationController
   end
 
   def current
-    fields = [:id, :email, :username, :name, :lastname, :full_name, :user_type]
+    fields = [:id, :email, :username, :name, :lastname, :full_name, :user_type, :google_sign_up]
     render json: current_user, fields: fields, include: [:photo]
   end
 
