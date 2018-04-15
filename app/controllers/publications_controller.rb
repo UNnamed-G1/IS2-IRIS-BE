@@ -21,16 +21,6 @@ class PublicationsController < ApplicationController
 
   # POST /publications
   def create
-    # puts params[:document]
-    # p = {
-    #   "name": "SSD replacement",
-    #   "date": "2017-09-15",
-    #   "abstract": "The SDD are useless, we must find a new solution and replace them.",
-    #   "brief_description": "If we destroy every SSD, we can get a better world!",
-    #   "type_pub": "tesis",
-    #   "document": params[:document]
-    # }
-    # puts p
     @publication = Publication.new(publication_params)
 
     if @publication.save

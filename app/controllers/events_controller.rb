@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   before_action :authenticate_user
   before_action :authorize_as_author_or_lider, only: %i[destroy update]
-  before_action :authorize_create, only: [:create]
+  # before_action :authorize_create, only: [:create]
   before_action :set_event, only: %i[show update destroy]
 
   # GET /events
@@ -24,7 +24,11 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
 
     if @event.save
-      render json: @event, status: :created, location: @event, include: []
+      params[:pictures].each do |picture|
+        @event.photos.create(picture: picture)
+      end
+      
+      render json: @event, status: :created, location: @event, include: [:photos]
     else
       render json: @event.errors, status: :unprocessable_entity
     end
@@ -33,7 +37,10 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1
   def update
     if @event.update(event_params)
-      render json: @event, include: []
+      params[:pictures].each do |picture|
+        @event.photos.create(picture: picture)
+      end
+      render json: @event, include: [:photos]
     else
       render json: @event.errors, status: :unprocessable_entity
     end

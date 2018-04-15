@@ -27,6 +27,8 @@ class UsersController < ApplicationController
     @user = User.new (user_params)
 
     if @user.save
+      pic = params[:picture] 
+      @user.update(photo: Photo.create_photo(pic, @user)) if pic
       UserMailer.sign_up_confirmation(@user).deliver_now
       render json: @user, status: :created, location: @user, include: []
     else
@@ -70,7 +72,7 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:name, :lastname, :username, :professional_profile, :email, :phone, :office, :cvlac_link, :career_id, :user_type, :password, :password_confirmation)
+      params.require(:user).permit(:name, :lastname, :username, :professional_profile, :email, :phone, :office, :cvlac_link, :career_id, :user_type, :password, :password_confirmation, :picture)
     end
 
     def authorize_update
