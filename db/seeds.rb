@@ -100,6 +100,7 @@ end
         password_confirmation: 'password'
     )
     u.update(photo: Photo.create(
+        link: Faker::Avatar.image,
         imageable: u
     ))
 end

@@ -8,11 +8,12 @@
 #  username             :string(40)
 #  email                :string           not null
 #  password_digest      :string
-#  professional_profile :text(5000)
+#  professional_profile :text
 #  user_type            :integer          default("estudiante"), not null
 #  phone                :string(20)
 #  office               :string(20)
 #  cvlac_link           :string
+#  google_sign_up       :boolean
 #  career_id            :integer
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
@@ -21,13 +22,17 @@
 #
 #  index_users_on_career_id  (career_id)
 #
+# Foreign Keys
+#
+#  fk_rails_...  (career_id => careers.id)
+#
 
 class UserSerializer < ActiveModel::Serializer
   type :user
   
   attributes :id, :name, :lastname, :username, :email
   attributes :professional_profile, :phone, :office, :cvlac_link
-  attributes :full_name
+  attributes :full_name, :google_sign_up
 
   attribute :user_type
 

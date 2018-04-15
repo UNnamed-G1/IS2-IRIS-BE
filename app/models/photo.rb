@@ -26,5 +26,9 @@ class Photo < ApplicationRecord
       picture: picture,
       imageable: imageable
     )
+  validates :link, :imageable_type, presence: true
+
+  def self.items(p)
+    paginate(page: p, per_page: 12)
   end
 end
