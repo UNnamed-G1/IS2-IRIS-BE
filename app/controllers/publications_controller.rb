@@ -1,6 +1,6 @@
 class PublicationsController < ApplicationController
-  before_action :authenticate_user, except: %i[show index]
-  before_action :authorize_as_lider, only: %i[create destroy]
+  #before_action :authenticate_user, except: %i[show index]
+  #before_action :authorize_as_lider, only: %i[create destroy]
   before_action :authorize_update, only: [:update]
   before_action :set_publication, only: %i[show update destroy]
 
