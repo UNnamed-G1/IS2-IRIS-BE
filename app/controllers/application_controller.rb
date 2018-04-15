@@ -4,19 +4,23 @@ class ApplicationController < ActionController::API
     UNAUTHORIZED_MESSAGE = "You are unauthorized to access this." 
 
     def authorize_as_admin
-        render json: [UNAUTHORIZED_MESSAGE], status: :unauthorized unless !current_user.nil? && current_user.is_admin?
+        render_unauthorize unless current_user.is_admin?
     end
 
     def authorize_as_student
-        render json: [UNAUTHORIZED_MESSAGE], status: :unauthorized unless !current_user.nil? && current_user.is_student?
+        render_unauthorize unless current_user.is_student?
     end
 
-    def authorize_as_student
-        render json: [UNAUTHORIZED_MESSAGE], status: :unauthorized unless !current_user.nil? && current_user.is_profesor?
+    def authorize_as_profesor
+        render_unauthorize unless current_user.is_profesor?
     end
 
     protected 
         def unauthorized_entity(entity_name)
+            render_unauthorize
+        end
+
+        def render_unauthorize
             render json: [UNAUTHORIZED_MESSAGE], status: :unauthorized
         end
 end

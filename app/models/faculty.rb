@@ -9,7 +9,8 @@
 #
 
 class Faculty < ApplicationRecord
-  has_many :departments
+  has_many :departments, dependent: :delete_all
 
-  validates :name, presence: true, length: {maximum: 100, too_long: "Se permiten máximo %´{count} caracteres."}
+  validates :name, presence: { message: Proc.new { ApplicationRecord.presence_msg("nombre") } }
+  validates :name, length: {maximum: 100, too_long: "Se permiten máximo %´{count} caracteres en el campo nombre."}
 end

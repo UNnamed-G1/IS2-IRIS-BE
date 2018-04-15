@@ -1,12 +1,14 @@
 class PhotosController < ApplicationController
   before_action :authenticate_user
-  before_action :set_photo, only: [:show, :update, :destroy]
+  before_action :set_photo, only: %i[show update destroy]
 
   # GET /photos
   def index
-    @photos = Photo.paginate(:page => params[:page], :per_page => 5)
-
-    render json: @photos, include: []
+    @photos = Photo.items(params[:page])
+    render json: {
+      photos: @photos,
+      total_pages: @photos.total_pages
+    }, include: []
   end
 
   # GET /photos/1
@@ -15,7 +17,8 @@ class PhotosController < ApplicationController
       render json: @photo.errors.messages
     else
       render json: @photo, include: []
-    end  end
+    end
+  end
 
   # POST /photos
   def create
@@ -43,16 +46,18 @@ class PhotosController < ApplicationController
       render json: @photo, include: []
     else
       render json: @photo.errors, status: 500
-    end  end
+    end
+  end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_photo
-      @photo = Photo.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def photo_params
-      params.require(:photo).permit(:link, :type_imageable)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_photo
+    @photo = Photo.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def photo_params
+    params.require(:photo).permit(:link, :type_imageable)
+  end
 end

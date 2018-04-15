@@ -8,6 +8,11 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
+# Indexes
+#
+#  index_schedule_users_on_schedule_id  (schedule_id)
+#  index_schedule_users_on_user_id      (user_id)
+#
 
 class ScheduleUser < ApplicationRecord
   belongs_to :user

@@ -1,10 +1,11 @@
+
 Rails.application.routes.draw do
   post 'user_token' => 'user_token#create'
   post 'google_user_token' => 'google_user_token#create'
 
   get 'users/current' => 'users#current'
- 
-  get 'users/current' => 'users#current'
+  post 'comments' => 'incoming_mails#receive_comments'
+
   get 'research_groups_news' => 'research_groups#news'
   get 'events_news' => 'events#news'
 
@@ -13,6 +14,7 @@ Rails.application.routes.draw do
   get 'careers_by_rg#rg_id=:id' => 'careers#search_careers_by_rg'
   get 'careers_by_user#usr_id=:id' => 'careers#search_careers_by_user'
   get 'careers_by_dept#dept_id=:id' => 'careers#search_careers_by_dept'
+  get 'depts_by_faculty#fac_id=:id' => 'departments#search_deps_by_faculty'
   get 'events_by_rg#rg_id=:id' => 'events#search_events_by_rg'
   get 'events_by_user#usr_id=:id' => 'events#search_events_by_user'
   get 'events_by_state#status=:status' => 'events#search_events_by_state'

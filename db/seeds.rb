@@ -52,7 +52,7 @@ end
         url: Faker::Internet.url
     )
     rg.update(photo: Photo.create(
-        link: Faker::Internet.url,
+        link: Faker::Avatar.image,
         imageable: rg
     ))
 end
@@ -65,7 +65,6 @@ end
         abstract: Faker::Lorem.paragraph,
         url: Faker::Internet.url,
         brief_description: Faker::Hacker.say_something_smart,
-        file_name: Faker::Hacker.adjective,
         type_pub: Faker::Number.between(0,5)
     )
 end
@@ -93,7 +92,7 @@ end
         name: Faker::Name.first_name,
         lastname: Faker::Name.last_name,
         username: Faker::Internet.user_name,
-        email: Faker::Internet.email,
+        email: Faker::Internet.user_name+"@unal.edu.co",
         professional_profile: Faker::Lorem.paragraph,
         user_type: Faker::Number.between(0,1),
         phone: Faker::PhoneNumber.cell_phone,
@@ -104,7 +103,7 @@ end
         password_confirmation: 'password'
     )
     u.update(photo: Photo.create(
-        link: Faker::Internet.url,
+        link: Faker::Avatar.image,
         imageable: u
     ))
 end
@@ -125,6 +124,14 @@ end
         hours_per_week: Faker::Number.between(1,10),
         user_id: Faker::Number.between(1,100),
         research_group_id: Faker::Number.between(1,50)
+    )
+end
+
+30.times do
+    EventUser.create(
+        type_user_event: Faker::Number::between(0, 2),
+        user_id: Faker::Number.between(1,10),
+        event_id: Faker::Number.between(1,10)
     )
 end
 
@@ -149,9 +156,14 @@ ResearchSubject.all.each do |rs|
 end
 
 User.all.each do |usr|
-    usr.events = Event.all.sample(rand(0..3))
-end
-
-User.all.each do |usr|
     usr.publications = Publication.all.sample(rand(0..3))
 end
+
+User.create(
+    name: "admin",
+    lastname: "admin",
+    email: "admin@unal.edu.co",
+    password: 'admin',
+    password_confirmation: 'admin',
+    user_type: 'admin'
+)

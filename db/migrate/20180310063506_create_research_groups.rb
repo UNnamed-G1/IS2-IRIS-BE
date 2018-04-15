@@ -8,7 +8,7 @@ class CreateResearchGroups < ActiveRecord::Migration[5.1]
       t.date :foundation_date, null: false
       t.integer :classification, null: false
       t.date :date_classification, null: false
-      t.string :url, limit: 300
+      t.string :url
 
       t.timestamps
     end
