@@ -2,7 +2,6 @@
 #
 # Table name: publication_research_groups
 #
-#  id                :integer          not null, primary key
 #  publication_id    :integer
 #  research_group_id :integer
 #  created_at        :datetime         not null

@@ -2,7 +2,6 @@
 #
 # Table name: event_users
 #
-#  id              :integer          not null, primary key
 #  type_user_event :integer          default("invitado"), not null
 #  user_id         :integer
 #  event_id        :integer
