@@ -2,7 +2,6 @@
 #
 # Table name: publication_research_groups
 #
-#  id                :integer          not null, primary key
 #  publication_id    :integer
 #  research_group_id :integer
 #  created_at        :datetime         not null
@@ -12,6 +11,11 @@
 #
 #  index_publication_research_groups_on_publication_id     (publication_id)
 #  index_publication_research_groups_on_research_group_id  (research_group_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (publication_id => publications.id)
+#  fk_rails_...  (research_group_id => research_groups.id)
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

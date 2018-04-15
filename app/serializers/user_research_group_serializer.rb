@@ -17,6 +17,11 @@
 #  index_user_research_groups_on_research_group_id  (research_group_id)
 #  index_user_research_groups_on_user_id            (user_id)
 #
+# Foreign Keys
+#
+#  fk_rails_...  (research_group_id => research_groups.id)
+#  fk_rails_...  (user_id => users.id)
+#
 
 class UserResearchGroupSerializer < ActiveModel::Serializer
   type :member
@@ -28,5 +33,11 @@ class UserResearchGroupSerializer < ActiveModel::Serializer
   belongs_to :user
   belongs_to :research_group
   
+  def type_urg
+    return object.type_urg.capitalize
+  end
 
+  def state
+    return object.state.capitalize
+  end
 end

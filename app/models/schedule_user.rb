@@ -2,7 +2,6 @@
 #
 # Table name: schedule_users
 #
-#  id          :integer          not null, primary key
 #  user_id     :integer
 #  schedule_id :integer
 #  created_at  :datetime         not null
