@@ -27,4 +27,8 @@ class Photo < ApplicationRecord
       imageable: imageable
     )
   end
+
+  def self.items(p)
+    paginate(page: p, per_page: 12)
+  end
 end

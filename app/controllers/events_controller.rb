@@ -1,13 +1,16 @@
 class EventsController < ApplicationController
-  before_action :authenticate_user
+  before_action :authenticate_user, except: %i[index show news]
   before_action :authorize_as_author_or_lider, only: %i[destroy update]
   # before_action :authorize_create, only: [:create]
   before_action :set_event, only: %i[show update destroy]
 
   # GET /events
   def index
-    @events = Event.all
-    render json: @events, include: []
+    @events = Event.items(params[:page])
+    render json: {
+      events: @events,
+      total_pages: @events.total_pages
+    }, include: []
   end
 
   # GET /events/1
@@ -55,11 +58,6 @@ class EventsController < ApplicationController
     end
   end
 
-  def paginate
-    events = Event.paginate(page: params[:page], per_page: 5)
-    render json: events, include: []
-  end
-
   def search_events_by_rg
     events_by_rg = Event.search_events_by_rg(params[:id])
     render json: events_by_rg, fields: %i[id name topic type_ev], include: []
@@ -91,8 +89,9 @@ class EventsController < ApplicationController
   end
 
   def news
-    @events = Event.news
-    render json: @events, include: [:photo]
+    events = Event.news
+    fields = %i[topic description date]
+    render json: events, fields: fields, include: [:photo]
   end
 
   private

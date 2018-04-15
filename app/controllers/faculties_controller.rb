@@ -47,11 +47,6 @@ class FacultiesController < ApplicationController
     end
   end
 
-  def paginate
-    faculty = Faculty.paginate(page: params[:page], per_page: 5)
-    render json: faculty, include: []
-  end
-
   private
 
   # Use callbacks to share common setup or constraints between actions.

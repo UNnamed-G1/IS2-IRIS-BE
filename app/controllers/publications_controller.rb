@@ -6,8 +6,11 @@ class PublicationsController < ApplicationController
 
   # GET /publications
   def index
-    @publications = Publication.all
-    render json: @publications, include: []
+    @publications = Publication.items(params[:page])
+    render json: {
+      publications: @publications,
+      total_pages: @publications.total_pages
+    }, include: []
   end
 
   # GET /publications/1
@@ -46,11 +49,6 @@ class PublicationsController < ApplicationController
     else
       render json: @publication.errors, status: 500
     end
-  end
-
-  def paginate
-    publications = Publication.paginate(page: params[:page], per_page: 5)
-    render json: publications, include: []
   end
 
   def search_publications_by_rg

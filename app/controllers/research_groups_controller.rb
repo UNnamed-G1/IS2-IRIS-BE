@@ -1,13 +1,16 @@
 class ResearchGroupsController < ApplicationController
-  before_action :authenticate_user, except: %i[index show]
+  before_action :authenticate_user, except: %i[index show news]
   before_action :authorize_as_admin, only: %i[destroy create]
   before_action :authorize_update, only: [:update]
   before_action :set_research_group, only: %i[show update destroy]
 
   # GET /research_groups
   def index
-    @research_groups = ResearchGroup.all
-    render json: @research_groups, include: []
+    @research_groups = ResearchGroup.items(params[:page])
+    render json: {
+      research_groups: @research_groups,
+      total_pages: @research_groups.total_pages
+    }, include: []
   end
 
   # GET /research_groups/1
@@ -52,12 +55,6 @@ class ResearchGroupsController < ApplicationController
     end
   end
 
-  def paginate
-    research_groups = ResearchGroup.paginate(page: params[:page], per_page: 5)
-    puts research_groups.total_pages
-    render json: research_groups, include: []
-  end
-
   def search_rgs_by_career
     rgs_by_career = ResearchGroup.search_rgs_by_career(params[:id])
     render json: rgs_by_career, fields: %i[id name], include: []
@@ -80,7 +77,8 @@ class ResearchGroupsController < ApplicationController
 
   def news
     research_groups = ResearchGroup.news
-    render json: research_groups, include: [:photo]
+    fields = %i[name description updated_at]
+    render json: research_groups, fields: fields, include: [:photo]
   end
 
   private

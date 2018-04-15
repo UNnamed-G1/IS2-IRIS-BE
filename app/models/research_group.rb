@@ -37,41 +37,44 @@ class ResearchGroup < ApplicationRecord
     validates :foundation_date, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha de creación") } }
     validates :classification, presence: { message: Proc.new { ApplicationRecord.presence_msg("clasificación") } }
     validates :date_classification, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha de clasificación") } }
-    
+
     validates :name, length: {maximum: 100, too_long: "Se permiten máximo %{count} caracteres para el campo nombre."}
     validates :description, length: { maximum: 1000, too_long: "Se permiten maximo %{count} caracteres para el campo descripción." }
-    validates :strategic_focus, length: { maximum: 1000, too_long: "Se permiten maximo %{count} caracteres para el campo enfoque estratégico." } 
-    validates :research_priorities, length: { maximum: 1000, too_long: "Se permiten maximo %{count} caracteres para el campo prioridades de investigación." } 
+    validates :strategic_focus, length: { maximum: 1000, too_long: "Se permiten maximo %{count} caracteres para el campo enfoque estratégico." }
+    validates :research_priorities, length: { maximum: 1000, too_long: "Se permiten maximo %{count} caracteres para el campo prioridades de investigación." }
     validates :classification, inclusion: { in: classifications, message: "El tipo de clasificación no es válido."}
 
-    
+    def self.items(p)
+      paginate(page: p, per_page: 12)
+    end
+
     ##Queries for searching
-    
+
     def self.search_rgs_by_career(career_id)
         select(:id, :name).joins(:careers)
                           .where('careers.id' => career_id) if career_id.present?
     end
-    
+
     def self.search_rgs_by_name(keywords)
         select(:id, :name).where("name LIKE ?","%#{keywords}%") if keywords.present?
     end
-    
+
     def self.search_rgs_by_class(cl_type)
         select(:id, :name).where(classification: cl_type) if cl_type.present?
     end
-    
+
     def self.search_rgs_by_dept(dep_id)
         select(:id, :name).joins(:careers)
                           .where('careers.department_id' => dep_id) if dep_id.present?
-    end  
+    end
 
     def self.news
-        self.order(:updated_at).last(3)
-    end 
+        select(:name, :description, :updated_at).order(:updated_at).last(3)
+    end
 
     def member_is_lider?(member)
         m = user_research_groups.find_by(user_id: member.id)
-        return m.type_urg == "lider" 
+        return m.type_urg == "lider"
     end
 
 end

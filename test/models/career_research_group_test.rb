@@ -13,6 +13,11 @@
 #  index_career_research_groups_on_career_id          (career_id)
 #  index_career_research_groups_on_research_group_id  (research_group_id)
 #
+# Foreign Keys
+#
+#  fk_rails_...  (career_id => careers.id)
+#  fk_rails_...  (research_group_id => research_groups.id)
+#
 
 require 'test_helper'
 
