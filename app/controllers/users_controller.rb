@@ -33,7 +33,7 @@ class UsersController < ApplicationController
       pic = params[:picture] 
       @user.update(photo: Photo.create_photo(pic, @user)) if pic
       UserMailer.sign_up_confirmation(@user).deliver_now
-      render json: @user, status: :created, location: @user, include: []
+      render json: @user, status: :created, location: @user, include: [:photo]
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -42,7 +42,9 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   def update
     if @user.update(user_params)
-      render json: @user, include: []
+      picture = params[:picture]
+      @user.photo.update(picture: picture) if picture
+      render json: @user, include: [:photo]
     else
       render json: @user.errors, status: :unprocessable_entity
     end
