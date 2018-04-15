@@ -23,4 +23,13 @@ class PublicationSerializer < ActiveModel::Serializer
 
   has_many :research_groups
   has_many :users
+
+  def document
+    
+    if object.document.url
+      return Base64.strict_encode64(File.read("#{Rails.root}/public/#{object.document.url}"))
+    else 
+      return ''
+    end
+  end
 end

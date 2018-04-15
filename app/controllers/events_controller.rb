@@ -1,7 +1,6 @@
 class EventsController < ApplicationController
   before_action :authenticate_user, except: %i[index show news]
   before_action :authorize_as_author_or_lider, only: %i[destroy update]
-  # before_action :authorize_create, only: [:create]
   before_action :set_event, only: %i[show update destroy]
 
   # GET /events
@@ -18,7 +17,7 @@ class EventsController < ApplicationController
     if @event.errors.any?
       render json: @event.errors.messages
     else
-      render json: @event, include: []
+      render json: @event, include: [:photos]
     end
   end
 
@@ -107,15 +106,12 @@ class EventsController < ApplicationController
   end
 
   def authorize_as_author_or_lider
-    group_id = Event.get_group_id(params[:id])
-    unless current_user.is_author_event?(params[:id]) || current_user.is_lider_of_research_group?(group_id)
+    event_id = params[:id]
+    group_id = Event.get_research_group_id(event_id)
+    puts group_id
+    unless current_user.is_author_event?(event_id) || current_user.is_lider_of_research_group?(group_id)
       render_unauthorize
     end
   end
 
-  def authorize_create
-    group_id = Event.get_group_id(params[:id])
-    unless current_user.is_lider_of_research_group?(group_id)
-    end
-  end
 end

@@ -103,22 +103,26 @@ class PublicationsController < ApplicationController
     params.require(:publication).permit(:name, :date, :abstract, :document, :brief_description, :type_pub)
   end
 
-  def authorize_as_lider
-    unless current_user.is_lider_of_research_group?(params[:id_group])
-      render_unauthorize
-    end
-  end
-
-  def authorize_update
+  def is_lider_research_group_publication?
     group_ids = Publication.get_research_groups(params[:id])
     is_lider = false
     for group in group_ids
-
       if current_user.is_lider_of_research_group?(group)
         is_lider = true
         break
       end
     end
+    return is_lider
+  end
+
+  def authorize_as_lider
+    unless is_lider_research_group_publication?
+      render_unauthorize
+    end
+  end
+
+  def authorize_update
+    is_lider = is_lider_research_group_publication?
     unless current_user.is_author_publication?(params[:id]) || is_lider
       render_unauthorize
     end

@@ -96,4 +96,9 @@ class Event < ApplicationRecord
     def self.news
         select(:topic, :description, :date).order(:date).first(3)
     end
+
+    def self.get_research_group_id(event_id)
+        event = Event.find(event_id)
+        return event.research_group.id
+    end
 end

@@ -55,6 +55,14 @@ class ResearchGroupsController < ApplicationController
     end
   end
 
+  # GET /research_groups/:id
+  def get_photo
+    set_research_group
+    response = {}
+    response["photo"] = Base64.strict_encode64(File.read("#{Rails.root}/public/#{@research_group.photo.picture.url}"))
+    render json: response, status: :ok
+  end
+
   def search_rgs_by_career
     rgs_by_career = ResearchGroup.search_rgs_by_career(params[:id])
     render json: rgs_by_career, fields: %i[id name], include: []

@@ -148,7 +148,6 @@ class User < ApplicationRecord
     return false unless is_member_of_research_group?(group_id)
 
     result = user_research_groups.where("user_id = ? AND research_group_id = ?", id, group_id).lider.first
-
     if result
       return true
     else
