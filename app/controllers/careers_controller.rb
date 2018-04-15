@@ -1,6 +1,6 @@
 class CareersController < ApplicationController
-  before_action :authenticate_user
-  before_action :authorize_as_admin, except: %i[index show search_careers_by_dept]
+  #before_action :authenticate_user
+  #before_action :authorize_as_admin, except: %i[index show search_careers_by_dept]
   before_action :set_career, only: %i[show update destroy]
 
   # GET /careers
