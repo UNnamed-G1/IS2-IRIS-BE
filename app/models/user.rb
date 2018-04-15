@@ -170,24 +170,17 @@ class User < ApplicationRecord
   def is_author_event?(event_id)
     result = event_users.where("user_id = ? AND event_id = ?", id, event_id).author.first
 
-<<<<<<< HEAD
     if result
-=======
-    if result
->>>>>>> development
       return true
     else
       return false
     end
   end
 
-<<<<<<< HEAD
-=======
   def self.find_by_email(email)
     return User.find_by email: email
   end
 
->>>>>>> development
   private
     def put_username
       username = self.email.split('@').first
