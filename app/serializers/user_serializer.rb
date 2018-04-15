@@ -51,5 +51,8 @@ class UserSerializer < ActiveModel::Serializer
     return object.name + " " + object.lastname
   end
 
+  def user_type
+    return object.user_type.capitalize
+  end
 
 end

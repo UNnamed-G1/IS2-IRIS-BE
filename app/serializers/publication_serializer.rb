@@ -23,4 +23,8 @@ class PublicationSerializer < ActiveModel::Serializer
 
   has_many :research_groups
   has_many :users
+
+  def type_pub
+    return object.type_pub.capitalize
+  end
 end
