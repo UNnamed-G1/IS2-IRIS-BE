@@ -9,7 +9,7 @@ class EventsController < ApplicationController
     @events = Event.items(params[:page])
     render json: {
       events: @events,
-      total_pages: @events.total_pages
+      total_pages: @events.total_pages,
     }, include: []
   end
 
@@ -79,6 +79,14 @@ class EventsController < ApplicationController
   def evs_by_usr_and_type
     evs_by_usr_and_type = Event.evs_by_usr_and_type(params[:id])
     render json: evs_by_usr_and_type, include: []
+  end
+
+  def evs_by_editable
+    evs = Event.evs_by_editable(current_user[:id], params[:page])
+    render json: {
+             events: evs,
+             total_pages: evs.total_pages,
+           }, include: []
   end
 
   def news

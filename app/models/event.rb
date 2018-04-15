@@ -24,76 +24,104 @@
 #
 
 class Event < ApplicationRecord
-    has_many :event_users, dependent: :delete_all
-    has_many :users, through: :event_users
-    has_many :photos, as: :imageable
-    belongs_to :research_group
+  include ActiveRecord::UnionScope
 
-    enum type_ev: [:privado, :publico]
-    enum frequence: [:unico, :repetitivo]
-    enum state: [:activo, :inactivo]
+  has_many :event_users, dependent: :delete_all
+  has_many :users, through: :event_users
+  has_many :photos, as: :imageable
+  belongs_to :research_group
 
-    validates :topic, presence: { message: Proc.new { ApplicationRecord.presence_msg("tema") } }
-    validates :description, presence: { message: Proc.new { ApplicationRecord.presence_msg("descripción") } }
-    validates :state, presence: { message: Proc.new { ApplicationRecord.presence_msg("estado") } }
-    validates :type_ev, presence: { message: Proc.new { ApplicationRecord.presence_msg("tipo de evento") } }
-    validates :date, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha") } }
-    validates :frequence, presence: { message: Proc.new { ApplicationRecord.presence_msg("frecuencia") } }
-    validates :end_time, presence: { message: Proc.new { ApplicationRecord.presence_msg("hora de finalización") } }
-    validates :type_ev, inclusion: {in: type_evs, message: "El tipo de evento seleccionado no es valido."}
-    validates :frequence, inclusion: {in: frequences, message: "El tipo de evento seleccionada no es valida."}
-    validates :state, inclusion: {in: states, message: "El estado seleccionado no es valido."}
+  enum type_ev: [:privado, :publico]
+  enum frequence: [:unico, :repetitivo]
+  enum state: [:activo, :inactivo]
 
-    def self.items(p)
-      paginate(page: p, per_page: 12)
-    end
+  validates :topic, presence: {message: Proc.new { ApplicationRecord.presence_msg("tema") }}
+  validates :description, presence: {message: Proc.new { ApplicationRecord.presence_msg("descripción") }}
+  validates :state, presence: {message: Proc.new { ApplicationRecord.presence_msg("estado") }}
+  validates :type_ev, presence: {message: Proc.new { ApplicationRecord.presence_msg("tipo de evento") }}
+  validates :date, presence: {message: Proc.new { ApplicationRecord.presence_msg("fecha") }}
+  validates :frequence, presence: {message: Proc.new { ApplicationRecord.presence_msg("frecuencia") }}
+  validates :end_time, presence: {message: Proc.new { ApplicationRecord.presence_msg("hora de finalización") }}
+  validates :type_ev, inclusion: {in: type_evs, message: "El tipo de evento seleccionado no es valido."}
+  validates :frequence, inclusion: {in: frequences, message: "El tipo de evento seleccionada no es valida."}
+  validates :state, inclusion: {in: states, message: "El estado seleccionado no es valido."}
 
-    def self.get_group_id(event_id)
-        return self.find(event_id).research_group_id
-    end
+  def self.items(p)
+    paginate(page: p, per_page: 12)
+  end
 
-    def is_public?
-        return type_ev == "publico"
-    end
+  def self.get_group_id(event_id)
+    return self.find(event_id).research_group_id
+  end
 
-    def is_private?
-        return type_ev == "private"
-    end
+  def is_public?
+    return type_ev == "publico"
+  end
 
-    ###Queries for searching
+  def is_private?
+    return type_ev == "private"
+  end
 
-    def self.search_events_by_rg(ev_id)
-        select(:id, :topic, :type_ev).where(research_group_id: ev_id) if ev_id.present?
-    end
+  ###Queries for searching
 
-    def self.search_events_by_user(usr_id)
-        select(:id, :topic, :type_ev).joins(:users)
-                                            .where('users.id' => usr_id) if usr_id.present?
-    end
+  def self.search_events_by_rg(ev_id)
+    select(:id, :topic, :type_ev).where(research_group_id: ev_id) if ev_id.present?
+  end
 
-    def self.search_events_by_state(status)
-        select(:id, :topic, :type_ev).where(state: status) if status.present?
-    end
+  def self.search_events_by_user(usr_id)
+    select(:id, :topic, :type_ev).joins(:users)
+      .where("users.id" => usr_id) if usr_id.present?
+  end
 
-    def self.search_events_by_freq(freq)
-        select(:id, :topic, :type_ev).where(frequence: freq) if freq.present?
-    end
+  def self.search_events_by_state(status)
+    select(:id, :topic, :type_ev).where(state: status) if status.present?
+  end
 
-    def self.search_events_by_type(type)
-        select(:id, :topic, :type_ev).where(type_ev: type) if type.present?
-    end
+  def self.search_events_by_freq(freq)
+    select(:id, :topic, :type_ev).where(frequence: freq) if freq.present?
+  end
 
-    scope :public_evs, ->{select(:id, :topic, :type_ev, :description, :date, :frequence, :end_time, :state, :research_group_id).where(type_ev: 1)}
+  def self.search_events_by_type(type)
+    select(:id, :topic, :type_ev).where(type_ev: type) if type.present?
+  end
 
-    scope :private_evs_by_user, -> (usr_id){select(:id, :topic, :type_ev, :description, :date, :frequence, :end_time, :state, :research_group_id)
-                                            .joins(:users)
-                                            .where('users.id': usr_id, type_ev: 0)}
+  scope :public_evs, -> { select(:id, :topic, :type_ev, :description, :date, :frequence, :end_time, :state, :research_group_id).where(type_ev: 1) }
 
-    def self.evs_by_usr_and_type(usr_id)
-        public_evs + private_evs_by_user(usr_id)
-    end
+  scope :private_evs_by_user, -> (usr_id) {
+          select(:id, :topic, :type_ev, :description, :date, :frequence, :end_time, :state, :research_group_id)
+            .joins(:users)
+            .where('users.id': usr_id, type_ev: 0)
+        }
 
-    def self.news
-        select(:topic, :description, :date).order(:date).first(3)
-    end
+  scope :evs_by_author, -> (usr_id) {
+          joins(:users)
+            .where('users.id': usr_id)
+            .merge(EventUser.author)
+            .distinct
+        }
+
+  scope :evs_by_lider, -> (usr_id) {
+          joins(:users, :research_group)
+            .merge(
+              ResearchGroup
+                .joins(:user_research_groups)
+                .where('user_research_groups.user_id': usr_id)
+                .merge(UserResearchGroup.lider)
+            )
+            .distinct
+        }
+
+  scope :evs_by_editable, -> (usr_id, page) {
+          union_scope(evs_by_author(usr_id),
+                      evs_by_lider(usr_id))
+            .paginate(page: page, per_page: 12)
+        }
+
+  def self.evs_by_usr_and_type(usr_id)
+    public_evs + private_evs_by_user(usr_id)
+  end
+
+  def self.news
+    select(:topic, :description, :date).order(:date).first(3)
+  end
 end
