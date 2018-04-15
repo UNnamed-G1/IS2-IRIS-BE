@@ -9,7 +9,9 @@ Rails.application.routes.draw do
   get "research_groups_news" => "research_groups#news"
   get "events_news" => "events#news"
 
-  # Search
+  get 'research_groups/photo/:id' => 'research_groups#get_photo'
+
+# Search
   # Nota el simbolo '#' se traduce a la ruta como '%23'
   get "careers_by_rg#rg_id=:id" => "careers#search_careers_by_rg"
   get "careers_by_user#usr_id=:id" => "careers#search_careers_by_user"

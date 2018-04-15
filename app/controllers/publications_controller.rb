@@ -1,6 +1,6 @@
 class PublicationsController < ApplicationController
   before_action :authenticate_user, except: %i[show index]
-  before_action :authorize_as_lider, only: %i[create destroy]
+  before_action :authorize_as_lider, only: %i[destroy]
   before_action :authorize_update, only: [:update]
   before_action :set_publication, only: %i[show update destroy]
 
@@ -100,25 +100,29 @@ class PublicationsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def publication_params
-    params.require(:publication).permit(:name, :date, :abstract, :url, :brief_description, :file_name, :type_pub)
+    params.require(:publication).permit(:name, :date, :abstract, :document, :brief_description, :type_pub)
   end
 
-  def authorize_as_lider
-    unless current_user.is_lider_of_research_group?(params[:id])
-      render_unauthorize
-    end
-  end
-
-  def authorize_update
+  def is_lider_research_group_publication?
     group_ids = Publication.get_research_groups(params[:id])
     is_lider = false
     for group in group_ids
-
       if current_user.is_lider_of_research_group?(group)
         is_lider = true
         break
       end
     end
+    return is_lider
+  end
+
+  def authorize_as_lider
+    unless is_lider_research_group_publication?
+      render_unauthorize
+    end
+  end
+
+  def authorize_update
+    is_lider = is_lider_research_group_publication?
     unless current_user.is_author_publication?(params[:id]) || is_lider
       render_unauthorize
     end
