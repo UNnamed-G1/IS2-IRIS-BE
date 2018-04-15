@@ -2,7 +2,6 @@
 #
 # Table name: event_users
 #
-#  id              :integer          not null, primary key
 #  type_user_event :integer          default("invitado"), not null
 #  user_id         :integer
 #  event_id        :integer
@@ -13,6 +12,11 @@
 #
 #  index_event_users_on_event_id  (event_id)
 #  index_event_users_on_user_id   (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (event_id => events.id)
+#  fk_rails_...  (user_id => users.id)
 #
 
 class EventUser < ApplicationRecord

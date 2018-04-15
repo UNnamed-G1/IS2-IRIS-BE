@@ -6,7 +6,7 @@
 #  name              :string(255)      not null
 #  date              :date             not null
 #  abstract          :text             not null
-#  url               :string           not null
+#  document          :text
 #  brief_description :string(500)      not null
 #  type_pub          :integer          not null
 #  created_at        :datetime         not null

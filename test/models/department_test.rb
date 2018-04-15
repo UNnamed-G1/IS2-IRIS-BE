@@ -12,6 +12,10 @@
 #
 #  index_departments_on_faculty_id  (faculty_id)
 #
+# Foreign Keys
+#
+#  fk_rails_...  (faculty_id => faculties.id)
+#
 
 require 'test_helper'
 
