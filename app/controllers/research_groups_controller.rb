@@ -10,7 +10,7 @@ class ResearchGroupsController < ApplicationController
     render json: {
             research_groups: research_groups,
             total_pages: research_groups.total_pages
-           }, include: []
+           }, include: [:photo]
   end
 
   # GET /research_groups/1
@@ -18,7 +18,7 @@ class ResearchGroupsController < ApplicationController
     if @research_group.errors.any?
       render json: @research_group.errors.messages
     else
-      render json: @research_group, include: ['users', 'members', 'members.user'] # This is an example of associations that are brought
+      render json: @research_group, include: ['users', 'members', 'members.user', :photo] # This is an example of associations that are brought
     end
   end
 
