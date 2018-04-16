@@ -6,11 +6,11 @@ class ResearchGroupsController < ApplicationController
 
   # GET /research_groups
   def index
-    @research_groups = ResearchGroup.items(params[:page])
+    research_groups = ResearchGroup.items(params[:page])
     render json: {
-      research_groups: @research_groups,
-      total_pages: @research_groups.total_pages
-    }, include: []
+            research_groups: research_groups,
+            total_pages: research_groups.total_pages
+           }, include: []
   end
 
   # GET /research_groups/1
@@ -27,7 +27,7 @@ class ResearchGroupsController < ApplicationController
     @research_group = ResearchGroup.new(research_group_params)
 
     if @research_group.save
-      picture = params[:picture] 
+      picture = params[:picture]
       @research_group.update(photo: Photo.create_photo(picture, @research_group)) if picture
       render json: @research_group, status: :created, location: @research_group, include: [:photo]
     else
@@ -64,23 +64,35 @@ class ResearchGroupsController < ApplicationController
   end
 
   def search_rgs_by_career
-    rgs_by_career = ResearchGroup.search_rgs_by_career(params[:id])
-    render json: rgs_by_career, fields: %i[id name], include: []
+    rgs_by_career = ResearchGroup.search_rgs_by_career(params[:id]).items(params[:page])
+    render json: {
+            research_groups: rgs_by_career,
+            total_pages: rgs_by_career.total_pages
+           }, fields: %i[id name], include: []
   end
 
   def search_rgs_by_name
-    rgs_by_name = ResearchGroup.search_rgs_by_name(params[:keywords])
-    render json: rgs_by_name, fields: %i[id name], include: []
+    rgs_by_name = ResearchGroup.search_rgs_by_name(params[:keywords]).items(params[:page])
+    render json: {
+            research_groups: rgs_by_name,
+            total_pages: rgs_by_name.total_pages
+           }, fields: %i[id name], include: []
   end
 
   def search_rgs_by_class
-    rgs_by_class = ResearchGroup.search_rgs_by_class(params[:cl_type])
-    render json: rgs_by_class, fields: %i[id name], include: []
+    rgs_by_class = ResearchGroup.search_rgs_by_class(params[:cl_type]).items(params[:page])
+    render json: {
+            research_groups: rgs_by_class,
+            total_pages: rgs_by_class.total_pages
+           }, fields: %i[id name], include: []
   end
 
   def search_rgs_by_department
-    rgs_by_department = ResearchGroup.search_rgs_by_dept(params[:id])
-    render json: rgs_by_department, fields: %i[id name], include: []
+    rgs_by_department = ResearchGroup.search_rgs_by_dept(params[:id]).items(params[:page])
+    render json: {
+            research_groups: rgs_by_department,
+            total_pages: rgs_by_department.total_pages
+           }, fields: %i[id name], include: []
   end
 
   def news

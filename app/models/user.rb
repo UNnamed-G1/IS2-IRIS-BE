@@ -12,15 +12,15 @@
 #  user_type            :integer          default("estudiante"), not null
 #  phone                :string(20)
 #  office               :string(20)
-#  cvlac_link           :string
-#  google_sign_up       :boolean
+#  cvlac_link           :text
+#  google_sign_up       :boolean          default(FALSE)
 #  career_id            :integer
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #
 # Indexes
 #
-#  index_users_on_career_id  (career_id)
+# index_users_on_career_id  (career_id)
 #
 # Foreign Keys
 #
@@ -68,7 +68,7 @@ class User < ApplicationRecord
   def self.items(p)
     paginate(page: p, per_page: 12)
   end
-  
+
   def self.create_google_user(data)
     newUser = find_by email: data['email']
     if !newUser

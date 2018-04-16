@@ -48,8 +48,11 @@ class SchedulesController < ApplicationController
   end
 
   def find_schedules_by_user
-    find_schedules_by_user = Schedule.find_schedules_by_user(params[:id])
-    render json: find_schedules_by_user, fields: [:start_date], include: []
+    find_schedules_by_user = Schedule.find_schedules_by_user(params[:id]).items(params[:page])
+    render json: {
+            schedules: find_schedules_by_user,
+            total_pages: find_schedules_by_user.total_pages
+           }, fields: [:start_date], include: []
   end
 
   private
@@ -61,6 +64,6 @@ class SchedulesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def schedule_params
-    params.require(:schedule).permit(:start_date, :end_date)
+    params.require(:schedule).permit(:start_hour, :duration)
   end
 end

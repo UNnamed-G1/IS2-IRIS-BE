@@ -1,7 +1,7 @@
 class CreatePublications < ActiveRecord::Migration[5.1]
   def change
     create_table :publications do |t|
-      t.string :name, limit: 255, null: false
+      t.text :name, null: false
       t.date :date, null: false
       t.text :abstract, null: false
       t.text :document

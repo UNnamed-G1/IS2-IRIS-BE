@@ -10,8 +10,8 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.integer :user_type, null: false, default: 0
       t.string :phone, limit: 20
       t.string :office, limit: 20
-      t.string :cvlac_link
-      t.boolean :google_sign_up
+      t.text :cvlac_link
+      t.boolean :google_sign_up, default: false
 
       t.references :career, foreign_key: true, null: true
 

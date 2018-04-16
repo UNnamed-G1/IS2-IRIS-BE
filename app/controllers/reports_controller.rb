@@ -5,6 +5,10 @@ class  ReportsController  <  ActionController::Base
   def user_history
 	   @reports_users = User.all
   end
+<<<<<<< HEAD
+=======
+
+>>>>>>> 046431f2382e4c1d41a3b1789181529d0380d97e
   def show
     user_history
     #group_history

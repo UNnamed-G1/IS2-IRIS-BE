@@ -3,7 +3,7 @@
 # Table name: publications
 #
 #  id                :integer          not null, primary key
-#  name              :string(255)      not null
+#  name              :text             not null
 #  date              :date             not null
 #  abstract          :text             not null
 #  document          :text
@@ -28,7 +28,6 @@ class Publication < ApplicationRecord
     validates :abstract, presence: { message: Proc.new { ApplicationRecord.presence_msg("abstract") } }
     validates :brief_description, presence: { message: Proc.new { ApplicationRecord.presence_msg("descripción breve") } }
     validates :type_pub, presence: { message: Proc.new { ApplicationRecord.presence_msg("tipo de publicación") } }
-    validates :name, length: { maximum: 255, too_long: "Se permiten maximo %{count} caracteres para el campo nombre." }
     validates :brief_description, length: { maximum: 500, too_long: "Se permiten maximo %{count} caracteres para el campo descripción breve." }
     validates :type_pub, inclusion: {in: type_pubs, message: "El tipo de publicación seleccionado no es valida."}
 
@@ -41,6 +40,10 @@ class Publication < ApplicationRecord
 
     ###Queries for seaching
 
+    def self.search_publications_by_name(keywords)
+        select(:id, :name, :type_pub).where("name LIKE ?","%#{keywords}%") if keywords.present?
+    end
+
     def self.search_publications_by_rg(rg_id)
         select(:id, :name, :type_pub).joins(:research_groups)
                           .where('research_groups.id' => rg_id) if rg_id.present?
@@ -52,7 +55,7 @@ class Publication < ApplicationRecord
     end
 
     def self.search_publications_by_type(type)
-        where(type_pub: type) if type.present?
+        select(:id, :name, :type_pub).where(type_pub: type) if type.present?
     end
 
     def self.search_p_by_rg_and_type(rg_id, type)
@@ -62,6 +65,7 @@ class Publication < ApplicationRecord
     def self.get_research_groups(publication_id)
         return find(publication_id).research_groups.pluck(:id)
     end
+    
     ###Queries for statistics
     def self.total_pubs_by_user
       joins(:users).group('users.id').order('COUNT(users.id) DESC, id')

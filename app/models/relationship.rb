@@ -20,5 +20,5 @@ class Relationship < ApplicationRecord
 
   validates :followed_id, :follower_id, presence: true
   validates :followed_id, uniqueness: { scope: :follower_id, message: "Esta relación ya se encuentra presente." }
-  
+
 end
