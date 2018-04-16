@@ -9,7 +9,7 @@ class EventsController < ApplicationController
     render json: {
       events: @events,
       total_pages: @events.total_pages,
-    }, include: []
+    }, include: [:photo]
   end
 
   # GET /events/1
@@ -110,7 +110,7 @@ class EventsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def event_params
-    params.require(:event).permit(:topic, :description, :type_ev, :date, :frequence, :end_time, :state, :research_group_id)
+    params.require(:event).permit(:topic, :description, :type_ev, :date, :frequence, :duration, :state, :research_group_id)
   end
 
   def authorize_as_author_or_lider

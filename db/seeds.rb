@@ -29,8 +29,8 @@ end
 
 100.times do
     Schedule.create(
-        start_date: Faker::Date.between(1.days.from_now, 4.days.from_now),
-        end_date: Faker::Date.between(6.days.from_now, 9.days.from_now)
+        start_hour: Faker::Date.between(0, 23),
+        duration: Faker::Number.between(1, 5)
     )
 end
 
@@ -75,7 +75,7 @@ end
         type_ev: Faker::Number.between(0,1),
         date: Faker::Time.backward(20),
         frequence: Faker::Number.between(0,1),
-        end_time: Faker::Time.forward(2),
+        duration: "01:18:19",
         state: Faker::Number.between(0,1)
     )
     5.times do
