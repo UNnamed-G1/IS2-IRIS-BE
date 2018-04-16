@@ -19,6 +19,9 @@ class Photo < ApplicationRecord
 
   mount_uploader :picture, PictureUploader
 
+  validates_integrity_of :picture
+  validates_processing_of :picture
+
   validates :imageable_type, presence: true  
 
   def self.create_photo(picture, imageable)
