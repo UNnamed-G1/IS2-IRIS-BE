@@ -1,8 +1,8 @@
 class CreatePhotos < ActiveRecord::Migration[5.1]
   def change
     create_table :photos do |t|
-      t.text :link, presence: true
-      t.string :imageable_type, presence: true
+      t.text :picture
+      t.string :imageable_type, null: false
       t.references :imageable, polymorphic: true, index: true
       t.timestamps
     end

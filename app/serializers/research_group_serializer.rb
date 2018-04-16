@@ -29,4 +29,7 @@ class ResearchGroupSerializer < ActiveModel::Serializer
   has_many :user_research_groups, key: :members
   has_one :photo
 
+  def classification
+    return object.classification.capitalize
+  end
 end

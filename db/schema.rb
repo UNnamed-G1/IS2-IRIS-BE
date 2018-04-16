@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 20180322060224) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "career_research_groups", force: :cascade do |t|
+  create_table "career_research_groups", id: false, force: :cascade do |t|
     t.bigint "career_id"
     t.bigint "research_group_id"
     t.datetime "created_at", null: false
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 20180322060224) do
     t.index ["faculty_id"], name: "index_departments_on_faculty_id"
   end
 
-  create_table "event_users", force: :cascade do |t|
+  create_table "event_users", id: false, force: :cascade do |t|
     t.integer "type_user_event", default: 0, null: false
     t.bigint "user_id"
     t.bigint "event_id"
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 20180322060224) do
   end
 
   create_table "photos", force: :cascade do |t|
-    t.text "link"
+    t.text "picture"
     t.string "imageable_type"
     t.bigint "imageable_id"
     t.datetime "created_at", null: false
@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(version: 20180322060224) do
     t.index ["imageable_type", "imageable_id"], name: "index_photos_on_imageable_type_and_imageable_id"
   end
 
-  create_table "publication_research_groups", force: :cascade do |t|
+  create_table "publication_research_groups", id: false, force: :cascade do |t|
     t.bigint "publication_id"
     t.bigint "research_group_id"
     t.datetime "created_at", null: false
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 20180322060224) do
     t.index ["research_group_id"], name: "index_publication_research_groups_on_research_group_id"
   end
 
-  create_table "publication_users", force: :cascade do |t|
+  create_table "publication_users", id: false, force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "publication_id"
     t.datetime "created_at", null: false
@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 20180322060224) do
     t.string "name", limit: 255, null: false
     t.date "date", null: false
     t.text "abstract", null: false
-    t.string "url", null: false
+    t.text "document"
     t.string "brief_description", limit: 500, null: false
     t.integer "type_pub", null: false
     t.datetime "created_at", null: false
@@ -133,7 +133,7 @@ ActiveRecord::Schema.define(version: 20180322060224) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "research_subject_research_groups", force: :cascade do |t|
+  create_table "research_subject_research_groups", id: false, force: :cascade do |t|
     t.bigint "research_subject_id"
     t.bigint "research_group_id"
     t.datetime "created_at", null: false
@@ -142,7 +142,7 @@ ActiveRecord::Schema.define(version: 20180322060224) do
     t.index ["research_subject_id"], name: "index_research_subject_research_groups_on_research_subject_id"
   end
 
-  create_table "research_subject_users", force: :cascade do |t|
+  create_table "research_subject_users", id: false, force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "research_subject_id"
     t.datetime "created_at", null: false
@@ -157,7 +157,7 @@ ActiveRecord::Schema.define(version: 20180322060224) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "schedule_users", force: :cascade do |t|
+  create_table "schedule_users", id: false, force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "schedule_id"
     t.datetime "created_at", null: false
@@ -198,6 +198,7 @@ ActiveRecord::Schema.define(version: 20180322060224) do
     t.string "phone", limit: 20
     t.string "office", limit: 20
     t.string "cvlac_link"
+    t.boolean "google_sign_up"
     t.bigint "career_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
