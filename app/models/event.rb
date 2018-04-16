@@ -85,11 +85,10 @@ class Event < ApplicationRecord
     select(:id, :topic, :type_ev).where(type_ev: type) if type.present?
   end
 
-  scope :public_evs, -> { select(:id, :topic, :type_ev, :description, :date, :frequence, :duration, :state, :research_group_id).where(type_ev: 1) }
+  scope :public_evs, -> { where(type_ev: 1) }
 
   scope :private_evs_by_user, -> (usr_id) {
-          select(:id, :topic, :type_ev, :description, :date, :frequence, :duration, :state, :research_group_id)
-            .joins(:users)
+            joins(:users)
             .where('users.id': usr_id, type_ev: 0)
         }
 
@@ -117,14 +116,15 @@ class Event < ApplicationRecord
             .paginate(page: page, per_page: 12)
         }
 
-  def self.evs_by_usr_and_type(usr_id)
-    public_evs + private_evs_by_user(usr_id)
-  end
+  scope :evs_by_usr_and_type, -> (usr_id) {
+          union_scope(public_evs,
+                      private_evs_by_user(usr_id))
+        }
 
   def self.news
     select(:topic, :description, :date).order(:date).first(3)
   end
-  
+
   def self.get_research_group_id(event_id)
       event = Event.find(event_id)
       return event.research_group.id

@@ -6,11 +6,11 @@ class PublicationsController < ApplicationController
 
   # GET /publications
   def index
-    @publications = Publication.items(params[:page])
+    publications = Publication.items(params[:page])
     render json: {
-      publications: @publications,
-      total_pages: @publications.total_pages
-    }, include: []
+            publications: publications,
+            total_pages: publications.total_pages
+           }, include: []
   end
 
   # GET /publications/1
@@ -51,44 +51,44 @@ class PublicationsController < ApplicationController
     end
   end
 
+  def search_publications_by_name
+    publications_by_name = Publication.search_publications_by_name(params[:keywords]).items(params[:page])
+    render json: {
+            research_groups: publications_by_name,
+            total_pages: publications_by_name.total_pages
+           }, fields: %i[id name type_pub], include: []
+  end
+
   def search_publications_by_rg
-    publications_by_rg = Publication.search_publications_by_rg(params[:id])
-    render json: publications_by_rg, fields: %i[id name type_pub], include: []
+    publications = Publication.search_publications_by_rg(params[:id]).items(params[:page])
+    render json: {
+            publications: publications,
+            total_pages: publications.total_pages
+           }, fields: %i[id name type_pub], include: []
   end
 
   def search_publications_by_user
-    publications_by_user = Publication.search_publications_by_user(params[:id])
-    render json: publications_by_user, fields: %i[id name type_pub], include: []
+    publications_by_user = Publication.search_publications_by_user(params[:id]).items(params[:page])
+    render json: {
+            publications: publications_by_user,
+            total_pages: publications_by_user.total_pages
+           }, fields: %i[id name type_pub], include: []
   end
 
   def search_publications_by_type
-    publications_by_type = Publication.search_publications_by_type(params[:type])
-    render json: publications_by_type, include: []
+    publications_by_type = Publication.search_publications_by_type(params[:type]).items(params[:page])
+    render json: {
+            publications: publications_by_type,
+            total_pages: publications_by_type.total_pages
+            }, fields: %i[id name type_pub], include: []
   end
 
   def search_p_by_rg_and_type
-    p_by_rg_and_type = Publication.search_p_by_rg_and_type(params[:id], params[:type])
-    render json: p_by_rg_and_type, fields: %i[id name type_pub], include: []
-  end
-
-  def num_publications_by_rg
-    num_publications_by_rg = Publication.num_publications_by_rg(params[:id])
-    render json: num_publications_by_rg, include: []
-  end
-
-  def num_publications_by_user
-    num_publications_by_user = Publication.num_publications_by_user(params[:id])
-    render json: num_publications_by_user, include: []
-  end
-
-  def num_publications_by_type
-    num_publications_by_type = Publication.num_publications_by_type(params[:type])
-    render json: num_publications_by_type, include: []
-  end
-
-  def num_publications_by_rg_and_type
-    num_publications_by_rg_and_type = Publication.num_publications_by_rg_and_type(params[:id], params[:type])
-    render json: num_publications_by_rg_and_type, include: []
+    p_by_rg_and_type = Publication.search_p_by_rg_and_type(params[:id], params[:type]).items(params[:page])
+    render json: {
+            publications: p_by_rg_and_type,
+            total_pages: p_by_rg_and_type.total_pages
+           }, fields: %i[id name type_pub], include: []
   end
 
   private

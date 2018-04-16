@@ -40,6 +40,10 @@ class Publication < ApplicationRecord
 
     ###Queries for seaching
 
+    def self.search_publications_by_name(keywords)
+        select(:id, :name, :type_pub).where("name LIKE ?","%#{keywords}%") if keywords.present?
+    end
+
     def self.search_publications_by_rg(rg_id)
         select(:id, :name, :type_pub).joins(:research_groups)
                           .where('research_groups.id' => rg_id) if rg_id.present?
@@ -51,7 +55,7 @@ class Publication < ApplicationRecord
     end
 
     def self.search_publications_by_type(type)
-        where(type_pub: type) if type.present?
+        select(:id, :name, :type_pub).where(type_pub: type) if type.present?
     end
 
     def self.search_p_by_rg_and_type(rg_id, type)
@@ -61,6 +65,7 @@ class Publication < ApplicationRecord
     def self.get_research_groups(publication_id)
         return find(publication_id).research_groups.pluck(:id)
     end
+    
     ###Queries for statistics
 
     def self.num_publications_by_rg(rg_id)
