@@ -9,7 +9,7 @@
 #  type_ev           :integer          not null
 #  date              :datetime         not null
 #  frequence         :integer          not null
-#  end_time          :datetime         not null
+#  duration          :time             not null
 #  state             :integer          not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
@@ -41,7 +41,7 @@ class Event < ApplicationRecord
   validates :type_ev, presence: {message: Proc.new { ApplicationRecord.presence_msg("tipo de evento") }}
   validates :date, presence: {message: Proc.new { ApplicationRecord.presence_msg("fecha") }}
   validates :frequence, presence: {message: Proc.new { ApplicationRecord.presence_msg("frecuencia") }}
-  validates :end_time, presence: {message: Proc.new { ApplicationRecord.presence_msg("hora de finalización") }}
+  validates :duration, presence: {message: Proc.new { ApplicationRecord.presence_msg("tiempo de duración") }}
   validates :type_ev, inclusion: {in: type_evs, message: "El tipo de evento seleccionado no es valido."}
   validates :frequence, inclusion: {in: frequences, message: "El tipo de evento seleccionada no es valida."}
   validates :state, inclusion: {in: states, message: "El estado seleccionado no es valido."}
@@ -85,10 +85,10 @@ class Event < ApplicationRecord
     select(:id, :topic, :type_ev).where(type_ev: type) if type.present?
   end
 
-  scope :public_evs, -> { select(:id, :topic, :type_ev, :description, :date, :frequence, :end_time, :state, :research_group_id).where(type_ev: 1) }
+  scope :public_evs, -> { select(:id, :topic, :type_ev, :description, :date, :frequence, :duration, :state, :research_group_id).where(type_ev: 1) }
 
   scope :private_evs_by_user, -> (usr_id) {
-          select(:id, :topic, :type_ev, :description, :date, :frequence, :end_time, :state, :research_group_id)
+          select(:id, :topic, :type_ev, :description, :date, :frequence, :duration, :state, :research_group_id)
             .joins(:users)
             .where('users.id': usr_id, type_ev: 0)
         }

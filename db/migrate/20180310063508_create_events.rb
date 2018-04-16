@@ -7,7 +7,7 @@ class CreateEvents < ActiveRecord::Migration[5.1]
       t.integer :type_ev, null: false #enum
       t.datetime :date, null: false
       t.integer :frequence, null: false #enum
-      t.datetime :end_time, null: false
+      t.time :duration, null: false
       t.integer :state, null: false #enum
 
       t.timestamps

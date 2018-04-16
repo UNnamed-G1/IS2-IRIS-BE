@@ -3,7 +3,7 @@
 # Table name: publications
 #
 #  id                :integer          not null, primary key
-#  name              :string(255)      not null
+#  name              :text             not null
 #  date              :date             not null
 #  abstract          :text             not null
 #  document          :text

@@ -12,8 +12,8 @@
 #  user_type            :integer          default("estudiante"), not null
 #  phone                :string(20)
 #  office               :string(20)
-#  cvlac_link           :string
-#  google_sign_up       :boolean
+#  cvlac_link           :text
+#  google_sign_up       :boolean          default(FALSE)
 #  career_id            :integer
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
