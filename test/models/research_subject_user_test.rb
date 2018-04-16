@@ -13,6 +13,11 @@
 #  index_research_subject_users_on_research_subject_id  (research_subject_id)
 #  index_research_subject_users_on_user_id              (user_id)
 #
+# Foreign Keys
+#
+#  fk_rails_...  (research_subject_id => research_subjects.id)
+#  fk_rails_...  (user_id => users.id)
+#
 
 require 'test_helper'
 

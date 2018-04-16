@@ -8,7 +8,7 @@
 #  username             :string(40)
 #  email                :string           not null
 #  password_digest      :string
-#  professional_profile :text(5000)
+#  professional_profile :text
 #  user_type            :integer          default("estudiante"), not null
 #  phone                :string(20)
 #  office               :string(20)
@@ -20,6 +20,10 @@
 # Indexes
 #
 #  index_users_on_career_id  (career_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (career_id => careers.id)
 #
 
 class User < ApplicationRecord

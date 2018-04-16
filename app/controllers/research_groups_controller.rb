@@ -10,7 +10,7 @@ class ResearchGroupsController < ApplicationController
     render json: {
       research_groups: @research_groups,
       total_pages: @research_groups.total_pages
-    }, include: []
+    }, include: [:photo]
   end
 
   # GET /research_groups/1
