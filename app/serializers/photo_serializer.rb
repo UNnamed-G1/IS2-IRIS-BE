@@ -20,4 +20,9 @@ class PhotoSerializer < ActiveModel::Serializer
   attributes :id, :picture, :imageable_type, :imageable_id
 
   belongs_to :imageable, polymorphic: true
+
+  def picture
+  	return object.picture.url
+  end
+  
 end
