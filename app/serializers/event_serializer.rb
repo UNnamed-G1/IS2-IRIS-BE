@@ -46,4 +46,8 @@ class EventSerializer < ActiveModel::Serializer
   def state
     return object.state.capitalize
   end
+
+  def duration
+    return object.duration.to_formatted_s(:time)
+  end 
 end

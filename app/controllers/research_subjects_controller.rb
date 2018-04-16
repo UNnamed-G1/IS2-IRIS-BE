@@ -5,9 +5,11 @@ class ResearchSubjectsController < ApplicationController
 
   # GET /research_subjects
   def index
-    # Don't forget variable
-    @research_subjects = ResearchSubject.all
-    render json: @research_subjects, include: []
+    research_subjects = ResearchSubject.items(params[:page])
+    render json: {
+            research_subjects: research_subjects,
+            total_pages: research_subjects.total_pages
+           }, include: []
   end
 
   # GET /research_subjects/1
@@ -49,28 +51,27 @@ class ResearchSubjectsController < ApplicationController
   end
 
   def search_rs_by_rg
-    rs_by_rg = ResearchSubject.search_rs_by_rg(params[:id])
-    render json: rs_by_rg, fields: %i[id name], include: []
+    rs_by_rg = ResearchSubject.search_rs_by_rg(params[:id]).items(params[:page])
+    render json: {
+            research_subjects: rs_by_rg,
+            total_pages: rs_by_rg.total_pages
+           },fields: %i[id name], include: []
   end
 
   def search_rs_by_name
-    rs_by_name = ResearchSubject.search_rs_by_name(params[:keywords])
-    render json: rs_by_name, fields: %i[id name], include: []
+    rs_by_name = ResearchSubject.search_rs_by_name(params[:keywords]).items(params[:page])
+    render json: {
+            research_subjects: rs_by_name,
+            total_pages: rs_by_name.total_pages
+           }, fields: %i[id name], include: []
   end
 
   def search_rs_by_user
-    rs_by_user = ResearchSubject.search_rs_by_user(params[:id])
-    render json: rs_by_user, fields: %i[id name], include: []
-  end
-
-  def num_rs_by_rg
-    num_rs_by_rg = ResearchSubject.num_rs_by_rg(params[:id])
-    render json: num_rs_by_rg, include: []
-  end
-
-  def num_rs_by_user
-    num_rs_by_user = ResearchSubject.num_rs_by_user(params[:id])
-    render json: num_rs_by_user, include: []
+    rs_by_user = ResearchSubject.search_rs_by_user(params[:id]).items(params[:page])
+    render json: {
+            research_subjects: rs_by_user,
+            total_pages: rs_by_user.total_pages
+           }, fields: %i[id name], include: []
   end
 
   private

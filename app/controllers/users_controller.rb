@@ -11,9 +11,9 @@ class UsersController < ApplicationController
   def index
     @users = User.items(params[:page])
     render json: {
-      users: @users,
-      total_pages: @users.total_pages
-    }, include: [] # This include is for select which associations bring in the JSON
+            users: @users,
+            total_pages: @users.total_pages
+           }, include: [] # This include is for select which associations bring in the JSON
   end
 
   # GET /users/1
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     @user = User.new (user_params)
 
     if @user.save
-      pic = params[:picture] 
+      pic = params[:picture]
       @user.update(photo: Photo.create_photo(pic, @user)) if pic
       UserMailer.sign_up_confirmation(@user).deliver_now
       render json: @user, status: :created, location: @user, include: [:photo]

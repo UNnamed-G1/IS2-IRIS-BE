@@ -48,8 +48,11 @@ class SchedulesController < ApplicationController
   end
 
   def find_schedules_by_user
-    find_schedules_by_user = Schedule.find_schedules_by_user(params[:id])
-    render json: find_schedules_by_user, fields: [:start_hour], include: []
+    find_schedules_by_user = Schedule.find_schedules_by_user(params[:id]).items(params[:page])
+    render json: {
+            schedules: find_schedules_by_user,
+            total_pages: find_schedules_by_user.total_pages
+           }, fields: [:start_date], include: []
   end
 
   private

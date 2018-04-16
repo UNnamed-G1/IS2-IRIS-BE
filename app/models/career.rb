@@ -33,8 +33,12 @@ class Career < ApplicationRecord
   validates :name, length: {maximum: 100, too_long: "Se permiten máximo %´{count} caracteres para el campo nombre."}
   validates :degree_type, inclusion: {in: degree_types, message: "El tipo de carrera seleccionado no es válido."}
   validates :snies_code, length: {maximum: 5, too_long: "Código SNIES no es válido"}
-  validates :snies_code, uniqueness: { message: "Código SNIES ya ha sido usado en otro registro."} 
+  validates :snies_code, uniqueness: { message: "Código SNIES ya ha sido usado en otro registro."}
   validates :snies_code, numericality: { only_integer: true, message: "El código SNIES debe ser un número."}
+
+  def self.items(p)
+    paginate(page: p, per_page: 12)
+  end
 
   ###Queries for searching
 

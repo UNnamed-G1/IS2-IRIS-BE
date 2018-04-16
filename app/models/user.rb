@@ -20,7 +20,7 @@
 #
 # Indexes
 #
-#  index_users_on_career_id  (career_id)
+# index_users_on_career_id  (career_id)
 #
 # Foreign Keys
 #
@@ -68,7 +68,7 @@ class User < ApplicationRecord
   def self.items(p)
     paginate(page: p, per_page: 12)
   end
-  
+
   def self.create_google_user(data)
     newUser = find_by email: data['email']
     if !newUser
