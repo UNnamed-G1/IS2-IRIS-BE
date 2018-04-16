@@ -20,12 +20,4 @@ class PhotoSerializer < ActiveModel::Serializer
   attributes :id, :picture, :imageable_type, :imageable_id
 
   belongs_to :imageable, polymorphic: true
-
-  def picture    
-    if object.picture.url
-      return Base64.strict_encode64(File.read("#{Rails.root}/public/#{object.picture.url}"))
-    else 
-      return ''
-    end 
-  end
 end
