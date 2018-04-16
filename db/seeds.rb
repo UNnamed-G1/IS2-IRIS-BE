@@ -52,6 +52,7 @@ end
         url: Faker::Internet.url
     )
     rg.update(photo: Photo.create(
+        picture: "data:image/jpeg;base64," + Base64.strict_encode64(File.read("#{Rails.root}/app/assets/seed/seed_image.png")),
         imageable: rg
     ))
 end
@@ -80,6 +81,7 @@ end
     )
     5.times do
       e.photos.create(
+        picture: "data:image/jpeg;base64," + Base64.strict_encode64(File.read("#{Rails.root}/app/assets/seed/seed_image.png"))
       )
     end
 end
@@ -100,6 +102,7 @@ end
         password_confirmation: 'password'
     )
     u.update(photo: Photo.create(
+        picture: "data:image/jpeg;base64," + Base64.strict_encode64(File.read("#{Rails.root}/app/assets/seed/seed_image.png")),
         imageable: u
     ))
 end
