@@ -1,8 +1,8 @@
 class CreateSchedules < ActiveRecord::Migration[5.1]
   def change
     create_table :schedules do |t|
-      t.datetime :start_date, null: false
-      t.datetime :end_date, null: false
+      t.integer :start_hour, null: false
+      t.integer :duration, null: false, default: 1
 
       t.timestamps
     end

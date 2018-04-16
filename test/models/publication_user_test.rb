@@ -2,7 +2,6 @@
 #
 # Table name: publication_users
 #
-#  id             :integer          not null, primary key
 #  user_id        :integer
 #  publication_id :integer
 #  created_at     :datetime         not null
@@ -12,6 +11,11 @@
 #
 #  index_publication_users_on_publication_id  (publication_id)
 #  index_publication_users_on_user_id         (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (publication_id => publications.id)
+#  fk_rails_...  (user_id => users.id)
 #
 
 require 'test_helper'

@@ -10,7 +10,7 @@ class ResearchGroupsController < ApplicationController
     render json: {
       research_groups: @research_groups,
       total_pages: @research_groups.total_pages
-    }, include: []
+    }, include: [:photo]
   end
 
   # GET /research_groups/1
@@ -27,7 +27,9 @@ class ResearchGroupsController < ApplicationController
     @research_group = ResearchGroup.new(research_group_params)
 
     if @research_group.save
-      render json: @research_group, status: :created, location: @research_group, include: []
+      picture = params[:picture] 
+      @research_group.update(photo: Photo.create_photo(picture, @research_group)) if picture
+      render json: @research_group, status: :created, location: @research_group, include: [:photo]
     else
       render json: @research_group.errors, status: :unprocessable_entity
     end
@@ -36,7 +38,9 @@ class ResearchGroupsController < ApplicationController
   # PATCH/PUT /research_groups/1
   def update
     if @research_group.update(research_group_params)
-      render json: @research_group, include: []
+      picture = params[:picture]
+      @research_group.photo.update(picture: picture) if picture
+      render json: @research_group, include: [:photo]
     else
       render json: @research_group.errors, status: :unprocessable_entity
     end
@@ -49,6 +53,14 @@ class ResearchGroupsController < ApplicationController
     else
       render json: @research_group.errors, status: 500
     end
+  end
+
+  # GET /research_groups/:id
+  def get_photo
+    set_research_group
+    response = {}
+    response["photo"] = Base64.strict_encode64(File.read("#{Rails.root}/public/#{@research_group.photo.picture.url}"))
+    render json: response, status: :ok
   end
 
   def search_rgs_by_career
