@@ -135,11 +135,7 @@ class User < ApplicationRecord
   def self.num_users_by_event(ev_id)
     joins(:events).where('events.id' => ev_id).count if ev_id.present?
   end
-<<<<<<< HEAD
 
-=======
-
->>>>>>> development
   def is_member_of_research_group?(group_id)
     if User.joins(:research_groups).where("user_id = ? AND research_group_id = ?", id, group_id).first
       return true

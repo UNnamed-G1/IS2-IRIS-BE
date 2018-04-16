@@ -15,7 +15,7 @@
 
 class PublicationSerializer < ActiveModel::Serializer
   type :publication
-  
+
   attributes :id, :name, :date, :abstract, :document
   attributes :brief_description
 
@@ -24,17 +24,16 @@ class PublicationSerializer < ActiveModel::Serializer
   has_many :research_groups
   has_many :users
 
-<<<<<<< HEAD
   def type_pub
     return object.type_pub.capitalize
-=======
+  end
+  
   def document
-    
+
     if object.document.url
       return Base64.strict_encode64(File.read("#{Rails.root}/public/#{object.document.url}"))
-    else 
+    else
       return ''
     end
->>>>>>> feature/upload_files
   end
 end

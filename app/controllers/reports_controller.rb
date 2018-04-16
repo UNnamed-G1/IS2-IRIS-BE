@@ -5,6 +5,7 @@ class  ReportsController  <  ActionController::Base
   def user_history
 	   @reports_users = User.all
   end
+
   def show
     user_history
     #group_history

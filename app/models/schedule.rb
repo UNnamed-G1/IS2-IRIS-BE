@@ -16,6 +16,10 @@ class Schedule < ApplicationRecord
   validates :start_date, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha de inicio") } }
   validates :end_date, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha de inicio") } }
 
+  def self.items(p)
+    paginate(page: p, per_page: 12)
+  end
+
   ###Queries for searching
 
   def self.find_schedules_by_user(usr_id)

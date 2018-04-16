@@ -18,7 +18,11 @@ class ResearchSubject < ApplicationRecord
   validates :name, presence: { message: Proc.new { ApplicationRecord.presence_msg("nombre") } }
   validates :name, length: { maximum: 200, too_long: "Se permiten máximo %´{count} caracteres para el campo nombre." }
 
-  ###Queries fro searching
+  def self.items(p)
+    paginate(page: p, per_page: 12)
+  end
+
+  ###Queries for searching
 
   def self.search_rs_by_rg(rg_id)
     select(:id, :name).joins(:research_groups)
