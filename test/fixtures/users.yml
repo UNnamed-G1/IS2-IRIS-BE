@@ -13,6 +13,7 @@
 #  phone                :string(20)
 #  office               :string(20)
 #  cvlac_link           :string
+#  google_sign_up       :boolean
 #  career_id            :integer
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null

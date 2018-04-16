@@ -2,7 +2,6 @@
 #
 # Table name: research_subject_users
 #
-#  id                  :integer          not null, primary key
 #  user_id             :integer
 #  research_subject_id :integer
 #  created_at          :datetime         not null

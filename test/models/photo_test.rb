@@ -3,7 +3,7 @@
 # Table name: photos
 #
 #  id             :integer          not null, primary key
-#  link           :text
+#  picture        :text
 #  imageable_type :string
 #  imageable_id   :integer
 #  created_at     :datetime         not null

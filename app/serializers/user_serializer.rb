@@ -13,6 +13,7 @@
 #  phone                :string(20)
 #  office               :string(20)
 #  cvlac_link           :string
+#  google_sign_up       :boolean
 #  career_id            :integer
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
@@ -31,7 +32,7 @@ class UserSerializer < ActiveModel::Serializer
   
   attributes :id, :name, :lastname, :username, :email
   attributes :professional_profile, :phone, :office, :cvlac_link
-  attributes :full_name
+  attributes :full_name, :google_sign_up
 
   attribute :user_type
 
@@ -50,5 +51,8 @@ class UserSerializer < ActiveModel::Serializer
     return object.name + " " + object.lastname
   end
 
+  def user_type
+    return object.user_type.capitalize
+  end
 
 end

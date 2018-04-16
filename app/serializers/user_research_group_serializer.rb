@@ -33,5 +33,11 @@ class UserResearchGroupSerializer < ActiveModel::Serializer
   belongs_to :user
   belongs_to :research_group
   
+  def type_urg
+    return object.type_urg.capitalize
+  end
 
+  def state
+    return object.state.capitalize
+  end
 end

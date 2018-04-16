@@ -2,7 +2,6 @@
 #
 # Table name: publication_users
 #
-#  id             :integer          not null, primary key
 #  user_id        :integer
 #  publication_id :integer
 #  created_at     :datetime         not null

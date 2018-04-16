@@ -34,4 +34,16 @@ class EventSerializer < ActiveModel::Serializer
   has_many :users
   has_many :photos
   belongs_to :research_group
+
+  def type_ev
+    return object.type_ev.capitalize
+  end
+
+  def frequence
+    return object.frequence.capitalize
+  end
+
+  def state
+    return object.state.capitalize
+  end
 end
