@@ -1,7 +1,7 @@
 class PictureUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
+  include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
   storage :file
@@ -10,11 +10,11 @@ class PictureUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "#{Rails.root}/public/uploads/pictures/#{model.class.to_s.underscore}/"
+    "#{Rails.root}/public/uploads/pictures/#{model.imageable_type.to_s.underscore}/"
   end
 
   def cache_dir
-    "#{Rails.root}/tmp/uploads/pictures/#{model.class.to_s.underscore}/"
+    "#{Rails.root}/tmp/uploads/pictures/#{model.imageable_type.to_s.underscore}/"
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
@@ -26,7 +26,7 @@ class PictureUploader < CarrierWave::Uploader::Base
   # end
 
   # Process files as they are uploaded:
-  # process scale: [200, 300]
+  process :resize_to_limit => [720, 720]
   #
   # def scale(width, height)
   #   # do something
@@ -47,6 +47,10 @@ class PictureUploader < CarrierWave::Uploader::Base
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   def extension_whitelist
     %w(jpg jpeg gif png)
+  end
+
+  def content_type_whitelist
+    /image\//
   end
 
   # Override the filename of the uploaded files:

@@ -20,7 +20,7 @@
 #
 # Indexes
 #
-# index_users_on_career_id  (career_id)
+#  index_users_on_career_id  (career_id)
 #
 # Foreign Keys
 #
