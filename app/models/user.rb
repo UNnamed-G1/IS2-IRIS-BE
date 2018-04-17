@@ -42,6 +42,8 @@ class User < ApplicationRecord
   has_many :schedules, through: :schedule_users
   has_many :following, class_name: "Relationship", foreign_key: "follower_id", dependent: :delete_all
   has_many :followers, class_name: "Relationship", foreign_key: "followed_id", dependent: :delete_all
+  has_many :following_users, through: :following, source: "followed"
+  has_many :follower_users, through: :followers, source: "follower"
   has_many :user_research_groups, dependent: :delete_all
   has_many :research_groups, through: :user_research_groups
   has_one :photo, as: :imageable
@@ -180,6 +182,14 @@ class User < ApplicationRecord
 
   def self.find_by_id(id)
     return User.find(id);
+  end
+
+  def get_following_users
+    return following_users
+  end
+
+  def get_follower_users
+    return follower_users
   end
 
   private

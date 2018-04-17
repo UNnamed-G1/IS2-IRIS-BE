@@ -74,6 +74,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def following
+    following = current_user.get_following_users
+    render json: following, include: [:photo], status: :ok
+  end
+
+  def followers
+    followers = current_user.get_follower_users
+    render json: followers, include: [:photo], status: :ok
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
