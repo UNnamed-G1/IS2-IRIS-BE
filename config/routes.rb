@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   get "reports/user_history", to:  "reports#total_user_history"
   get "reports/rgs_history", to:  "reports#total_rgs_history"
   get "reports/rep_by_user", to:  "reports#history_by_user"
+  get "reports/rep_by_rg", to:  "reports#history_by_rg"
 
   resources :publications
   resources :research_groups
