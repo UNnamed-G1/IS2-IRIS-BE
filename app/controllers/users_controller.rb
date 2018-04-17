@@ -76,13 +76,26 @@ class UsersController < ApplicationController
   end
 
   def following
-    following = current_user.get_following_users
-    render json: following, include: [:photo], status: :ok
+    result = {}
+    result["following"] = current_user.get_following
+    result["count"] = current_user.count_following
+    render json: result, include: [:photo], status: :ok
   end
 
   def followers
-    followers = current_user.get_follower_users
-    render json: followers, include: [:photo], status: :ok
+    result = {}
+    result['followers'] = current_user.get_followers
+    result['count'] = current_user.count_followers
+    render json: result, include: [:photo], status: :ok
+  end
+
+  def unfollow_user
+    user_to_unfollow = User.find_by_id(params[:id_followed])
+    if current_user.unfollow(user_to_unfollow)
+      render json: {message: "Has dejado de seguir a este usuario."}, status: :ok
+    else
+      render json: {message: "Error: el error no ha sido especificado"}, status: 500
+    end
   end
 
   private

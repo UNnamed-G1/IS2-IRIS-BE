@@ -184,12 +184,28 @@ class User < ApplicationRecord
     return User.find(id);
   end
 
-  def get_following_users
+  def get_following
     return following_users
   end
 
-  def get_follower_users
+  def get_followers
     return follower_users
+  end
+
+  def count_followers
+    return follower_users.count
+  end
+
+  def count_following
+    return following_users.count
+  end
+
+  def unfollow(user_to_unfollow)
+    if following_users.delete(user_to_unfollow)
+      return true
+    else 
+      return false
+    end
   end
 
   private
