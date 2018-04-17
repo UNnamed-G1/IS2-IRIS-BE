@@ -29,7 +29,7 @@ class Department < ApplicationRecord
   end
 
   def self.search_deps_by_faculty(fac_id)
-      select(:id, :name).joins(:faculty)
+      select(:id, :name).joins(:faculties)
                         .where('faculties.id' => fac_id) if fac_id.present?
   end
 end
