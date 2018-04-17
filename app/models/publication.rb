@@ -19,7 +19,7 @@ class Publication < ApplicationRecord
     has_many :publication_users, dependent: :delete_all
     has_many :users, through: :publication_users
 
-    mount_base64_uploader :document, DocumentUploader
+    mount_uploader :document, DocumentUploader
 
     enum type_pub: [:software, :articulo, :tesis, :libro, :monografia, :patente]
 

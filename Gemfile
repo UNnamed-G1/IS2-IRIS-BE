@@ -35,9 +35,7 @@ gem 'wkhtmltopdf-binary'
 gem 'active_model_serializers', '~> 0.10.0'
 group :assets do
 
-end
-gem 'carrierwave-base64'
-
+gem 'mini_magick'
 gem 'carrierwave'
 
 group :development, :test do

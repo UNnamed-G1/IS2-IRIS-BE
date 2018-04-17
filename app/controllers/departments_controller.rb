@@ -48,11 +48,8 @@ class DepartmentsController < ApplicationController
   end
 
   def search_deps_by_faculty
-    deps_by_faculty = Department.search_deps_by_faculty(params[:id]).items(params[:page])
-    render json: {
-            departments: deps_by_faculty,
-            total_pages: deps_by_faculty.total_pages
-           }, fields: %i[id name], include: []
+    deps_by_faculty = Department.search_deps_by_faculty(params[:id])
+    render json: deps_by_faculty, include: []
   end
 
   private

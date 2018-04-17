@@ -5,6 +5,15 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+def seed_image(file_name)
+    Pathname.new("#{Rails.root}/app/assets/images/seed/#{file_name}.jpg").open
+end
+
+def seed_document(file_name)
+    Pathname.new("#{Rails.root}/app/assets/documents/seed/#{file_name}.pdf").open
+end
+
 10.times do
     Faculty.create(
         name:  Faker::Educator.university
@@ -52,6 +61,7 @@ end
         url: Faker::Internet.url
     )
     rg.update(photo: Photo.create(
+        picture: seed_image("research_group_image"),
         imageable: rg
     ))
 end
@@ -63,7 +73,8 @@ end
         date: Faker::Time.backward(10),
         abstract: Faker::Lorem.paragraph,
         brief_description: Faker::Hacker.say_something_smart,
-        type_pub: Faker::Number.between(0,5)
+        type_pub: Faker::Number.between(0,5),
+        document: seed_document("publication_document")
     )
 end
 
@@ -80,6 +91,7 @@ end
     )
     5.times do
       e.photos.create(
+        picture: seed_image("event_image")
       )
     end
 end
@@ -100,6 +112,7 @@ end
         password_confirmation: 'password'
     )
     u.update(photo: Photo.create(
+        picture: seed_image("user_image"),
         imageable: u
     ))
 end

@@ -48,27 +48,18 @@ class CareersController < ApplicationController
   end
 
   def search_careers_by_rg
-    careers_by_rg = Career.search_careers_by_rg(params[:id]).items(params[:page])
-    render json: {
-            careers: careers_by_rg,
-            total_pages: careers_by_rg.total_pages
-           }, fields: %i[id name], include: []
+    careers_by_rg = Career.search_careers_by_rg(params[:id])
+    render json: careers_by_rg, include: []
   end
 
   def search_careers_by_user
-    careers_by_user = Career.search_careers_by_user(params[:id]).items(params[:page])
-    render json: {
-            careers: careers_by_user,
-            total_pages: careers_by_user.total_pages
-           }, fields: %i[id name], include: []
+    careers_by_user = Career.search_careers_by_user(params[:id])
+    render json: careers_by_user, include: []
   end
 
   def search_careers_by_dept
-    careers_by_dept = Career.search_careers_by_dept(params[:id]).items(params[:page])
-    render json: {
-            careers: careers_by_dept,
-            total_pages: careers_by_dept.total_pages
-           }, fields: %i[id name], include: []
+    careers_by_dept = Career.search_careers_by_dept(params[:id])
+    render json: careers_by_dept, include: []
   end
 
   private

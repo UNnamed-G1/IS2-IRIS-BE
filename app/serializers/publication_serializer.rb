@@ -28,12 +28,4 @@ class PublicationSerializer < ActiveModel::Serializer
     return object.type_pub.capitalize
   end
 
-  def document
-
-    if object.document.url
-      return Base64.strict_encode64(File.read("#{Rails.root}/public/#{object.document.url}"))
-    else
-      return ''
-    end
-  end
 end

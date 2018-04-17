@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :authenticate_user, except: %i[index show news]
+  #before_action :authenticate_user, except: %i[index show news]
   before_action :authorize_as_author_or_lider, only: %i[destroy update]
   before_action :set_event, only: %i[show update destroy]
 
@@ -7,8 +7,8 @@ class EventsController < ApplicationController
   def index
     events = Event.items(params[:page])
     render json: {
-            events: events,
-            total_pages: events.total_pages,
+             events: events,
+             total_pages: events.total_pages,
            }, include: []
   end
 
@@ -26,8 +26,10 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
 
     if @event.save
-      params[:pictures].each do |picture|
-        @event.photos.create(picture: picture)
+      if params.has_key?(:pictures)
+        params[:pictures].each do |picture|
+          @event.photos.create(picture: picture)
+        end
       end
 
       render json: @event, status: :created, location: @event, include: [:photos]
@@ -39,8 +41,10 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1
   def update
     if @event.update(event_params)
-      params[:pictures].each do |picture|
-        @event.photos.create(picture: picture)
+      if params.has_key?(:pictures)
+        params[:pictures].each do |picture|
+          @event.photos.create(picture: picture)
+        end
       end
       render json: @event, include: [:photos]
     else
@@ -60,48 +64,48 @@ class EventsController < ApplicationController
   def search_events_by_rg
     events_by_rg = Event.search_events_by_rg(params[:id]).items(params[:page])
     render json: {
-            events: events_by_rg,
-            total_pages: events_by_rg.total_pages
+             events: events_by_rg,
+             total_pages: events_by_rg.total_pages,
            }, fields: %i[id name topic type_ev], include: []
   end
 
   def search_events_by_user
     events_by_user = Event.search_events_by_user(params[:id]).items(params[:page])
     render json: {
-            events: events_by_user,
-            total_pages: events_by_user.total_pages
+             events: events_by_user,
+             total_pages: events_by_user.total_pages,
            }, fields: %i[id name topic type_ev], include: []
   end
 
   def search_events_by_state
     events_by_state = Event.search_events_by_state(params[:status]).items(params[:page])
     render json: {
-            events: events_by_state,
-            total_pages: events_by_state.total_pages
+             events: events_by_state,
+             total_pages: events_by_state.total_pages,
            }, fields: %i[id name topic type_ev], include: []
   end
 
   def search_events_by_freq
     events_by_freq = Event.search_events_by_freq(params[:freq]).items(params[:page])
     render json: {
-            events: events_by_freq,
-            total_pages: events_by_freq.total_pages
+             events: events_by_freq,
+             total_pages: events_by_freq.total_pages,
            }, fields: %i[id name topic type_ev], include: []
   end
 
   def search_events_by_type
     events_by_type = Event.search_events_by_type(params[:type]).items(params[:page])
     render json: {
-            events: events_by_type,
-            total_pages: events_by_type.total_pages
+             events: events_by_type,
+             total_pages: events_by_type.total_pages,
            }, fields: %i[id name topic type_ev], include: []
   end
 
   def evs_by_usr_and_type
     evs_by_usr_and_type = Event.evs_by_usr_and_type(params[:id]).items(params[:page])
     render json: {
-            events: evs_by_usr_and_type,
-            total_pages: evs_by_usr_and_type.total_pages
+             events: evs_by_usr_and_type,
+             total_pages: evs_by_usr_and_type.total_pages,
            }, fields: %i[id name topic type_ev], include: []
   end
 
@@ -139,5 +143,4 @@ class EventsController < ApplicationController
       render_unauthorize
     end
   end
-
 end
