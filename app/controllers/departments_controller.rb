@@ -1,6 +1,6 @@
 class DepartmentsController < ApplicationController
-  before_action :authenticate_user
-  before_action :authorize_as_admin, except: %i[index show search_deps_by_faculty]
+  #before_action :authenticate_user
+  #before_action :authorize_as_admin, except: %i[index show search_deps_by_faculty]
   before_action :set_department, only: %i[show update destroy]
 
   # GET /departments
@@ -48,11 +48,8 @@ class DepartmentsController < ApplicationController
   end
 
   def search_deps_by_faculty
-    deps_by_faculty = Department.search_deps_by_faculty(params[:id]).items(params[:page])
-    render json: {
-            departments: deps_by_faculty,
-            total_pages: deps_by_faculty.total_pages
-           }, fields: %i[id name], include: []
+    deps_by_faculty = Department.search_deps_by_faculty(params[:id])
+    render json: deps_by_faculty, include: []
   end
 
   private

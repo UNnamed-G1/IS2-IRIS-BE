@@ -36,10 +36,6 @@ class Career < ApplicationRecord
   validates :snies_code, uniqueness: { message: "Código SNIES ya ha sido usado en otro registro."}
   validates :snies_code, numericality: { only_integer: true, message: "El código SNIES debe ser un número."}
 
-  def self.items(p)
-    paginate(page: p, per_page: 12)
-  end
-
   ###Queries for searching
 
   def self.search_careers_by_rg(rg_id)
