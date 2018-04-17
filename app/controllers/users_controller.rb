@@ -64,6 +64,16 @@ class UsersController < ApplicationController
     render json: current_user, fields: fields, include: [:photo]
   end
 
+  def follow_user
+    followed_user = User.find_by_id(params[:id_followed])
+    result = Relationship.add_follower(current_user, followed_user)
+    if result.errors.empty?
+      render json: {message: "Acción realizada satisfactoriamente"}, status: :ok
+    else
+      render json: result.errors, status: :unprocessable_entity 
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user

@@ -178,6 +178,10 @@ class User < ApplicationRecord
     return User.find_by email: email
   end
 
+  def self.find_by_id(id)
+    return User.find(id);
+  end
+
   private
     def put_username
       username = self.email.split('@').first

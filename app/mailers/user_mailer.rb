@@ -20,5 +20,12 @@ class UserMailer < ApplicationMailer
         @comments = comments
         @subject = subject
         mail(to: 'iris.investigationgroups@gmail.com', subject: subject)
-      end
+    end
+
+    def new_follower(user, follower) 
+        @user = user
+        @follower = follower
+
+        email_with_name = %("#{full_name}" <#{@user.email}>)
+    end
 end
