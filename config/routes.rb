@@ -40,7 +40,9 @@ Rails.application.routes.draw do
 
   #Reports
 
-  get "reports/show", to:  "reports#show"
+  get "reports/user_history", to:  "reports#total_user_history"
+  get "reports/rgs_history", to:  "reports#total_rgs_history"
+  get "reports/rep_by_user", to:  "reports#history_by_user"
 
   resources :publications
   resources :research_groups

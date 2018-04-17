@@ -97,6 +97,10 @@ class User < ApplicationRecord
 
   ###Queries for searching
 
+  def self.search_users_by_id(usr_id)
+    select(:name).where(id: usr_id)
+  end
+
   def self.search_users_by_rg(rg_id)
     select(:id, :name, :lastname, :email, :user_type).joins(:research_groups)
                                                   .where('research_groups.id' => rg_id) if rg_id.present?

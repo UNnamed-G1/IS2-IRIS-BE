@@ -1,6 +1,6 @@
 class DepartmentsController < ApplicationController
-  before_action :authenticate_user
-  before_action :authorize_as_admin, except: %i[index show search_deps_by_faculty]
+  #before_action :authenticate_user
+  #before_action :authorize_as_admin, except: %i[index show search_deps_by_faculty]
   before_action :set_department, only: %i[show update destroy]
 
   # GET /departments

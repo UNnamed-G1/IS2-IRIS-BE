@@ -1,0 +1,21 @@
+<h1>
+  <% hello = @pdf_name %>
+  <%= "ResearchGroup #{hello}" %>
+</h1>
+<table class="table">
+  <tr>
+    <th>Id</th>
+    <th>Titulo</th>
+    <th>Tipo de publicación</th>
+  </tr>
+
+  <tbody>
+    <% @report_by_user.each do |log| %>
+      <tr>
+        <td><%= log.id %></td>
+        <td><%= log.name %></td>
+        <td><%= log.type_pub %></td>
+      </tr>
+    <%end%>
+  </tbody>
+</table>
