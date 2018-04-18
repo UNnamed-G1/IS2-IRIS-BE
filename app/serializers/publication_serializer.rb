@@ -28,4 +28,8 @@ class PublicationSerializer < ActiveModel::Serializer
     return object.type_pub.capitalize
   end
 
+  def document
+    return object.document.url
+  end
+
 end
