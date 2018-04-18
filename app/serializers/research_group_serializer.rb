@@ -10,7 +10,7 @@
 #  foundation_date     :date             not null
 #  classification      :integer          not null
 #  date_classification :date             not null
-#  url                 :string(300)
+#  url                 :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #
@@ -29,4 +29,7 @@ class ResearchGroupSerializer < ActiveModel::Serializer
   has_many :user_research_groups, key: :members
   has_one :photo
 
+  def classification
+    return object.classification.capitalize
+  end
 end

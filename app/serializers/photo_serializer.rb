@@ -3,7 +3,7 @@
 # Table name: photos
 #
 #  id             :integer          not null, primary key
-#  link           :text(300)
+#  picture        :text
 #  imageable_type :string
 #  imageable_id   :integer
 #  created_at     :datetime         not null
@@ -17,7 +17,12 @@
 class PhotoSerializer < ActiveModel::Serializer
   type :photo
 
-  attributes :id, :link, :imageable_type, :imageable_id
+  attributes :id, :picture, :imageable_type, :imageable_id
 
   belongs_to :imageable, polymorphic: true
+
+  def picture
+  	return object.picture.url
+  end
+
 end

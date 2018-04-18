@@ -8,11 +8,12 @@
 #  username             :string(40)
 #  email                :string           not null
 #  password_digest      :string
-#  professional_profile :text(5000)
+#  professional_profile :text
 #  user_type            :integer          default("estudiante"), not null
 #  phone                :string(20)
 #  office               :string(20)
-#  cvlac_link           :string
+#  cvlac_link           :text
+#  google_sign_up       :boolean          default(FALSE)
 #  career_id            :integer
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
@@ -20,6 +21,10 @@
 # Indexes
 #
 #  index_users_on_career_id  (career_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (career_id => careers.id)
 #
 
 class User < ApplicationRecord
@@ -63,7 +68,7 @@ class User < ApplicationRecord
   def self.items(p)
     paginate(page: p, per_page: 12)
   end
-  
+
   def self.create_google_user(data)
     newUser = find_by email: data['email']
     if !newUser
@@ -72,11 +77,8 @@ class User < ApplicationRecord
         user.lastname = data["last_name"]
         user.email = data['email']
         user.password = 'google-authorized account'
+        user.google_sign_up = true
       end
-      newUser.update(photo: Photo.create(
-        link: data['photo'],
-        imageable: newUser
-      ))
     end
     return newUser
   end
@@ -146,7 +148,6 @@ class User < ApplicationRecord
     return false unless is_member_of_research_group?(group_id)
 
     result = user_research_groups.where("user_id = ? AND research_group_id = ?", id, group_id).lider.first
-
     if result
       return true
     else
