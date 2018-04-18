@@ -23,7 +23,6 @@ Rails.application.routes.draw do
   get "events_by_freq" => "events#search_events_by_freq"
   get "events_by_type" => "events#search_events_by_type"
   get "events_by_editable" => "events#evs_by_editable"
-  get "events_by_usr_and_type" => "events#evs_by_usr_and_type"
   get "publications_by_name" => "publications#search_publications_by_name"
   get "publications_by_rg" => "publications#search_publications_by_rg"
   get "publications_by_user" => "publications#search_publications_by_user"
@@ -37,6 +36,13 @@ Rails.application.routes.draw do
   get "rs_by_name" => "research_subjects#search_rs_by_name"
   get "rs_by_user" => "research_subjects#search_rs_by_user"
   get "find_schedules_by_user" => "schedules#find_schedules_by_user"
+
+  #Reports
+
+  get "reports/user_history", to:  "reports#total_user_history"
+  get "reports/rgs_history", to:  "reports#total_rgs_history"
+  get "reports/rep_by_user", to:  "reports#history_by_user"
+  get "reports/rep_by_rg", to:  "reports#history_by_rg"
 
   resources :publications
   resources :research_groups

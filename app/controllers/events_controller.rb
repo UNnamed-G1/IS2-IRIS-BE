@@ -5,11 +5,11 @@ class EventsController < ApplicationController
 
   # GET /events
   def index
-    events = Event.items(params[:page])
+    events = Event.evs_by_usr_and_type(params[:id]).items(params[:page])
     render json: {
              events: events,
              total_pages: events.total_pages,
-           }, include: []
+           }, fields: %i[id name topic type_ev], include: []
   end
 
   # GET /events/1
@@ -98,14 +98,6 @@ class EventsController < ApplicationController
     render json: {
              events: events_by_type,
              total_pages: events_by_type.total_pages,
-           }, fields: %i[id name topic type_ev], include: []
-  end
-
-  def evs_by_usr_and_type
-    evs_by_usr_and_type = Event.evs_by_usr_and_type(params[:id]).items(params[:page])
-    render json: {
-             events: evs_by_usr_and_type,
-             total_pages: evs_by_usr_and_type.total_pages,
            }, fields: %i[id name topic type_ev], include: []
   end
 
