@@ -10,9 +10,10 @@
   </tr>
 
   <tbody>
+    <% tot_publications = Publication.all.count %>
     <% @reports_rgs.each do |post| %>
       <% num_p_by_rg = Publication.num_publications_by_rg(post.id)%>
-      <% perc = (num_p_by_rg * 100 / Publication.all.count) %>
+      <% perc = (num_p_by_rg * 100 / tot_publications) %>
       <tr>
         <td><%= post.id %></td>
         <td><%= post.name %></td>

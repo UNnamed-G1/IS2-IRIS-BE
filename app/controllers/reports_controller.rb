@@ -1,10 +1,6 @@
 class  ReportsController  <  ActionController::Base
   include Knock::Authenticable
-  before_action :authenticate_user
-
-  def group_history
-	   @reports_rgs = ResearchGroup.all
-  end
+  #before_action :authenticate_user
 
   def show(temp_path, pdf_name)
     respond_to do |format|
@@ -39,10 +35,10 @@ class  ReportsController  <  ActionController::Base
   end
 
   def history_by_rg
-    id_user = params[:id]
-    @report_by_rg = Publication.search_publications_by_rg(id_user)
+    id_rg = params[:id]
+    @report_by_rg = Publication.search_publications_by_rg(id_rg)
     template_s = "../views/reports/rep_by_rg"
-    @par = id_user
+    @par = id_rg
     @pdf_name = "Report_RG #{id_user}"
     show(template_s, @pdf_name)
   end
