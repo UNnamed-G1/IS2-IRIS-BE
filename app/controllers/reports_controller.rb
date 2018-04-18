@@ -1,4 +1,6 @@
 class  ReportsController  <  ActionController::Base
+  include Knock::Authenticable
+  before_action :authenticate_user
 
   def group_history
 	   @reports_rgs = ResearchGroup.all
@@ -28,19 +30,27 @@ class  ReportsController  <  ActionController::Base
   end
 
   def history_by_user
-    @report_by_user = Publication.search_publications_by_user(params[:id])
+    id_user = params[:id]
+    @report_by_user = Publication.search_publications_by_user(id_user)
     template_s = "../views/reports/rep_by_user"
-    @par = params[:id]
-    @pdf_name = "Report_User #{params[:id]}"
+    @par = id_user
+    @pdf_name = "Report_User #{id_user}"
     show(template_s, @pdf_name)
   end
 
   def history_by_rg
-    @report_by_rg = Publication.search_publications_by_rg(params[:id])
+    id_user = params[:id]
+    @report_by_rg = Publication.search_publications_by_rg(id_user)
     template_s = "../views/reports/rep_by_rg"
-    @par = params[:id]
-    @pdf_name = "Report_RG #{params[:id]}"
+    @par = id_user
+    @pdf_name = "Report_RG #{id_user}"
     show(template_s, @pdf_name)
+  end
+  
+  private
+  # Method for change the message when user is unauthorized
+  def unauthorized_entity(entity_name)
+    render json: ["You are unauthorized to access this."], status: :unauthorized
   end
 
 end
