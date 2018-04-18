@@ -30,15 +30,17 @@ class  ReportsController  <  ActionController::Base
   def history_by_user
     @report_by_user = Publication.search_publications_by_user(params[:id])
     template_s = "../views/reports/rep_by_user"
-    @pdf_name = "#{User.search_users_by_id(params[:id])}"
+    @par = params[:id]
+    @pdf_name = "Report_User #{params[:id]}"
     show(template_s, @pdf_name)
   end
 
   def history_by_rg
     @report_by_rg = Publication.search_publications_by_rg(params[:id])
     template_s = "../views/reports/rep_by_rg"
-    pdf_name = "Report"
-    show(template_s, pdf_name)
+    @par = params[:id]
+    @pdf_name = "Report_RG #{params[:id]}"
+    show(template_s, @pdf_name)
   end
 
 end

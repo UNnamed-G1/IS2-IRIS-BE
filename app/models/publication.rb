@@ -45,12 +45,12 @@ class Publication < ApplicationRecord
     end
 
     def self.search_publications_by_rg(rg_id)
-        select(:id, :name, :type_pub).joins(:research_groups)
+        select(:id, :name, :type_pub, :date).joins(:research_groups)
                           .where('research_groups.id' => rg_id) if rg_id.present?
     end
 
     def self.search_publications_by_user(usr_id)
-        select(:id, :name, :type_pub).joins(:users)
+        select(:id, :name, :type_pub, :date).joins(:users)
                           .where('users.id' => usr_id) if usr_id.present?
     end
 
@@ -65,7 +65,7 @@ class Publication < ApplicationRecord
     def self.get_research_groups(publication_id)
         return find(publication_id).research_groups.pluck(:id)
     end
-    
+
     ###Queries for statistics
     def self.total_pubs_by_user
       joins(:users).group('users.id').order('COUNT(users.id) DESC, id')

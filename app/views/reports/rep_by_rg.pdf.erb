@@ -1,11 +1,13 @@
 <h3 align="center">
-  Reporte general de publicaciones de grupos de investigación
+  <% rg_name = ResearchGroup.get_rgname_by_id(@par) %>
+  Reporte general de publicaciones del grupo <%= "#{rg_name[0]}" %>
 </h3>
 <table class="table">
   <tr>
     <th>Id</th>
     <th>Titulo</th>
     <th>Tipo de publicación</th>
+    <th>Fecha de Publicación</th>
   </tr>
 
   <tbody>
@@ -14,6 +16,7 @@
         <td><%= log.id %></td>
         <td><%= log.name %></td>
         <td><%= log.type_pub %></td>
+        <td><%= log.date %></td>
       </tr>
     <%end%>
   </tbody>

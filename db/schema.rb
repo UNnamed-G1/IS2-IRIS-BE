@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20180322060224) do
     t.integer "type_ev", null: false
     t.datetime "date", null: false
     t.integer "frequence", null: false
-    t.datetime "end_time", null: false
+    t.time "duration", null: false
     t.integer "state", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 20180322060224) do
   end
 
   create_table "publications", force: :cascade do |t|
-    t.string "name", limit: 255, null: false
+    t.text "name", null: false
     t.date "date", null: false
     t.text "abstract", null: false
     t.text "document"
@@ -167,8 +167,8 @@ ActiveRecord::Schema.define(version: 20180322060224) do
   end
 
   create_table "schedules", force: :cascade do |t|
-    t.datetime "start_date", null: false
-    t.datetime "end_date", null: false
+    t.integer "start_hour", null: false
+    t.integer "duration", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -197,8 +197,8 @@ ActiveRecord::Schema.define(version: 20180322060224) do
     t.integer "user_type", default: 0, null: false
     t.string "phone", limit: 20
     t.string "office", limit: 20
-    t.string "cvlac_link"
-    t.boolean "google_sign_up"
+    t.text "cvlac_link"
+    t.boolean "google_sign_up", default: false
     t.bigint "career_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

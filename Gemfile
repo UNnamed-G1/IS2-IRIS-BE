@@ -33,7 +33,6 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 # serializers gem
 gem 'active_model_serializers', '~> 0.10.0'
-group :assets do
 
 gem 'mini_magick'
 gem 'carrierwave'

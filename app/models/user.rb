@@ -98,12 +98,16 @@ class User < ApplicationRecord
   ###Queries for searching
 
   def self.search_users_by_id(usr_id)
-    return select(:name).where(id: usr_id)
+    where(id: usr_id).pluck(:name, :lastname)
   end
 
   def self.search_users_by_rg(rg_id)
     select(:id, :name, :lastname, :email, :user_type).joins(:research_groups)
                                                   .where('research_groups.id' => rg_id) if rg_id.present?
+  end
+
+  def self.get_name_by_publ(publ_id)
+    joins(:publications).where('publications.id' => publ_id).pluck(:name, :lastname) if publ_id.present?
   end
 
   def self.search_users_by_publ(publ_id)
