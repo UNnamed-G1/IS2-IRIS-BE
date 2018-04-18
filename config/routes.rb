@@ -23,7 +23,6 @@ Rails.application.routes.draw do
   get "events_by_freq" => "events#search_events_by_freq"
   get "events_by_type" => "events#search_events_by_type"
   get "events_by_editable" => "events#evs_by_editable"
-  get "events_by_usr_and_type" => "events#evs_by_usr_and_type"
   get "publications_by_name" => "publications#search_publications_by_name"
   get "publications_by_rg" => "publications#search_publications_by_rg"
   get "publications_by_user" => "publications#search_publications_by_user"
