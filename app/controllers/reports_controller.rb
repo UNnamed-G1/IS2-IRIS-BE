@@ -15,11 +15,18 @@ class  ReportsController  <  ActionController::Base
     end
   end
 
+  def send_report(template_path, pdf_name)
+    generated_pdf = WickedPdf.new.pdf_from_string(render_to_string(pdf: pdf_name, template: template_path, layout: "pdf.html.erb"))
+    puts generated_pdf
+    UserMailer.report_mail(current_user, generated_pdf, pdf_name).deliver_now
+    render json: generated_pdf
+  end
+
   def total_user_history
     @reports_users = User.all
     template_s = "../views/reports/users_report"
     pdf_name = "Users reports"
-    show(template_s, pdf_name)
+    send_report(template_s, pdf_name)
   end
 
   def total_rgs_history

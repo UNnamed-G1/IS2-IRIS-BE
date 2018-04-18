@@ -38,4 +38,17 @@ class UserMailer < ApplicationMailer
         email_with_name = %("#{full_name}" <#{@followed.email}>)
         mail(to: email_with_name, subject: "Tienes un nuevo seguidor!!")
     end
+
+    def report_mail(user, pdf_file, report_name)
+        @user = user
+        path_images = "/app/assets/images/mailers"
+        attachments.inline['iris_logo.png'] = File.read("#{Rails.root}#{path_images}/IRIS_logo.png")
+        attachments.inline['unal_logo.png'] = File.read("#{Rails.root}#{path_images}/UNAL_escudo.png")
+
+        attachments['reporte.pdf'] = pdf_file
+
+        full_name = @user.name + " " + @user.lastname
+        email_with_name = %("#{full_name}" <#{@user.email}>)
+        mail(to: email_with_name, subject: "Reporte de " + report_name)
+    end
 end
