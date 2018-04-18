@@ -21,7 +21,7 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'httparty'
 # Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
+#gem 'capistrano-rails', group: :development
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors', :require => 'rack/cors'
@@ -29,7 +29,8 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'will_paginate', '~> 3.1.0'
 gem 'faker', '~> 1.8', '>= 1.8.7'
 gem 'knock'
-
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 # serializers gem
 gem 'active_model_serializers', '~> 0.10.0'
 

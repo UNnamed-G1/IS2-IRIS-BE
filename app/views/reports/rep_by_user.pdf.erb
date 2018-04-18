@@ -1,0 +1,23 @@
+<h3 align="center">
+  <% us_name = User.search_users_by_id(@par) %>
+  Reporte general de publicaciones de <%= "#{us_name[0][0]} #{us_name[0][1]}" %>
+</h3>
+<table class="table">
+  <tr>
+    <th>Id</th>
+    <th>Titulo</th>
+    <th>Tipo de publicación</th>
+    <th>Fecha de publicación</th>
+  </tr>
+
+  <tbody>
+    <% @report_by_user.each do |log| %>
+      <tr>
+        <td><%= log.id %></td>
+        <td><%= log.name %></td>
+        <td><%= log.type_pub %></td>
+        <td><%= log.date %></td>
+      </tr>
+    <%end%>
+  </tbody>
+</table>

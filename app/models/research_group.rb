@@ -55,6 +55,14 @@ class ResearchGroup < ApplicationRecord
                           .where('careers.id' => career_id) if career_id.present?
     end
 
+    def self.get_rgname_by_id(rg_id)
+        where(id: rg_id).pluck(:name)
+    end
+
+    def self.get_name_by_publ(publ_id)
+      joins(:publications).where('publications.id' => publ_id).pluck(:name) if publ_id.present?
+    end
+
     def self.search_rgs_by_name(keywords)
         select(:id, :name).where("name LIKE ?","%#{keywords}%") if keywords.present?
     end
