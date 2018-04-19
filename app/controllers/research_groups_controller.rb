@@ -105,6 +105,16 @@ class ResearchGroupsController < ApplicationController
     render json: research_groups, fields: fields, include: [:photo]
   end
 
+  def join_research_group
+    research_group = ResearchGroup.find(params[:id])
+    result = current_user.join_research_group(research_group)
+    if result.errors.any?
+      render json: result.errors.messages, status: :unprocessable_entity
+    else 
+      render json: {"message": "Ahora eres miembro del grupo de investigación."}, status: :ok
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

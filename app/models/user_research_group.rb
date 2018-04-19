@@ -3,10 +3,9 @@
 # Table name: user_research_groups
 #
 #  joining_date      :date             not null
-#  end_joining_date  :date             not null
+#  end_joining_date  :date
 #  state             :integer          default("retirado"), not null
 #  type_urg          :integer          default("miembro"), not null
-#  hours_per_week    :integer          default(0), not null
 #  user_id           :integer
 #  research_group_id :integer
 #  created_at        :datetime         not null
@@ -35,7 +34,6 @@ class UserResearchGroup < ApplicationRecord
   validates :state, presence: { message: Proc.new { ApplicationRecord.presence_msg("estado") } }
   validates :state, inclusion: {in: states, message: "El estado seleccionado no es valido."}
   validates :type_urg, inclusion: {in: type_urgs, message: "El tipo de usuario seleccionado no es valido."}
-  validates :hours_per_week, numericality: {only_integer: true, message: "El campo horas por semana solo acepta valores enteros."}
 
   scope :lider, ->{ where(type_urg: :lider) }
   scope :is_retired, ->{ where(type_urg: :retirado) }

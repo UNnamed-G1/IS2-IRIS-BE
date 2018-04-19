@@ -219,6 +219,15 @@ class User < ApplicationRecord
     end
   end
 
+  def join_research_group(research_group)
+    return user_research_groups.create(
+      joining_date: Time.new,
+      state: 1,
+      type_urg: 0,
+      research_group: research_group
+    )
+  end
+
   private
 
   def put_username

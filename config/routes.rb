@@ -17,7 +17,9 @@ Rails.application.routes.draw do
   get "curr_following" => "users#curr_following"
   get "followers" => "users#followers"
 
-  # Search
+  post 'research_groups/join/' => "research_groups#join_research_group"
+
+# Search
   # Nota el simbolo '#' se traduce a la ruta como '%23'
   get "careers_by_rg" => "careers#search_careers_by_rg"
   get "careers_by_user" => "careers#search_careers_by_user"
