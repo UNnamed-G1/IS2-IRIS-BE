@@ -43,7 +43,11 @@ class UsersController < ApplicationController
   def update
     if @user.update(user_params)
       picture = params[:picture]
-      @user.photo.update(picture: picture) if picture
+      if @user.photo
+        @user.photo.update(picture: picture) if picture
+      else
+        @user.update(photo: Photo.create_photo(picture, @user)) if picture
+      end
       render json: @user, include: [:photo]
     else
       render json: @user.errors, status: :unprocessable_entity

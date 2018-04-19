@@ -21,3 +21,28 @@
     <%end%>
   </tbody>
 </table>
+
+<h4 align = "center">
+  Resumen
+</h4>
+<table class="table">
+  <tr>
+    <th>Softwares publicados</th>
+    <th>Articulos publicados</th>
+    <th>Tesis publicadas</th>
+    <th>Libros publicados</th>
+    <th>Monografías publicadas</th>
+    <th>Patentes publicadas</th>
+  </tr>
+
+  <tbody>
+    <tr>
+      <td><%= Publication.num_publications_by_user_and_type(@par, 0) %></td>
+      <td><%= Publication.num_publications_by_user_and_type(@par, 1) %></td>
+      <td><%= Publication.num_publications_by_user_and_type(@par, 2) %></td>
+      <td><%= Publication.num_publications_by_user_and_type(@par, 3) %></td>
+      <td><%= Publication.num_publications_by_user_and_type(@par, 4) %></td>
+      <td><%= Publication.num_publications_by_user_and_type(@par, 5) %></td>
+    </tr>
+  </tbody>
+</table>

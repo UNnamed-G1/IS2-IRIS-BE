@@ -127,6 +127,10 @@ class User < ApplicationRecord
       .where("events.id" => ev_id) if ev_id.present?
   end
 
+  scope :with_publications_count, -> {joins(:publications)
+                                      .select("users.*, COUNT(publications.id) AS pubs_count")
+                                      .group("users.id")}
+
   ##Queries for statistics
 
   def self.num_users_by_rg(group_id)

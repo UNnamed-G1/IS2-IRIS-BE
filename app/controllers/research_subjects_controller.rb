@@ -1,5 +1,5 @@
 class ResearchSubjectsController < ApplicationController
-  #before_action :authenticate_user, except: %i[index show]
+  before_action :authenticate_user, except: %i[index show]
   before_action :authorize_as_admin, only: %i[update destroy create]
   before_action :set_research_subject, only: %i[show update destroy]
 
