@@ -1,6 +1,6 @@
 class  ReportsController  <  ActionController::Base
   include Knock::Authenticable
-  #before_action :authenticate_user
+  before_action :authenticate_user
 
   TEMPLATES_PATH = "../views/reports"
 
@@ -22,7 +22,7 @@ class  ReportsController  <  ActionController::Base
 
   def total_user_history
     reports_users = User.with_publications_count
-    template = "/users_report.pdf.erb"
+    template = "/users_report"
     pdf_name = "Users reports"
 
     if params[:send] == "true"
@@ -35,7 +35,7 @@ class  ReportsController  <  ActionController::Base
 
   def total_rgs_history
     reports_rgs = ResearchGroup.with_publications_count
-    template_path = TEMPLATES_PATH + "/rgs_report"
+    template_path = "/rgs_report"
     pdf_name = "RGS reports"
 
     # if params[:send] == "true"
@@ -59,7 +59,7 @@ class  ReportsController  <  ActionController::Base
   def history_by_rg
     id_user = params[:id]
     @report_by_rg = Publication.search_publications_by_rg(id_user)
-    template_s = "/rep_by_rg"
+    template_s = "/rep_by_rg.pdf.erb"
     @par = id_user
     @pdf_name = "Report_RG #{id_user}"
     show(template_s, @pdf_name)
