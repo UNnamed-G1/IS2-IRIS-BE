@@ -111,6 +111,7 @@ class ResearchGroupsController < ApplicationController
     if result.errors.any?
       render json: result.errors.messages, status: :unprocessable_entity
     else 
+      ResearchGroupMailer.welcome_research_group(current_user, research_group).deliver_now
       render json: {"message": "Ahora eres miembro del grupo de investigación."}, status: :ok
     end
   end

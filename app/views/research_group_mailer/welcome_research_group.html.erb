@@ -14,22 +14,23 @@
                         </td>
                     </tr>
                 </table>
-            </div>
-            <div>
-                <p>
+                <small>
                     La mejor aplicación dónde podrás encontrar la información de los grupos de 
                     investigación de la Universidad Nacional de Colombia 
-                </p>
+                </small>
             </div>
             <br>
             <div>
-                <h4>
-                    <%= "Bienvenido a #{@research_group.name}!" %>
-                </h4>
                 <h2>
-                    Por parte de nuestro equipo te damos la bienvenida y esperamos que este grupo sea
-                    lo más enriquecedor para ti y para nosotro. Gracias!!
+                    <%= "Bienvenido a #{@research_group.name}!" %>
                 </h2>
+                <hr>
+                <hr>
+                <br>
+                <h4>
+                    Por parte de nuestro equipo te damos la bienvenida y esperamos que este grupo sea
+                    lo más enriquecedor para ti y para nosotros. Gracias!!
+                </h4>
             </div>
             <div class="content follower">
                 <table>
@@ -37,6 +38,7 @@
                         <td class="small profile_image">
                             <%= if @research_group.photo 
                                     image_tag attachments["research_group_picture.png"].url
+                                end
                             %>
                         </td>
                         <td>
