@@ -12,14 +12,14 @@ class  ReportsController  <  ActionController::Base
   end
 
   def total_user_history
-    @reports_users = User.all
+    @reports_users = User.with_publications_count
     template_s = "../views/reports/users_report"
     pdf_name = "Users reports"
     show(template_s, pdf_name)
   end
 
   def total_rgs_history
-    @reports_rgs = ResearchGroup.all
+    @reports_rgs = ResearchGroup.with_publications_count
     template_s = "../views/reports/rgs_report"
     pdf_name = "RGS reports"
     show(template_s, pdf_name)

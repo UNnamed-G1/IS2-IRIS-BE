@@ -13,14 +13,14 @@
   <tbody>
     <% tot_publications = Publication.all.count %>
     <% @reports_users.each do |post| %>
-      <% num_p_by_us = Publication.num_publications_by_user(post.id) %>
-      <% perc = (num_p_by_us * 100 / tot_publications) %>
+      <% pubs_count = "#{post.pubs_count}" %>
+      <% perc = (Integer(pubs_count) * 100 / tot_publications) %>
       <tr>
         <td><%= post.id %></td>
         <td><%= post.name %></td>
         <td><%= post.lastname %></td>
-        <td><%= num_p_by_us %></td>
-        <td><%= "#{perc}%" %></td>
+        <td><%= pubs_count %></td>
+        <td><%= "#{perc} %"%></td>
       </tr>
     <%end%>
   </tbody>
