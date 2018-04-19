@@ -8,11 +8,12 @@ class  ReportsController  <  ActionController::Base
 	   @reports_rgs = ResearchGroup.all
   end
 
-  def show(temp_path, pdf_name)
+  def show(template, pdf_name)
+    template_path = TEMPLATES_PATH + template
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: pdf_name, template: temp_path, layout: "pdf.html"
+        render pdf: pdf_name, template: template_path, layout: "pdf.html"
       end
     end
   end
