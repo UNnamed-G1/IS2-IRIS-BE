@@ -8,8 +8,8 @@ class ResearchGroupsController < ApplicationController
   def index
     research_groups = ResearchGroup.items(params[:page])
     render json: {
-            research_groups: research_groups,
-            total_pages: research_groups.total_pages
+             research_groups: research_groups,
+             total_pages: research_groups.total_pages,
            }, include: [:photo]
   end
 
@@ -18,7 +18,7 @@ class ResearchGroupsController < ApplicationController
     if @research_group.errors.any?
       render json: @research_group.errors.messages
     else
-      render json: @research_group, include: ['users', 'members', 'members.user', :photo] # This is an example of associations that are brought
+      render json: @research_group, include: ["users", "members", "members.user", :photo] # This is an example of associations that are brought
     end
   end
 
@@ -39,7 +39,11 @@ class ResearchGroupsController < ApplicationController
   def update
     if @research_group.update(research_group_params)
       picture = params[:picture]
-      @research_group.photo.update(picture: picture) if picture
+      if @research_group.photo
+        @research_group.photo.update(picture: picture) if picture
+      else
+        @research_group.update(photo: Photo.create_photo(picture, @research_group)) if picture
+      end
       render json: @research_group, include: [:photo]
     else
       render json: @research_group.errors, status: :unprocessable_entity
@@ -66,32 +70,32 @@ class ResearchGroupsController < ApplicationController
   def search_rgs_by_career
     rgs_by_career = ResearchGroup.search_rgs_by_career(params[:id]).items(params[:page])
     render json: {
-            research_groups: rgs_by_career,
-            total_pages: rgs_by_career.total_pages
+             research_groups: rgs_by_career,
+             total_pages: rgs_by_career.total_pages,
            }, fields: %i[id name], include: []
   end
 
   def search_rgs_by_name
     rgs_by_name = ResearchGroup.search_rgs_by_name(params[:keywords]).items(params[:page])
     render json: {
-            research_groups: rgs_by_name,
-            total_pages: rgs_by_name.total_pages
+             research_groups: rgs_by_name,
+             total_pages: rgs_by_name.total_pages,
            }, fields: %i[id name], include: []
   end
 
   def search_rgs_by_class
     rgs_by_class = ResearchGroup.search_rgs_by_class(params[:cl_type]).items(params[:page])
     render json: {
-            research_groups: rgs_by_class,
-            total_pages: rgs_by_class.total_pages
+             research_groups: rgs_by_class,
+             total_pages: rgs_by_class.total_pages,
            }, fields: %i[id name], include: []
   end
 
   def search_rgs_by_department
     rgs_by_department = ResearchGroup.search_rgs_by_dept(params[:id]).items(params[:page])
     render json: {
-            research_groups: rgs_by_department,
-            total_pages: rgs_by_department.total_pages
+             research_groups: rgs_by_department,
+             total_pages: rgs_by_department.total_pages,
            }, fields: %i[id name], include: []
   end
 
@@ -99,6 +103,16 @@ class ResearchGroupsController < ApplicationController
     research_groups = ResearchGroup.news
     fields = %i[name description updated_at]
     render json: research_groups, fields: fields, include: [:photo]
+  end
+
+  def join_research_group
+    research_group = ResearchGroup.find(params[:id])
+    result = current_user.join_research_group(research_group)
+    if result.errors.any?
+      render json: result.errors.messages, status: :unprocessable_entity
+    else 
+      render json: {"message": "Ahora eres miembro del grupo de investigación."}, status: :ok
+    end
   end
 
   private
