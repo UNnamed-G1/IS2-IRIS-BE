@@ -39,7 +39,7 @@ class  ReportsController  <  ActionController::Base
     @report_by_rg = Publication.search_publications_by_rg(id_rg)
     template_s = "../views/reports/rep_by_rg"
     @par = id_rg
-    @pdf_name = "Report_RG #{id_user}"
+    @pdf_name = "Report_RG #{id_rg}"
     show(template_s, @pdf_name)
   end
 
