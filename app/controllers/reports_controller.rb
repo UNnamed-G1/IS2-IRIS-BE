@@ -1,6 +1,6 @@
 class  ReportsController  <  ActionController::Base
   include Knock::Authenticable
-  before_action :authenticate_user
+  # before_action :authenticate_user
 
   TEMPLATES_PATH = "../views/reports"
 
@@ -63,7 +63,7 @@ class  ReportsController  <  ActionController::Base
   def history_by_rg
     id_user = params[:id]
     @report_by_rg = Publication.search_publications_by_rg(id_user)
-    template_s = "../views/reports/rep_by_rg"
+    template_s = "/rep_by_rg"
     @par = id_user
     @pdf_name = "Report_RG #{id_user}"
     show(template_s, @pdf_name)
