@@ -9,12 +9,15 @@ Rails.application.routes.draw do
   get "research_groups_news" => "research_groups#news"
   get "events_news" => "events#news"
 
-  get 'research_groups/photo/:id' => 'research_groups#get_photo'
+  get "research_groups/photo/:id" => "research_groups#get_photo"
 
-  post 'follow' => 'users#follow_user' # param must be :id_followed
-  post 'unfollow' => 'users#unfollow_user' # param must be :id_followed
-  get 'following' => 'users#following'
-  get 'followers' => 'users#followers'
+  post "follow" => "users#follow_user" # param must be :id_followed
+  post "unfollow" => "users#unfollow_user" # param must be :id_followed
+  get "following" => "users#following"
+  get "curr_following" => "users#curr_following"
+  get "followers" => "users#followers"
+
+  post 'research_groups/join/' => "research_groups#join_research_group"
 
 # Search
   # Nota el simbolo '#' se traduce a la ruta como '%23'
@@ -44,10 +47,10 @@ Rails.application.routes.draw do
 
   #Reports
 
-  get "reports/user_history", to:  "reports#total_user_history"
-  get "reports/rgs_history", to:  "reports#total_rgs_history"
-  get "reports/rep_by_user", to:  "reports#history_by_user"
-  get "reports/rep_by_rg", to:  "reports#history_by_rg"
+  get "reports/user_history", to: "reports#total_user_history"
+  get "reports/rgs_history", to: "reports#total_rgs_history"
+  get "reports/rep_by_user", to: "reports#history_by_user"
+  get "reports/rep_by_rg", to: "reports#history_by_rg"
 
   resources :publications
   resources :research_groups

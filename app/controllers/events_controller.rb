@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  #before_action :authenticate_user, except: %i[index show news]
+  before_action :authenticate_user, except: %i[index show news]
   before_action :authorize_as_author_or_lider, only: %i[destroy update]
   before_action :set_event, only: %i[show update destroy]
 
@@ -9,7 +9,7 @@ class EventsController < ApplicationController
     render json: {
              events: events,
              total_pages: events.total_pages,
-           }, fields: %i[id name topic type_ev], include: []
+           }, fields: %i[id name topic type_ev], include: [:photos]
   end
 
   # GET /events/1

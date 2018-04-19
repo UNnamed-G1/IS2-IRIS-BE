@@ -1,6 +1,6 @@
 class  ReportsController  <  ActionController::Base
   include Knock::Authenticable
-  before_action :authenticate_user
+  #before_action :authenticate_user
 
   TEMPLATES_PATH = "../views/reports"
 

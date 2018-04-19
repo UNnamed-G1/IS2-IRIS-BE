@@ -130,7 +130,6 @@ end
         end_joining_date: Faker::Time.forward(2),
         state: Faker::Number.between(0,1),
         type_urg: Faker::Number.between(0,1),
-        hours_per_week: Faker::Number.between(1,10),
         user_id: Faker::Number.between(1,100),
         research_group_id: Faker::Number.between(1,50)
     )
