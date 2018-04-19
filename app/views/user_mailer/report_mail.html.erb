@@ -8,12 +8,12 @@
                     <tr>
                         <td>
                             <p width="20%">
-                                
+                                <%= image_tag attachments['iris_logo.png'].url %>
                             </p>
                         </td>
                         <td>
                             <p width="30%">
-                            
+                                <%= image_tag attachments['unal_logo.png'].url %>
                             </p>
                         </td>
                     </tr>
@@ -30,28 +30,6 @@
                 <h4>
                     Tienes Nuevos seguidores:
                 </h4>
-            </div>
-            <div class="content follower">
-                <table>
-                    <tr>
-                        <td class="small profile_image">
-                            <%= 
-                            # if @user.photo 
-                            #         image_tag attachments["profile_image.png"].url
-                            #     else
-                            #         image_tag attachments["profile_image_default.png"].url
-                            #     end
-                            %>
-                        </td>
-                        <td>
-                            <h4><%= @user.name + " " + @user.name + " "%> 
-                                <small>(<%= @user.username %>)</small>
-                            </h4>
-                            <p><%= @user.professional_profile %></p>
-                            <a class="btn" href="https://is2-iris-fe.herokuapp.com">Visita su perfil &raquo;</a>
-                        </td>
-                    </tr>
-                </table>
             </div>
             <div class="content">
                 <table>

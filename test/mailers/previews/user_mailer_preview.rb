@@ -11,4 +11,8 @@ class UserMailerPreview < ActionMailer::Preview
     def new_follower_mail
         UserMailer.new_follower_mail(User.last, User.find(101))
     end
+
+    def report_mail
+        UserMailer.report_mail(User.find(101), "ASDASD")
+    end
 end
