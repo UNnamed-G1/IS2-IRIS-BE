@@ -53,11 +53,11 @@ class  ReportsController  <  ActionController::Base
 
   def history_by_user
     id_user = params[:id]
-    report_by_user = Publication.search_publications_by_user(id_user)
+    @report_by_user = Publication.search_publications_by_user(id_user)
     template = "/rep_by_user.pdf.erb"
     @par = id_user
     @pdf_name = "Report_User #{id_user}"
-    show(template_s, @pdf_name)
+    show(template, @pdf_name)
   end
 
   def history_by_rg
