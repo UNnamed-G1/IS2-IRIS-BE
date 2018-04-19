@@ -2,17 +2,17 @@ class UsersController < ApplicationController
   # The json to be received when the user will be created
   # has to follow the next format: { "user": { Here goes the info of the new user } }
 
-  before_action :authenticate_user, except: [:create, :show, :index]
+  before_action :authenticate_user, except: [:create, :show, :index, :following, :followers]
   before_action :authorize_as_admin, only: [:destroy]
   before_action :authorize_update, only: [:update]
   before_action :set_user, only: [:show, :update, :destroy]
 
   # GET /users
   def index
-    @users = User.items(params[:page])
+    @users = User.items(params[:page], 12)
     render json: {
-            users: @users,
-            total_pages: @users.total_pages
+             users: @users,
+             total_pages: @users.total_pages,
            }, include: [] # This include is for select which associations bring in the JSON
   end
 
@@ -64,24 +64,86 @@ class UsersController < ApplicationController
     render json: current_user, fields: fields, include: [:photo]
   end
 
+  def follow_user
+    followed_user = User.find_by_id(params[:id_followed])
+    result = Relationship.add_follower(current_user, followed_user)
+    if result.errors.empty?
+      UserMailer.new_follower_mail(followed_user, current_user).deliver_now
+      render json: {message: "Acción realizada satisfactoriamente"}, status: :ok
+    else
+      render json: result.errors, status: :unprocessable_entity
+    end
+  end
+
+  def following
+    result = {}
+    if params.has_key?(:id)
+      user = User.find_by(id: params[:id])
+    else
+      user = current_user
+    end
+    if user
+      result["following"] = user.get_following.items(params[:page], 6)
+      result["count"] = result["following"].total_entries
+      result["total_pages"] = result["following"].total_pages
+      render json: result, include: [:photo], status: :ok
+    else
+      render json: {message: "Error: Bad request"}, status: 500
+    end
+  end
+
+  def followers
+    result = {}
+    if params.has_key?(:id)
+      user = User.find_by(id: params[:id])
+    else
+      user = current_user
+    end
+    if user
+      result["followers"] = user.get_followers.items(params[:page], 6)
+      result["count"] = result["followers"].total_entries
+      result["total_pages"] = result["followers"].total_pages
+      render json: result, include: [:photo], status: :ok
+    else
+      render json: {message: "Error: Bad request"}, status: 500
+    end
+  end
+
+  def curr_following
+    result = {}
+    result["following"] = current_user.get_following
+    result["count"] = current_user.count_following
+    render json: result, include: [:photo], status: :ok
+  end
+
+  def unfollow_user
+    user_to_unfollow = User.find_by_id(params[:id_followed])
+    if current_user.unfollow(user_to_unfollow)
+      render json: {message: "Has dejado de seguir a este usuario."}, status: :ok
+    else
+      render json: {message: "Error: el error no ha sido especificado"}, status: 500
+    end
+  end
+
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def user_params
-      params.require(:user).permit(:name, :lastname, :username, :professional_profile, :email, :phone, :office, :cvlac_link, :career_id, :user_type, :password, :password_confirmation, :picture)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
 
-    def authorize_update
-      unless current_user.is_admin? || is_current?
-        render_unauthorize
-      end
-    end
+  # Only allow a trusted parameter "white list" through.
+  def user_params
+    params.require(:user).permit(:name, :lastname, :username, :professional_profile, :email, :phone, :office, :cvlac_link, :career_id, :user_type, :password, :password_confirmation, :picture)
+  end
 
-    def is_current?
-      return current_user.id.to_s == params[:id].to_s
+  def authorize_update
+    unless current_user.is_admin? || is_current?
+      render_unauthorize
     end
+  end
+
+  def is_current?
+    return current_user.id.to_s == params[:id].to_s
+  end
 end

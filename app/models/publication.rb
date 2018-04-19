@@ -67,9 +67,6 @@ class Publication < ApplicationRecord
     end
 
     ###Queries for statistics
-    def self.total_pubs_by_user
-      joins(:users).group('users.id').order('COUNT(users.id) DESC, id')
-    end
 
     def self.num_publications_by_rg(rg_id)
         joins(:research_groups).where('research_groups.id' => rg_id).count if rg_id.present?
@@ -77,6 +74,10 @@ class Publication < ApplicationRecord
 
     def self.num_publications_by_user(usr_id)
         joins(:users).where('users.id' => usr_id).count if usr_id.present?
+    end
+
+    def self.num_publications_by_user_and_type(usr_id, type)
+        joins(:users).where('users.id' => usr_id, type_pub: type).count
     end
 
     def self.num_publications_by_type(type)
