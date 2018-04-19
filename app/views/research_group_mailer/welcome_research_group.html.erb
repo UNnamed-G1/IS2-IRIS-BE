@@ -1,0 +1,67 @@
+<table class="body-wrap" bgcolor="">
+    <tr>
+        <td></td>
+        <td class="container" align="">
+
+            <div class="content">
+                <table>
+                    <tr>
+                        <td>
+                            <p width="20%"><%= image_tag attachments['iris_logo.png'].url %></p>
+                        </td>
+                        <td>
+                            <p width="30%"><%= image_tag attachments['unal_logo.png'].url %></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <p>
+                    La mejor aplicación dónde podrás encontrar la información de los grupos de 
+                    investigación de la Universidad Nacional de Colombia 
+                </p>
+            </div>
+            <br>
+            <div>
+                <h4>
+                    <%= "Bienvenido a #{@research_group.name}!" %>
+                </h4>
+                <h2>
+                    Por parte de nuestro equipo te damos la bienvenida y esperamos que este grupo sea
+                    lo más enriquecedor para ti y para nosotro. Gracias!!
+                </h2>
+            </div>
+            <div class="content follower">
+                <table>
+                    <tr>
+                        <td class="small profile_image">
+                            <%= if @research_group.photo 
+                                    image_tag attachments["research_group_picture.png"].url
+                            %>
+                        </td>
+                        <td>
+                            <h4>
+                                <%= @research_group.name %>                                     
+                                <small> <%= @research_group.description %> </small>
+                            </h4>
+                            <p><%= @research_group.strategic_focus %></p>
+                            <a class="btn" href="https://is2-iris-fe.herokuapp.com">Visita su página &raquo;</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="content">
+                <table>
+                    <tr>
+                        <td>
+                            <p class="callout">
+                                Para dejarnos un comentario accede al siguiente enlace:
+                                <a href="https://is2-iris-fe.herokuapp.com/leave-comments">enviar comentarios</a> &raquo;
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
