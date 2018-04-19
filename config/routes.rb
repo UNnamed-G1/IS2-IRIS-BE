@@ -11,6 +11,11 @@ Rails.application.routes.draw do
 
   get 'research_groups/photo/:id' => 'research_groups#get_photo'
 
+  post 'follow' => 'users#follow_user' # param must be :id_followed
+  post 'unfollow' => 'users#unfollow_user' # param must be :id_followed
+  get 'following' => 'users#following'
+  get 'followers' => 'users#followers'
+
 # Search
   # Nota el simbolo '#' se traduce a la ruta como '%23'
   get "careers_by_rg" => "careers#search_careers_by_rg"
