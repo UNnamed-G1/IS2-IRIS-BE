@@ -13,6 +13,6 @@ class UserMailerPreview < ActionMailer::Preview
     end
 
     def report_mail
-        UserMailer.report_mail(User.find(101), "ASDASD")
+        UserMailer.report_mail(User.find(101), "asdasd", "../views/reports/users_report.pdf.erb", User.all) # recipient, report_name, template_path, reports_users
     end
 end
