@@ -21,4 +21,8 @@ class Relationship < ApplicationRecord
   validates :followed_id, :follower_id, presence: true
   validates :followed_id, uniqueness: { scope: :follower_id, message: "Esta relación ya se encuentra presente." }
 
+  def self.add_follower(follower, followed)
+    Relationship.create(follower: follower, followed: followed)
+  end
+
 end

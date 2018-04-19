@@ -1,0 +1,65 @@
+<table class="body-wrap" bgcolor="">
+    <tr>
+        <td></td>
+        <td class="container" align="">
+
+            <div class="content">
+                <table>
+                    <tr>
+                        <td>
+                            <p width="20%"><%= image_tag attachments['iris_logo.png'].url %></p>
+                        </td>
+                        <td>
+                            <p width="30%"><%= image_tag attachments['unal_logo.png'].url %></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <p>
+                    La mejor aplicación dónde podrás encontrar la información de los grupos de 
+                    investigación de la Universidad Nacional de Colombia 
+                </p>
+            </div>
+            <br>
+            <div>
+                <h4>
+                    Tienes Nuevos seguidores:
+                </h4>
+            </div>
+            <div class="content follower">
+                <table>
+                    <tr>
+                        <td class="small profile_image">
+                            <%= if @follower.photo 
+                                    image_tag attachments["profile_image.png"].url
+                                else
+                                    image_tag attachments["profile_image_default.png"].url
+                                end
+                            %>
+                        </td>
+                        <td>
+                            <h4><%= @follower.name + " " + @follower.name + " "%> 
+                                <small>(<%= @follower.username %>)</small>
+                            </h4>
+                            <p><%= @follower.professional_profile %></p>
+                            <a class="btn" href="https://is2-iris-fe.herokuapp.com">Visita su perfil &raquo;</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="content">
+                <table>
+                    <tr>
+                        <td>
+                            <p class="callout">
+                                Para dejarnos un comentario accede al siguiente enlace:
+                                <a href="https://is2-iris-fe.herokuapp.com/leave-comments">enviar comentarios</a> &raquo;
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

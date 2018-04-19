@@ -20,5 +20,38 @@ class UserMailer < ApplicationMailer
         @comments = comments
         @subject = subject
         mail(to: 'iris.investigationgroups@gmail.com', subject: subject)
-      end
+    end
+
+    def new_follower_mail(followed, follower) 
+        @followed = followed
+        @follower = follower
+        # Mark this mail as no-spam
+        headers({'X-No-Spam' => 'True', 'In-Reply-To' => 'complaints@dontcare.com'})
+        path_images = "/app/assets/images/mailers"
+        attachments.inline['iris_logo.png'] = File.read("#{Rails.root}#{path_images}/IRIS_logo.png")
+        attachments.inline['unal_logo.png'] = File.read("#{Rails.root}#{path_images}/UNAL_escudo.png")
+        attachments.inline['profile_image_default.png'] = File.read("#{Rails.root}#{path_images}/user_default.png")
+        if @follower.photo
+            attachments.inline['profile_image.png'] = File.read("#{Rails.root}/public#{@follower.photo.picture.url}")
+        end
+        full_name = @followed.name + " " + @followed.lastname
+        email_with_name = %("#{full_name}" <#{@followed.email}>)
+        mail(to: email_with_name, subject: "Tienes un nuevo seguidor!!")
+    end
+
+    def report_mail(recipient, report_name, template_path, reports_users)
+        @recipient = recipient
+        @reports_users = reports_users
+        path_images = "/app/assets/images/mailers"
+        attachments.inline['iris_logo.png'] = File.read("#{Rails.root}#{path_images}/IRIS_logo.png")
+        attachments.inline['unal_logo.png'] = File.read("#{Rails.root}#{path_images}/UNAL_escudo.png")
+
+        report = WickedPdf.new.pdf_from_string(render_to_string(pdf: report_name, template: template_path, layout: "pdf.html"))
+
+        attachments["#{report_name}.pdf"] = report
+
+        full_name = @recipient.name + " " + @recipient.lastname
+        email_with_name = %("#{full_name}" <#{@recipient.email}>)
+        mail(to: email_with_name, subject: "Reporte de " + report_name)
+    end
 end

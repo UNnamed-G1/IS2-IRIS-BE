@@ -7,4 +7,12 @@ class UserMailerPreview < ActionMailer::Preview
     def receive_comments_mail
         UserMailer.receive_comments_mail("Dejar un comentario", User.first, "asdadasdasdasd")
     end
+
+    def new_follower_mail
+        UserMailer.new_follower_mail(User.last, User.find(101))
+    end
+
+    def report_mail
+        UserMailer.report_mail(User.find(101), "asdasd", "../views/reports/users_report.pdf.erb", User.all) # recipient, report_name, template_path, reports_users
+    end
 end
