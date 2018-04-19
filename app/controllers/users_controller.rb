@@ -9,7 +9,7 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.items(params[:page])
+    @users = User.items(params[:page], 12)
     render json: {
              users: @users,
              total_pages: @users.total_pages,
@@ -83,8 +83,9 @@ class UsersController < ApplicationController
       user = current_user
     end
     if user
-      result["following"] = user.get_following
-      result["count"] = user.count_following
+      result["following"] = user.get_following.items(params[:page], 6)
+      result["count"] = result["following"].total_entries
+      result["total_pages"] = result["following"].total_pages
       render json: result, include: [:photo], status: :ok
     else
       render json: {message: "Error: Bad request"}, status: 500
@@ -99,12 +100,20 @@ class UsersController < ApplicationController
       user = current_user
     end
     if user
-      result["followers"] = user.get_followers
-      result["count"] = user.count_followers
+      result["followers"] = user.get_followers.items(params[:page], 6)
+      result["count"] = result["followers"].total_entries
+      result["total_pages"] = result["followers"].total_pages
       render json: result, include: [:photo], status: :ok
     else
       render json: {message: "Error: Bad request"}, status: 500
     end
+  end
+
+  def curr_following
+    result = {}
+    result["following"] = current_user.get_following
+    result["count"] = current_user.count_following
+    render json: result, include: [:photo], status: :ok
   end
 
   def unfollow_user
