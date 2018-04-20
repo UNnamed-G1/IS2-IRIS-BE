@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :authenticate_user, except: %i[index show news]
+  before_action :authenticate_user, except: %i[index show news search_events_by_rg]
   before_action :authorize_as_author_or_lider, only: %i[destroy update]
   before_action :set_event, only: %i[show update destroy]
 
