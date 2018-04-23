@@ -1,4 +1,4 @@
-class  ReportsController  <  ActionController::Base
+class ReportsController < ActionController::Base
   include Knock::Authenticable
   #before_action :authenticate_user
 
@@ -9,6 +9,7 @@ class  ReportsController  <  ActionController::Base
     respond_to do |format|
       format.html
       format.pdf do
+        response.headers["Access-Control-Expose-Headers"] = "Accept-Ranges"
         render pdf: pdf_name, template: template_path, layout: "pdf.html"
       end
     end
@@ -42,8 +43,8 @@ class  ReportsController  <  ActionController::Base
     #   UserMailer.report_mail(current_user, pdf_name, template_path, reports_rgs).deliver_now
     #   render json: {"message": "Acción realizada satisfactoriamente"}, status: :ok
     # else
-      @reports_rgs = reports_rgs
-      show(template_path, pdf_name)
+    @reports_rgs = reports_rgs
+    show(template_path, pdf_name)
     # end
   end
 
@@ -66,9 +67,9 @@ class  ReportsController  <  ActionController::Base
   end
 
   private
+
   # Method for change the message when user is unauthorized
   def unauthorized_entity(entity_name)
     render json: ["You are unauthorized to access this."], status: :unauthorized
   end
-
 end
