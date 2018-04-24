@@ -43,7 +43,7 @@
                                 <small>(<%= @follower.username %>)</small>
                             </h4>
                             <p><%= @follower.professional_profile %></p>
-                            <a class="btn" href="https://is2-iris-fe.herokuapp.com">Visita su perfil &raquo;</a>
+                            <%= link_to "Visita su perfil &raquo;".html_safe, "https://is2-iris-fe.herokuapp.com/profile?username=#{@follower.username}", class: "btn"%>                        
                         </td>
                     </tr>
                 </table>
