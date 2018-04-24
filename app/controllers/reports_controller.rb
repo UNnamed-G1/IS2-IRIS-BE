@@ -1,74 +1,113 @@
-class  ReportsController  <  ActionController::Base
+class ReportsController < ActionController::Base
   include Knock::Authenticable
   #before_action :authenticate_user
 
-  TEMPLATES_PATH = "../views/reports"
+  BASE_TEMPLATE_PATH = "../views/reports"
 
   def show(template, pdf_name)
-    template_path = TEMPLATES_PATH + template
+    template_path = BASE_TEMPLATE_PATH + template
+
     respond_to do |format|
       format.html
       format.pdf do
+        response.headers["Access-Control-Expose-Headers"] = "Accept-Ranges"
         render pdf: pdf_name, template: template_path, layout: "pdf.html"
       end
     end
   end
 
-  def send_report(report_name, template, value_report)
-    template_path = TEMPLATES_PATH + template
-    UserMailer.report_mail(current_user, pdf_name, template_path, value_report).deliver_now
+  def send_report(report_name, template, data)
+    template_path = BASE_TEMPLATE_PATH + template
+    ReportMailer.report_mail(current_user, report_name, template_path, data).deliver_now
     render json: {"message": "Acción realizada satisfactoriamente"}, status: :ok
   end
 
   def total_user_history
-    reports_users = User.with_publications_count
+    data = Hash.new
+    data['users'] = User.with_publications_count
+    data['total_publications'] = Publication.all.count
+    
     template = "/users_report"
     pdf_name = "Users reports"
-
+    
     if params[:send] == "true"
-      send_report(pdf_name, template, reports_users)
+      data['report_description'] = "historial de aportes y numero
+                                    de publicaciones"
+      send_report(pdf_name, template, data)
     else
-      @reports_users = reports_users
+      @data = data
       show(template, pdf_name)
     end
   end
 
   def total_rgs_history
-    reports_rgs = ResearchGroup.with_publications_count
-    template_path = "/rgs_report"
-    pdf_name = "RGS reports"
+    data = Hash.new
+    data["research_groups"] = ResearchGroup.with_publications_count
+    data["total_publications"] = Publication.all.count
 
-    # if params[:send] == "true"
-    #   UserMailer.report_mail(current_user, pdf_name, template_path, reports_rgs).deliver_now
-    #   render json: {"message": "Acción realizada satisfactoriamente"}, status: :ok
-    # else
-      @reports_rgs = reports_rgs
-      show(template_path, pdf_name)
-    # end
+    template = "/rgs_report"
+    pdf_name = "Research Groups"
+
+    if params[:send] == "true"
+      data["report_description"] = "historial de aportes y número de publicaciones"
+      send_report(pdf_name, template, data)
+    else
+      @data = data
+      show(template, pdf_name)
+    end
   end
 
   def history_by_user
-    id_user = params[:id]
-    @report_by_user = Publication.search_publications_by_user(id_user)
-    template = "/rep_by_user.pdf.erb"
-    @par = id_user
-    @pdf_name = "Report_User #{id_user}"
-    show(template, @pdf_name)
+    data = Hash.new
+    user_id = params[:id]
+    data['user'] = User.find_by_id(user_id)
+    data["publications"] = Publication.search_publications_by_user(user_id)
+    data["stats_publication"] = Array.new
+    publication_types = Publication.type_pubs.values 
+    for publication_type in publication_types do
+      data["stats_publication"][publication_type] = Publication.num_publications_by_user_and_type(user_id, publication_type)
+    end
+
+    template = "/rep_by_user"
+    pdf_name = "Report_User #{user_id}"
+
+    if params[:send] == "true"
+      data["report_description"] = "publicaciones hechas por usuario"
+      send_report(pdf_name, template, data)
+    else
+      @data = data
+      show(template, pdf_name)
+    end
   end
 
   def history_by_rg
-    id_user = params[:id]
-    @report_by_rg = Publication.search_publications_by_rg(id_user)
-    template_s = "/rep_by_rg.pdf.erb"
-    @par = id_user
-    @pdf_name = "Report_RG #{id_user}"
-    show(template_s, @pdf_name)
+    user_id = params[:id]
+    data = Hash.new
+    data["publications"] = Publication.search_publications_by_rg(user_id)
+    data["research_group_name"] = ResearchGroup.find_by_id(user_id).name
+    data["stats_publication"] = Array.new
+    publication_types = Publication.type_pubs.values 
+    for publication_type in publication_types do
+      data["stats_publication"][publication_type] = Publication.num_publications_by_rg_and_type(user_id, publication_type)
+    end
+    puts data
+    template = "/rep_by_rg.pdf.erb"
+    pdf_name = "Report_Research_Group #{user_id}"
+    
+    if params[:send] == "true"
+      data["report_description"] = "publicaciones realizada por un
+                                    Grupo de Investigación"
+      send_report(pdf_name, template, data)
+    else
+      @data = data
+      show(template, pdf_name)
+    end
   end
 
   private
+
   # Method for change the message when user is unauthorized
   def unauthorized_entity(entity_name)
     render json: ["You are unauthorized to access this."], status: :unauthorized
   end
-
 end

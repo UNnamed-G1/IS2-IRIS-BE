@@ -68,6 +68,12 @@ class UsersController < ApplicationController
     render json: current_user, fields: fields, include: [:photo]
   end
 
+  # GET /user_by_username?username=:username
+  def by_username
+    user = User.byUsername(params[:username])
+    render json: user, include: [:photo, :career, :research_groups, :events, :publications, :research_subjects]
+  end
+
   def follow_user
     followed_user = User.find_by_id(params[:id_followed])
     result = Relationship.add_follower(current_user, followed_user)

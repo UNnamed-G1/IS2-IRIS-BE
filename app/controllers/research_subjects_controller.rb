@@ -1,5 +1,5 @@
 class ResearchSubjectsController < ApplicationController
-  before_action :authenticate_user, except: %i[index show]
+  before_action :authenticate_user, except: %i[index show search_rs_by_rg]
   before_action :authorize_as_admin, only: %i[update destroy create]
   before_action :set_research_subject, only: %i[show update destroy]
 
@@ -7,8 +7,8 @@ class ResearchSubjectsController < ApplicationController
   def index
     research_subjects = ResearchSubject.items(params[:page])
     render json: {
-            research_subjects: research_subjects,
-            total_pages: research_subjects.total_pages
+             research_subjects: research_subjects,
+             total_pages: research_subjects.total_pages,
            }, include: []
   end
 
@@ -53,24 +53,24 @@ class ResearchSubjectsController < ApplicationController
   def search_rs_by_rg
     rs_by_rg = ResearchSubject.search_rs_by_rg(params[:id]).items(params[:page])
     render json: {
-            research_subjects: rs_by_rg,
-            total_pages: rs_by_rg.total_pages
-           },fields: %i[id name], include: []
+             research_subjects: rs_by_rg,
+             total_pages: rs_by_rg.total_pages,
+           }, fields: %i[id name], include: []
   end
 
   def search_rs_by_name
     rs_by_name = ResearchSubject.search_rs_by_name(params[:keywords]).items(params[:page])
     render json: {
-            research_subjects: rs_by_name,
-            total_pages: rs_by_name.total_pages
+             research_subjects: rs_by_name,
+             total_pages: rs_by_name.total_pages,
            }, fields: %i[id name], include: []
   end
 
   def search_rs_by_user
     rs_by_user = ResearchSubject.search_rs_by_user(params[:id]).items(params[:page])
     render json: {
-            research_subjects: rs_by_user,
-            total_pages: rs_by_user.total_pages
+             research_subjects: rs_by_user,
+             total_pages: rs_by_user.total_pages,
            }, fields: %i[id name], include: []
   end
 
