@@ -1,6 +1,5 @@
 <h3 align="center">
-  <% rg_name = ResearchGroup.get_rgname_by_id(@par) %>
-  Reporte general de publicaciones del grupo <%= "#{rg_name[0]}" %>
+  Reporte general de publicaciones del grupo: <b><%= "#{@data["research_group_name"]}" %> </b>
 </h3>
 <table class="table">
   <tr>
@@ -11,14 +10,14 @@
   </tr>
 
   <tbody>
-    <% @report_by_rg.each do |log| %>
+    <% @data["publications"].each do |publication| %>
       <tr>
-        <td><%= log.id %></td>
-        <td><%= log.name %></td>
-        <td><%= log.type_pub %></td>
-        <td><%= log.date %></td>
+        <td><%= publication.id %></td>
+        <td><%= publication.name %></td>
+        <td><%= publication.type_pub %></td>
+        <td><%= publication.date %></td>
       </tr>
-    <%end%>
+    <% end %>
   </tbody>
 </table>
 
@@ -37,12 +36,9 @@
 
   <tbody>
     <tr>
-      <td><%= Publication.num_publications_by_rg_and_type(@par, 0) %></td>
-      <td><%= Publication.num_publications_by_rg_and_type(@par, 1) %></td>
-      <td><%= Publication.num_publications_by_rg_and_type(@par, 2) %></td>
-      <td><%= Publication.num_publications_by_rg_and_type(@par, 3) %></td>
-      <td><%= Publication.num_publications_by_rg_and_type(@par, 4) %></td>
-      <td><%= Publication.num_publications_by_rg_and_type(@par, 5) %></td>
+      <% for statistic in @data["stats_publication"] do %>
+        <td><%= statistic %></td>
+      <% end %>
     </tr>
   </tbody>
 </table>
