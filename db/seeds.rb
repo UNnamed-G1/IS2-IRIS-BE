@@ -38,7 +38,8 @@ end
 
 100.times do
     Schedule.create(
-        start_hour: Faker::Date.between(0, 23),
+        start_hour: Faker::Number.between(0, 23),
+        day_week: Faker::Number.between(0, 6),
         duration: Faker::Number.between(1, 5)
     )
 end

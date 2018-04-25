@@ -233,6 +233,10 @@ class User < ApplicationRecord
            )
   end
 
+  def add_schedule(schedule_id)
+    return schedule_users.create(schedule: Schedule.find(schedule_id))
+  end
+
   private
 
   def put_username

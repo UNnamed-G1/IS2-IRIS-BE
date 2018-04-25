@@ -4,6 +4,7 @@
 #
 #  id         :integer          not null, primary key
 #  start_hour :integer          not null
+#  day_week   :integer          not null
 #  duration   :integer          default(1), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -13,7 +14,10 @@ class Schedule < ApplicationRecord
   has_many :schedule_users, dependent: :delete_all
   has_many :users, through: :schedule_users
 
+  enum day_week: [:lunes, :martes, :miercoles, :jueves, :viernes, :sabado, :domingo]
+
   validates :start_hour, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha de inicio") } }
+  validates :day_week, inclusion: {in: day_weeks, message: "El tipo de día de la semana no es válido."}
   validates :duration, presence: { message: Proc.new { ApplicationRecord.presence_msg("duración") } }
 
   def self.items(p)
