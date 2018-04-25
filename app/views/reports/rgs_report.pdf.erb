@@ -10,15 +10,14 @@
   </tr>
 
   <tbody>
-    <% tot_publications = Publication.all.count %>
-    <% @reports_rgs.each do |post| %>
-      <% pubs_count = "#{post.pubs_count}" %>
-      <% perc = (Integer(pubs_count) * 100 / tot_publications) %>
+    <% @data["research_groups"].each do |research_group| %>
+      <% num_publications = "#{research_group.pubs_count}" %>
+      <% percentage = (Integer(num_publications) * 100 / @data["total_publications"]) %>
       <tr>
-        <td><%= post.id %></td>
-        <td><%= post.name %></td>
-        <td><%= pubs_count %></td>
-        <td><%= "#{perc} %"%></td>
+        <td><%= research_group.id %></td>
+        <td><%= research_group.name %></td>
+        <td><%= num_publications %></td>
+        <td><%= "#{percentage} %"%></td>
       </tr>
     <%end%>
   </tbody>
