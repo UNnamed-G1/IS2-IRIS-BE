@@ -98,7 +98,7 @@ class UsersController < ApplicationController
       result["total_pages"] = result["following"].total_pages
       render json: result, include: [:photo], status: :ok
     else
-      render json: {message: "Error: Bad request"}, status: 500
+      render json: {message: "Error: Bad request"}, status: 400
     end
   end
 
@@ -115,7 +115,7 @@ class UsersController < ApplicationController
       result["total_pages"] = result["followers"].total_pages
       render json: result, include: [:photo], status: :ok
     else
-      render json: {message: "Error: Bad request"}, status: 500
+      render json: {message: "Error: Bad request"}, status: 400
     end
   end
 

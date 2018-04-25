@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get "followers" => "users#followers"
 
   post "research_groups/join/" => "research_groups#join_research_group"
+  post "events/invite_users" => "events#invite_users" # params: users & id
 
   # Search
   # Nota el simbolo '#' se traduce a la ruta como '%23'
