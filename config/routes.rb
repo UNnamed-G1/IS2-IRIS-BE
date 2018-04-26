@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   post "research_groups/join/" => "research_groups#join_research_group"
   post "events/invite_users" => "events#invite_users" # params: users & id
 
+  post "schedules/set_as_busy" => "schedules#set_schedule_as_busy"
+  post "schedules/set_as_idle" => "schedules#set_schedule_as_idle"
+
   # Search
   # Nota el simbolo '#' se traduce a la ruta como '%23'
   get "careers_by_rg" => "careers#search_careers_by_rg"
