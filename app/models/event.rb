@@ -129,4 +129,32 @@ class Event < ApplicationRecord
       event = Event.find(event_id)
       return event.research_group.id
   end
+
+  def self.get_by_id(event_id)
+    return Event.find(10)
+  end
+
+  def add_author(user)
+    return event_users.create(
+      user: user,
+      type_user_event: "autor"
+    )
+  end
+
+  def invite_user(user)
+    return event_users.create(
+      user: user,
+      type_user_event: "invitado"
+    )
+  end
+
+  def delete_user(user)
+    return users.delete(user)
+  end
+
+  def change_user_as_attendee(user)
+    sql = "UPDATE event_users SET type_user_event = 1 WHERE user_id = #{user.id} AND event_id = #{id}"
+    ActiveRecord::Base.connection.execute(sql)
+    return event_users.where("user_id": user.id).first
+  end
 end

@@ -31,7 +31,7 @@ class EventsController < ApplicationController
           @event.photos.create(picture: picture)
         end
       end
-
+      @event.add_author(current_user)
       render json: @event, status: :created, location: @event, include: [:photos]
     else
       render json: @event.errors, status: :unprocessable_entity
@@ -113,6 +113,16 @@ class EventsController < ApplicationController
     events = Event.news
     fields = %i[topic description date]
     render json: events, fields: fields, include: [:photo]
+  end
+
+  # POST /events/invite_users
+  def invite_users
+    users_ids = params[:users_ids]
+    event = Event.get_by_id(params[:id])
+    for user_id in users_ids do 
+      event.invite_user(User.find_by_id(user_id))
+    end
+    render json: {message: "Usuarios han sido invitados."}, status: :ok
   end
 
   private

@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   # The json to be received when the user will be created
   # has to follow the next format: { "user": { Here goes the info of the new user } }
 
-  before_action :authenticate_user, except: [:create, :show, :index, :following, :followers]
+  before_action :authenticate_user, except: [:create, :show, :index, :following, :followers, :by_username]
   before_action :authorize_as_admin, only: [:destroy]
   before_action :authorize_update, only: [:update]
   before_action :set_user, only: [:show, :update, :destroy]
@@ -98,7 +98,7 @@ class UsersController < ApplicationController
       result["total_pages"] = result["following"].total_pages
       render json: result, include: [:photo], status: :ok
     else
-      render json: {message: "Error: Bad request"}, status: 500
+      render json: {message: "Error: Bad request"}, status: 400
     end
   end
 
@@ -115,7 +115,7 @@ class UsersController < ApplicationController
       result["total_pages"] = result["followers"].total_pages
       render json: result, include: [:photo], status: :ok
     else
-      render json: {message: "Error: Bad request"}, status: 500
+      render json: {message: "Error: Bad request"}, status: 400
     end
   end
 

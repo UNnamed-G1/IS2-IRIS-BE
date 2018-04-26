@@ -4,6 +4,7 @@
 #
 #  id         :integer          not null, primary key
 #  start_hour :integer          not null
+#  day_week   :integer          not null
 #  duration   :integer          default(1), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
