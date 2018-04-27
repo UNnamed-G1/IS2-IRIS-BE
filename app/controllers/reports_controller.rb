@@ -9,7 +9,7 @@ class  ReportsController  <  ActionController::Base
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: pdf_name, template: template_path, layout: "pdf.html"
+        render pdf: pdf_name, template: template_path, layout: "pdf.html", footer: { right: '[page] of [topage]' }
       end
     end
   end
