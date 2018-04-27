@@ -55,6 +55,16 @@ class SchedulesController < ApplicationController
            }, fields: [:start_date], include: []
   end
 
+  def set_schedule_as_busy
+    current_user.add_schedule(params[:id_schedule])
+    render json: {message: "Horario ha sido seleccionado."}, status: :ok
+  end
+
+  def set_schedule_as_idle
+    current_user.remove_schedule(params[:id_schedule])
+    render json: {message: "Horario ha sido puesto como disponible."}, status: :ok
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -64,6 +74,6 @@ class SchedulesController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def schedule_params
-    params.require(:schedule).permit(:start_hour, :duration)
+    params.require(:schedule).permit(:start_hour, :duration, :day_week)
   end
 end

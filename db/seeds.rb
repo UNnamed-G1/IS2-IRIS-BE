@@ -38,7 +38,8 @@ end
 
 100.times do
     Schedule.create(
-        start_hour: Faker::Date.between(0, 23),
+        start_hour: Faker::Number.between(0, 23),
+        day_week: Faker::Number.between(0, 6),
         duration: Faker::Number.between(1, 5)
     )
 end
@@ -130,7 +131,6 @@ end
         end_joining_date: Faker::Time.forward(2),
         state: Faker::Number.between(0,1),
         type_urg: Faker::Number.between(0,1),
-        hours_per_week: Faker::Number.between(1,10),
         user_id: Faker::Number.between(1,100),
         research_group_id: Faker::Number.between(1,50)
     )

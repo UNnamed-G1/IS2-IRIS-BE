@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :authenticate_user, except: %i[index show news]
+  before_action :authenticate_user, except: %i[index show news search_events_by_rg]
   before_action :authorize_as_author_or_lider, only: %i[destroy update]
   before_action :set_event, only: %i[show update destroy]
 
@@ -9,7 +9,7 @@ class EventsController < ApplicationController
     render json: {
              events: events,
              total_pages: events.total_pages,
-           }, fields: %i[id name topic type_ev], include: []
+           }, fields: %i[id name topic type_ev], include: [:photos]
   end
 
   # GET /events/1
@@ -31,7 +31,7 @@ class EventsController < ApplicationController
           @event.photos.create(picture: picture)
         end
       end
-
+      @event.add_author(current_user)
       render json: @event, status: :created, location: @event, include: [:photos]
     else
       render json: @event.errors, status: :unprocessable_entity
@@ -114,6 +114,44 @@ class EventsController < ApplicationController
     fields = %i[topic description date]
     render json: events, fields: fields, include: [:photo]
   end
+
+  # POST /events/invite_users
+  def invite_users
+    users_ids = params[:users_ids]
+    event = Event.get_by_id(params[:id])
+    for user_id in users_ids do 
+      event.invite_user(User.find_by_id(user_id))
+    end
+    render json: {message: "Usuarios han sido invitados."}, status: :ok
+  end
+
+  # POST /events/remove_invitation
+  def remove_invitation
+    event = Event.get_by_id(params[:id])
+    event.delete_user(User.find_by_id(user_id))
+    render json: {message: "La invitación ha sido cancelada"}, status: :ok
+  end
+
+  # GET /events/invited_users?id=event_id
+  def get_invited_users
+    event = Event.get_by_id(params[:id])
+    users = event.get_invited_users
+    render json: users, include: [], status: :ok
+  end
+
+  # GET /events/attendees?id=event_id
+  def get_attendees
+    event = Event.get_by_id(params[:id])
+    users = event.get_attendees
+    render json: users, include: [], status: :ok
+  end
+
+    # GET /events/authors?id=event_id
+    def get_authors
+      event = Event.get_by_id(params[:id])
+      users = event.get_authors
+      render json: users, include: [], status: :ok
+    end
 
   private
 

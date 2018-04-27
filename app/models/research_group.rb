@@ -56,7 +56,7 @@ class ResearchGroup < ApplicationRecord
     end
 
     def self.get_rgname_by_id(rg_id)
-        where(id: rg_id).pluck(:name)
+        where(id: rg_id).name
     end
 
     def self.get_name_by_publ(publ_id)
@@ -86,6 +86,10 @@ class ResearchGroup < ApplicationRecord
     def member_is_lider?(member)
         m = user_research_groups.find_by(user_id: member.id)
         return m.type_urg == "lider"
+    end
+
+    def self.find_by_id(research_group_id)
+        return ResearchGroup.find(research_group_id)
     end
 
 end

@@ -98,6 +98,9 @@ class User < ApplicationRecord
   end
 
   ###Queries for searching
+  def self.byUsername(username)
+    find_by(username: username)
+  end
 
   def self.search_users_by_id(usr_id)
     where(id: usr_id).pluck(:name, :lastname)
@@ -127,9 +130,11 @@ class User < ApplicationRecord
       .where("events.id" => ev_id) if ev_id.present?
   end
 
-  scope :with_publications_count, -> {joins(:publications)
-                                      .select("users.*, COUNT(publications.id) AS pubs_count")
-                                      .group("users.id")}
+  scope :with_publications_count, -> {
+          joins(:publications)
+            .select("users.*, COUNT(publications.id) AS pubs_count")
+            .group("users.id")
+        }
 
   ##Queries for statistics
 
@@ -215,6 +220,27 @@ class User < ApplicationRecord
     if following_users.delete(user_to_unfollow)
       return true
     else
+      return false
+    end
+  end
+
+  def join_research_group(research_group)
+    return user_research_groups.create(
+             joining_date: Time.new,
+             state: 1,
+             type_urg: 0,
+             research_group: research_group,
+           )
+  end
+
+  def add_schedule(schedule_id)
+    return schedule_users.create(schedule: Schedule.find(schedule_id))
+  end
+
+  def remove_schedule(schedule_id)
+    if schedules.delete(Schedule.find(schedule_id))
+      return true
+    else 
       return false
     end
   end

@@ -9,14 +9,26 @@ Rails.application.routes.draw do
   get "research_groups_news" => "research_groups#news"
   get "events_news" => "events#news"
 
-  get 'research_groups/photo/:id' => 'research_groups#get_photo'
+  get "research_groups/photo/:id" => "research_groups#get_photo"
+  get "/user_by_username" => "users#by_username"
+  post "follow" => "users#follow_user" # param must be :id_followed
+  post "unfollow" => "users#unfollow_user" # param must be :id_followed
+  get "following" => "users#following"
+  get "curr_following" => "users#curr_following"
+  get "followers" => "users#followers"
 
-  post 'follow' => 'users#follow_user' # param must be :id_followed
-  post 'unfollow' => 'users#unfollow_user' # param must be :id_followed
-  get 'following' => 'users#following'
-  get 'followers' => 'users#followers'
+  post "research_groups/join/" => "research_groups#join_research_group"
+  
+  post "events/invite_users" => "events#invite_users" # params: users_ids & id
+  post "events/remove_invitation" => "events#remove_invitation" # params: user_id & id
+  get "events/invited_users" => "events#get_invited_users" # params: ?id="something"
+  get "events/attendees" => "events#get_attendees" # params: ?id="something"
+  get "events/authors" => "events#get_authors" # params: ?id="something"
 
-# Search
+  post "schedules/set_as_busy" => "schedules#set_schedule_as_busy"
+  post "schedules/set_as_idle" => "schedules#set_schedule_as_idle"
+
+  # Search
   # Nota el simbolo '#' se traduce a la ruta como '%23'
   get "careers_by_rg" => "careers#search_careers_by_rg"
   get "careers_by_user" => "careers#search_careers_by_user"
@@ -44,10 +56,10 @@ Rails.application.routes.draw do
 
   #Reports
 
-  get "reports/user_history", to:  "reports#total_user_history"
-  get "reports/rgs_history", to:  "reports#total_rgs_history"
-  get "reports/rep_by_user", to:  "reports#history_by_user"
-  get "reports/rep_by_rg", to:  "reports#history_by_rg"
+  get "reports/user_history", to: "reports#total_user_history"
+  get "reports/rgs_history", to: "reports#total_rgs_history"
+  get "reports/rep_by_user", to: "reports#history_by_user"
+  get "reports/rep_by_rg", to: "reports#history_by_rg"
 
   resources :publications
   resources :research_groups

@@ -1,6 +1,6 @@
 <h3 align="center">
-  <% us_name = User.search_users_by_id(@par) %>
-  Reporte general de publicaciones de <%= "#{us_name[0][0]} #{us_name[0][1]}" %>
+  <% full_name = @data["user"].name + " " + @data["user"].lastname %>
+  Reporte general de publicaciones de <%= full_name %>
 </h3>
 <table class="table">
   <tr>
@@ -11,12 +11,12 @@
   </tr>
 
   <tbody>
-    <% @report_by_user.each do |log| %>
+    <% @data["publications"].each do |publications| %>
       <tr>
-        <td><%= log.id %></td>
-        <td><%= log.name %></td>
-        <td><%= log.type_pub %></td>
-        <td><%= log.date %></td>
+        <td><%= publications.id %></td>
+        <td><%= publications.name %></td>
+        <td><%= publications.type_pub %></td>
+        <td><%= publications.date %></td>
       </tr>
     <%end%>
   </tbody>
@@ -37,12 +37,9 @@
 
   <tbody>
     <tr>
-      <td><%= Publication.num_publications_by_user_and_type(@par, 0) %></td>
-      <td><%= Publication.num_publications_by_user_and_type(@par, 1) %></td>
-      <td><%= Publication.num_publications_by_user_and_type(@par, 2) %></td>
-      <td><%= Publication.num_publications_by_user_and_type(@par, 3) %></td>
-      <td><%= Publication.num_publications_by_user_and_type(@par, 4) %></td>
-      <td><%= Publication.num_publications_by_user_and_type(@par, 5) %></td>
+      <% for value in @data["stats_publication"] do %>
+      <td><%= value %></td>
+      <%end%>
     </tr>
   </tbody>
 </table>
