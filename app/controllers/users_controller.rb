@@ -30,8 +30,8 @@ class UsersController < ApplicationController
     @user = User.new (user_params)
 
     if @user.save
-      pic = params[:picture]
-      @user.update(photo: Photo.create_photo(pic, @user)) if pic
+      #pic = params[:picture]
+      #@user.update(photo: Photo.create_photo(pic, @user)) if pic
       UserMailer.sign_up_confirmation(@user).deliver_now
       render json: @user, status: :created, location: @user, include: [:photo]
     else

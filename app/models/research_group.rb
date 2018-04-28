@@ -80,9 +80,13 @@ class ResearchGroup < ApplicationRecord
         select(:name, :description, :updated_at).order(:updated_at).last(3)
     end
 
-    scope :with_publications_count, -> {joins(:publications)
-                                        .select("research_groups.*, COUNT(publications.id) AS pubs_count")
-                                        .group("research_groups.id")}
+    scope :with_publications_count, -> {
+            joins(:publications)
+              .select("research_groups.*, COUNT(publications.id) AS pubs_count")
+              .order("pubs_count DESC")
+              .group("research_groups.id")
+          }
+          
     def member_is_lider?(member)
         m = user_research_groups.find_by(user_id: member.id)
         return m.type_urg == "lider"

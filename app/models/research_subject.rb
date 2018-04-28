@@ -43,7 +43,7 @@ class ResearchSubject < ApplicationRecord
   def self.num_rs_by_rg(rg_id)
     joins(:research_groups).where('research_groups.id' => rg_id).count if rg_id.present?
   end
-
+  
   def self.num_rs_by_user(usr_id)
     joins(:users).where('users.id' => usr_id).count if usr_id.present?
   end

@@ -81,18 +81,18 @@ class ReportsController < ActionController::Base
   end
 
   def history_by_rg
-    user_id = params[:id]
+    rg_id = params[:id]
     data = Hash.new
-    data["publications"] = Publication.search_publications_by_rg(user_id)
-    data["research_group_name"] = ResearchGroup.find_by_id(user_id).name
+    data["publications"] = Publication.search_publications_by_rg(rg_id)
+    data["research_group_name"] = ResearchGroup.find_by_id(rg_id).name
     data["stats_publication"] = Array.new
     publication_types = Publication.type_pubs.values 
     for publication_type in publication_types do
-      data["stats_publication"][publication_type] = Publication.num_publications_by_rg_and_type(user_id, publication_type)
+      data["stats_publication"][publication_type] = Publication.num_publications_by_rg_and_type(rg_id, publication_type)
     end
     puts data
     template = "/rep_by_rg.pdf.erb"
-    pdf_name = "Report_Research_Group #{user_id}"
+    pdf_name = "Report_Research_Group #{rg_id}"
     
     if params[:send] == "true"
       data["report_description"] = "publicaciones realizada por un

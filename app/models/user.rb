@@ -130,12 +130,6 @@ class User < ApplicationRecord
       .where("events.id" => ev_id) if ev_id.present?
   end
 
-  scope :with_publications_count, -> {
-          joins(:publications)
-            .select("users.*, COUNT(publications.id) AS pubs_count")
-            .group("users.id")
-        }
-
   ##Queries for statistics
 
   def self.num_users_by_rg(group_id)
@@ -153,6 +147,22 @@ class User < ApplicationRecord
   def self.num_users_by_event(ev_id)
     joins(:events).where("events.id" => ev_id).count if ev_id.present?
   end
+
+  scope :with_publications_count, -> {
+    joins(:publications)
+      .select("users.*, COUNT(publications.id) AS pubs_count")
+      .order("pubs_count DESC")
+      .group("users.id")
+  }
+  scope :with_publications_count_in_rg, -> (rg_id){
+    joins(:publications, :research_groups)
+      .select("users.id, users.name, users.lastname, COUNT(publications.id) AS pubs_count")
+      .where("research_groups.id" => rg_id)
+      .order("pubs_count DESC")
+      .group("users.id")
+  }    
+
+  #Queries for validations
 
   def is_member_of_research_group?(group_id)
     if User.joins(:research_groups).where("user_id = ? AND research_group_id = ?", id, group_id).first
