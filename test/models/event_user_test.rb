@@ -3,8 +3,8 @@
 # Table name: event_users
 #
 #  type_user_event :integer          default("invitado"), not null
-#  user_id         :integer
-#  event_id        :integer
+#  user_id         :bigint(8)
+#  event_id        :bigint(8)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #

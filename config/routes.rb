@@ -18,7 +18,12 @@ Rails.application.routes.draw do
   get "followers" => "users#followers"
 
   post "research_groups/join/" => "research_groups#join_research_group"
-  post "events/invite_users" => "events#invite_users" # params: users & id
+  
+  post "events/invite_users" => "events#invite_users" # params: users_ids & id
+  post "events/remove_invitation" => "events#remove_invitation" # params: user_id & id
+  get "events/invited_users" => "events#get_invited_users" # params: ?id="something"
+  get "events/attendees" => "events#get_attendees" # params: ?id="something"
+  get "events/authors" => "events#get_authors" # params: ?id="something"
 
   post "schedules/set_as_busy" => "schedules#set_schedule_as_busy"
   post "schedules/set_as_idle" => "schedules#set_schedule_as_idle"

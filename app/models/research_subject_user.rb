@@ -2,8 +2,8 @@
 #
 # Table name: research_subject_users
 #
-#  user_id             :integer
-#  research_subject_id :integer
+#  user_id             :bigint(8)
+#  research_subject_id :bigint(8)
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #

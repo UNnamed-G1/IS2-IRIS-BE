@@ -2,9 +2,9 @@
 #
 # Table name: departments
 #
-#  id         :integer          not null, primary key
+#  id         :bigint(8)        not null, primary key
 #  name       :string(100)
-#  faculty_id :integer
+#  faculty_id :bigint(8)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

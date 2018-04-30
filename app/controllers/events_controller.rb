@@ -125,6 +125,34 @@ class EventsController < ApplicationController
     render json: {message: "Usuarios han sido invitados."}, status: :ok
   end
 
+  # POST /events/remove_invitation
+  def remove_invitation
+    event = Event.get_by_id(params[:id])
+    event.delete_user(User.find_by_id(user_id))
+    render json: {message: "La invitación ha sido cancelada"}, status: :ok
+  end
+
+  # GET /events/invited_users?id=event_id
+  def get_invited_users
+    event = Event.get_by_id(params[:id])
+    users = event.get_invited_users
+    render json: users, include: [], status: :ok
+  end
+
+  # GET /events/attendees?id=event_id
+  def get_attendees
+    event = Event.get_by_id(params[:id])
+    users = event.get_attendees
+    render json: users, include: [], status: :ok
+  end
+
+    # GET /events/authors?id=event_id
+    def get_authors
+      event = Event.get_by_id(params[:id])
+      users = event.get_authors
+      render json: users, include: [], status: :ok
+    end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

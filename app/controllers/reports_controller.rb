@@ -11,7 +11,7 @@ class ReportsController < ActionController::Base
       format.html
       format.pdf do
         response.headers["Access-Control-Expose-Headers"] = "Accept-Ranges"
-        render pdf: pdf_name, template: template_path, layout: "pdf.html"
+        render pdf: pdf_name, template: template_path, layout: "pdf.html", footer: { right: '[page] of [topage]' }
       end
     end
   end

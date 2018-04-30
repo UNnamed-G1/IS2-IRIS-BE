@@ -2,7 +2,7 @@
 #
 # Table name: publications
 #
-#  id                :integer          not null, primary key
+#  id                :bigint(8)        not null, primary key
 #  name              :text             not null
 #  date              :date             not null
 #  abstract          :text             not null

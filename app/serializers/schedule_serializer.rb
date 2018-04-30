@@ -2,7 +2,7 @@
 #
 # Table name: schedules
 #
-#  id         :integer          not null, primary key
+#  id         :bigint(8)        not null, primary key
 #  start_hour :integer          not null
 #  day_week   :integer          not null
 #  duration   :integer          default(1), not null

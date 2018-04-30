@@ -2,6 +2,7 @@ class CreateEvents < ActiveRecord::Migration[5.1]
   def change
     create_table :events do |t|
       t.references :research_group, foreign_key: true
+      t.string :name, null: false
       t.text :topic, null: false
       t.text :description, null: false
       t.integer :type_ev, null: false #enum

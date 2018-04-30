@@ -2,8 +2,9 @@
 #
 # Table name: events
 #
-#  id                :integer          not null, primary key
-#  research_group_id :integer
+#  id                :bigint(8)        not null, primary key
+#  research_group_id :bigint(8)
+#  name              :string           not null
 #  topic             :text             not null
 #  description       :text             not null
 #  type_ev           :integer          not null
@@ -131,7 +132,7 @@ class Event < ApplicationRecord
   end
 
   def self.get_by_id(event_id)
-    return Event.find(10)
+    return Event.find(event_id)
   end
 
   def add_author(user)
@@ -157,4 +158,17 @@ class Event < ApplicationRecord
     ActiveRecord::Base.connection.execute(sql)
     return event_users.where("user_id": user.id).first
   end
+
+  def get_invited_users
+    return users.where('event_users.type_user_event': "invitado")
+  end
+
+  def get_attendees
+    return users.where('event_users.type_user_event': "asistente")
+  end
+
+  def get_authors
+    return users.where('event_users.type_user_event': "autor")
+  end
+
 end
