@@ -156,7 +156,7 @@ class User < ApplicationRecord
   }
   scope :with_publications_count_in_rg, -> (rg_id){
     joins(:publications, :research_groups)
-      .select("users.id, users.name, users.lastname, COUNT(publications.id) AS pubs_count")
+      .select(:id, :name, :lastname, "COUNT(publications.id) AS pubs_count")
       .where("research_groups.id" => rg_id)
       .order("pubs_count DESC")
       .group("users.id")

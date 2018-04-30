@@ -63,14 +63,16 @@ Rails.application.routes.draw do
 
   #Statistics
 
-  get "statistics/num_pubs_by_user", to: "statistics#num_publications_by_user"
-  get "statistics/num_pubs_by_rg", to: "statistics#num_publications_by_rg"
-  get "statistics/rec_pubs_user", to: "statistics#recent_publications_by_user"
-  get "statistics/rec_pubs_rg", to: "statistics#recent_publications_by_rg"
-  get "statistics/num_pubs_by_user_type", to: "statistics#num_publications_by_user_and_type"
-  get "statistics/num_pubs_by_rg_type", to: "statistics#num_publications_by_rg_and_type"
+  get "statistics/num_publications_by_user", to: "statistics#num_publications_by_user"
+  get "statistics/num_publications_by_rg", to: "statistics#num_publications_by_rg"
+  get "statistics/recent_publications_by_user", to: "statistics#recent_publications_by_user"
+  get "statistics/recent_publications_by_rg", to: "statistics#recent_publications_by_rg"
+  get "statistics/num_publications_by_user_and_type", to: "statistics#num_publications_by_user_and_type"
+  get "statistics/num_publications_by_rg_and_type", to: "statistics#num_publications_by_rg_and_type"
   get "statistics/overall_num_pubs_by_users_in_rg", to: "statistics#overall_num_pubs_by_users_in_rg"
-
+  get "statistics/average_publications_in_a_period_by_rg", to: "statistics#average_publications_in_a_period_by_rg"
+  get "statistics/average_publications_in_a_period_by_user", to: "statistics#average_publications_in_a_period_by_user"
+  
   resources :publications
   resources :research_groups
   resources :events
