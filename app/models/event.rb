@@ -2,8 +2,9 @@
 #
 # Table name: events
 #
-#  id                :integer          not null, primary key
-#  research_group_id :integer
+#  id                :bigint(8)        not null, primary key
+#  research_group_id :bigint(8)
+#  name              :string           not null
 #  topic             :text             not null
 #  description       :text             not null
 #  type_ev           :integer          not null

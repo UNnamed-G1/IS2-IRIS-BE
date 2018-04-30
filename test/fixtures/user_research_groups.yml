@@ -6,8 +6,8 @@
 #  end_joining_date  :date
 #  state             :integer          default("retirado"), not null
 #  type_urg          :integer          default("miembro"), not null
-#  user_id           :integer
-#  research_group_id :integer
+#  user_id           :bigint(8)
+#  research_group_id :bigint(8)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #

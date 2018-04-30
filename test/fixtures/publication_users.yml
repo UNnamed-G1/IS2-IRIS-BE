@@ -2,8 +2,8 @@
 #
 # Table name: publication_users
 #
-#  user_id        :integer
-#  publication_id :integer
+#  user_id        :bigint(8)
+#  publication_id :bigint(8)
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #

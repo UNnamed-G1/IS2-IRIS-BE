@@ -2,7 +2,7 @@
 #
 # Table name: research_groups
 #
-#  id                  :integer          not null, primary key
+#  id                  :bigint(8)        not null, primary key
 #  name                :text             not null
 #  description         :text             not null
 #  strategic_focus     :text             not null

@@ -2,8 +2,8 @@
 #
 # Table name: career_research_groups
 #
-#  career_id         :integer
-#  research_group_id :integer
+#  career_id         :bigint(8)
+#  research_group_id :bigint(8)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
