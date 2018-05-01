@@ -12,6 +12,9 @@
 #  frequence         :integer          not null
 #  duration          :time             not null
 #  state             :integer          not null
+#  latitude          :float
+#  longitude         :float
+#  address           :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
@@ -29,6 +32,7 @@ class EventSerializer < ActiveModel::Serializer
   
   attributes :id, :topic, :description, :date
   attributes :frequence, :duration, :state, :name
+  attributes :latitude, :longitude, :address
 
   attribute :type_ev, key: :event_type
 

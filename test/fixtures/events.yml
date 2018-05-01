@@ -12,6 +12,9 @@
 #  frequence         :integer          not null
 #  duration          :time             not null
 #  state             :integer          not null
+#  latitude          :float
+#  longitude         :float
+#  address           :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #

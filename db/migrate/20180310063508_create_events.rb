@@ -10,6 +10,9 @@ class CreateEvents < ActiveRecord::Migration[5.1]
       t.integer :frequence, null: false #enum
       t.time :duration, null: false
       t.integer :state, null: false #enum
+      t.float :latitude
+      t.float :longitude
+      t.string :address
 
       t.timestamps
     end
