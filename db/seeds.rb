@@ -126,16 +126,23 @@ end
 end
 
 100.times do
-   UserResearchGroup.create(
+
+    u = UserResearchGroup.create(
         joining_date: Faker::Time.backward(10),
         end_joining_date: Faker::Time.forward(2),
         state: Faker::Number.between(0,1),
         type_urg: Faker::Number.between(0,1),
         user_id: Faker::Number.between(1,100),
-        research_group_id: Faker::Number.between(1,50)
+        research_group_id: Faker::Number.between(1,100)
     )
 end
 
+100.times do
+    p = PublicationUser.create(
+        user_id: Faker::Number.between(1,100),
+        publication_id: Faker::Number.between(1,100)
+    )
+end
 30.times do
     EventUser.create(
         type_user_event: Faker::Number::between(0, 2),
