@@ -2,10 +2,10 @@
 #
 # Table name: photos
 #
-#  id             :integer          not null, primary key
+#  id             :bigint(8)        not null, primary key
 #  picture        :text
 #  imageable_type :string
-#  imageable_id   :integer
+#  imageable_id   :bigint(8)
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #

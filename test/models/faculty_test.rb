@@ -2,7 +2,7 @@
 #
 # Table name: faculties
 #
-#  id         :integer          not null, primary key
+#  id         :bigint(8)        not null, primary key
 #  name       :string(100)      not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null

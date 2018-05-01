@@ -3,8 +3,8 @@
 # Table name: event_users
 #
 #  type_user_event :integer          default("invitado"), not null
-#  user_id         :integer
-#  event_id        :integer
+#  user_id         :bigint(8)
+#  event_id        :bigint(8)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
@@ -28,4 +28,5 @@ class EventUser < ApplicationRecord
     validates :type_user_event, presence: :true
     validates :type_user_event, inclusion: {in: type_user_events, message: "El tipo de usuario no es válido"}
 
+    
 end

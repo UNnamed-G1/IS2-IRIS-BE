@@ -2,8 +2,8 @@
 #
 # Table name: publication_research_groups
 #
-#  publication_id    :integer
-#  research_group_id :integer
+#  publication_id    :bigint(8)
+#  research_group_id :bigint(8)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #

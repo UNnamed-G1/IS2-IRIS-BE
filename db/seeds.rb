@@ -82,6 +82,7 @@ end
 50.times do
     e = Event.create(
         research_group_id: Faker::Number.between(1, 50),
+        name: Faker::Name.name,
         topic: Faker::Lorem.sentence,
         description: Faker::Hacker.say_something_smart,
         type_ev: Faker::Number.between(0,1),

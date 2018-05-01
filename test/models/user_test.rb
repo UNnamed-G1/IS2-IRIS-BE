@@ -2,7 +2,7 @@
 #
 # Table name: users
 #
-#  id                   :integer          not null, primary key
+#  id                   :bigint(8)        not null, primary key
 #  name                 :string(100)      not null
 #  lastname             :string(100)      not null
 #  username             :string(40)
@@ -14,7 +14,7 @@
 #  office               :string(20)
 #  cvlac_link           :text
 #  google_sign_up       :boolean          default(FALSE)
-#  career_id            :integer
+#  career_id            :bigint(8)
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #

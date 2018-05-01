@@ -2,8 +2,9 @@
 #
 # Table name: events
 #
-#  id                :integer          not null, primary key
-#  research_group_id :integer
+#  id                :bigint(8)        not null, primary key
+#  research_group_id :bigint(8)
+#  name              :string           not null
 #  topic             :text             not null
 #  description       :text             not null
 #  type_ev           :integer          not null
@@ -11,6 +12,9 @@
 #  frequence         :integer          not null
 #  duration          :time             not null
 #  state             :integer          not null
+#  latitude          :float
+#  longitude         :float
+#  address           :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
@@ -27,7 +31,8 @@ class EventSerializer < ActiveModel::Serializer
   type :event
   
   attributes :id, :topic, :description, :date
-  attributes :frequence, :duration, :state
+  attributes :frequence, :duration, :state, :name
+  attributes :latitude, :longitude, :address
 
   attribute :type_ev, key: :event_type
 
