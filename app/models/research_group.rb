@@ -25,7 +25,7 @@ class ResearchGroup < ApplicationRecord
     has_many :careers, through: :career_research_groups
     has_many :events, dependent: :delete_all
     has_many :user_research_groups, dependent: :delete_all
-    has_many :members, class_name: "User", through: :user_research_groups
+    has_many :members, class_name: "User", through: :user_research_groups, source: :user
     has_one :photo, as: :imageable
 
     enum classification: [:A, :B, :C, :D]
@@ -57,6 +57,10 @@ class ResearchGroup < ApplicationRecord
 
     def self.get_rgname_by_id(rg_id)
         where(id: rg_id).name
+    end
+
+    def self.get_rgs_by_user(user_id)
+      select(:id, :name).joins(:members).where('members.id'=> user_id) if user_id.present?
     end
 
     def self.get_name_by_publ(publ_id)
