@@ -146,12 +146,12 @@ class EventsController < ApplicationController
     render json: users, include: [], status: :ok
   end
 
-    # GET /events/authors?id=event_id
-    def get_authors
-      event = Event.get_by_id(params[:id])
-      users = event.get_authors
-      render json: users, include: [], status: :ok
-    end
+  # GET /events/authors?id=event_id
+  def get_authors
+    event = Event.get_by_id(params[:id])
+    users = event.get_authors
+    render json: users, include: [], status: :ok
+  end
 
   private
 
