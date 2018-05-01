@@ -36,6 +36,7 @@ class Event < ApplicationRecord
   enum frequence: [:unico, :repetitivo]
   enum state: [:activo, :inactivo]
 
+  validates :name, presence: {message: Proc.new { ApplicationRecord.presence_msg("nombre") }}
   validates :topic, presence: {message: Proc.new { ApplicationRecord.presence_msg("tema") }}
   validates :description, presence: {message: Proc.new { ApplicationRecord.presence_msg("descripción") }}
   validates :state, presence: {message: Proc.new { ApplicationRecord.presence_msg("estado") }}

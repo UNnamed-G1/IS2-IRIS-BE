@@ -29,6 +29,7 @@ class EventSerializer < ActiveModel::Serializer
   
   attributes :id, :topic, :description, :date
   attributes :frequence, :duration, :state, :name
+  attributes :latitude, :longitude, :address
 
   attribute :type_ev, key: :event_type
 
