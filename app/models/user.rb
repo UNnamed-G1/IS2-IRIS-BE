@@ -104,11 +104,7 @@ class User < ApplicationRecord
 
   def self.search_users_by_id(usr_id)
     where(id: usr_id).pluck(:name, :lastname)
-  end
-
-  def self.get_name_and_lastname()
-    select("CONCAT(users.name,' ', users.lastname) AS fullname")
-  end  
+  end 
 
   def self.search_users_by_rg(rg_id)
     select(:id, :name, :lastname, :email, :user_type).joins(:research_groups)
@@ -167,7 +163,7 @@ class User < ApplicationRecord
   scope :with_publications_count_in_rg, -> (rg_id){
     joins(:publications, :research_groups)
       .where("research_groups.id" => rg_id)
-      .select(:id, :name, :lastname, "COUNT(publications.id) AS pubs_count")
+      .select(:id, "CONCAT(users.name,' ', users.lastname) AS fullname", "COUNT(publications.id) AS pubs_count")
       .order("pubs_count DESC")
       .group("users.id")
   }    

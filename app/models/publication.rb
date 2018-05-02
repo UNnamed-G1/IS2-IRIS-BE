@@ -64,7 +64,8 @@ class Publication < ApplicationRecord
         select(:id, :name, :type_pub, :date).joins(:research_groups)
                                        .where('publications.created_at > ? AND research_groups.id = ?', 1.week.ago, rg_id)
                                        .limit(3)
-    end 
+    end
+    
 
     def self.search_publications_by_type(type)
         select(:id, :name, :type_pub).where(type_pub: type) if type.present?
@@ -86,6 +87,16 @@ class Publication < ApplicationRecord
 
     def self.num_publications_by_user(usr_id)
         joins(:users).where('users.id' => usr_id).count if usr_id.present?
+    end
+
+    def self.num_publications_by_user_in_a_period(usr_id)
+        joins(:users).where('users.id' => usr_id)
+                     .group_by_period(:month, :date, range: 6.months.ago..Time.now, time_zone: "Bogota").count
+    end
+
+    def self.num_publications_by_rg_in_a_period(rg_id)
+        joins(:research_groups).where('research_groups.id' => rg_id)
+                     .group_by_period(:month, :date, range: 6.months.ago..Time.now, time_zone: "Bogota").count
     end
 
     def self.num_publications_by_user_and_type(usr_id, type)
