@@ -199,7 +199,7 @@ class User < ApplicationRecord
   end
 
   def is_author_event?(event_id)
-    result = event_users.where("user_id = ? AND event_id = ?", id, event_id).author.first
+    result = event_users.where("user_id = ? AND event_id = ?", id, event_id).autor.first
 
     if result
       return true
@@ -256,7 +256,7 @@ class User < ApplicationRecord
   def remove_schedule(schedule_id)
     if schedules.delete(Schedule.find(schedule_id))
       return true
-    else 
+    else
       return false
     end
   end

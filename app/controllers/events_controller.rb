@@ -119,7 +119,7 @@ class EventsController < ApplicationController
   def invite_users
     users_ids = params[:users_ids]
     event = Event.get_by_id(params[:id])
-    for user_id in users_ids do 
+    for user_id in users_ids do
       event.invite_user(User.find_by_id(user_id))
     end
     render json: {message: "Usuarios han sido invitados."}, status: :ok
@@ -162,7 +162,7 @@ class EventsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def event_params
-    params.require(:event).permit(:topic, :description, :type_ev, :date, :frequence, :duration, :state, :research_group_id)
+    params.require(:event).permit(:name, :topic, :description, :type_ev, :date, :frequence, :duration, :state, :research_group_id, :latitude, :longitude, :address)
   end
 
   def authorize_as_author_or_lider

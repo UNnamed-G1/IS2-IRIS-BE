@@ -83,6 +83,16 @@ class ResearchGroupsController < ApplicationController
            }, fields: %i[id name], include: []
   end
 
+  def search_rgs_by_user
+    rgs_by_user = ResearchGroup.get_rgs_by_user(params[:id])
+    render json: rgs_by_user, fields: %i[id name], include: []
+  end
+
+  def search_rgs_by_current_user
+    rgs_by_curr_user = ResearchGroup.get_rgs_by_user(current_user.id)
+    render json: rgs_by_curr_user, fields: %i[id name], include: []
+  end
+
   def search_rgs_by_class
     rgs_by_class = ResearchGroup.search_rgs_by_class(params[:cl_type]).items(params[:page])
     render json: {
@@ -110,7 +120,7 @@ class ResearchGroupsController < ApplicationController
     result = current_user.join_research_group(research_group)
     if result.errors.any?
       render json: result.errors.messages, status: :unprocessable_entity
-    else 
+    else
       ResearchGroupMailer.welcome_research_group(current_user, research_group).deliver_now
       render json: {"message": "Ahora eres miembro del grupo de investigación."}, status: :ok
     end

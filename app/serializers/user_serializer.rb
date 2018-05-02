@@ -29,7 +29,7 @@
 
 class UserSerializer < ActiveModel::Serializer
   type :user
-  
+
   attributes :id, :name, :lastname, :username, :email
   attributes :professional_profile, :phone, :office, :cvlac_link
   attributes :full_name, :google_sign_up

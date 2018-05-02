@@ -22,7 +22,7 @@ class Photo < ApplicationRecord
   validates_integrity_of :picture
   validates_processing_of :picture
 
-  validates :imageable_type, presence: true  
+  validates :imageable_type, presence: true
 
   def self.create_photo(picture, imageable)
     return Photo.create(

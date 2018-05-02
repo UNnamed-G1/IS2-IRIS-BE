@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   get "followers" => "users#followers"
 
   post "research_groups/join/" => "research_groups#join_research_group"
-  
+
   post "events/invite_users" => "events#invite_users" # params: users_ids & id
   post "events/remove_invitation" => "events#remove_invitation" # params: user_id & id
   get "events/invited_users" => "events#get_invited_users" # params: ?id="something"
@@ -47,6 +47,8 @@ Rails.application.routes.draw do
   get "p_by_rg_and_type" => "publications#search_p_by_rg_and_type"
   get "rgs_by_career" => "research_groups#search_rgs_by_career"
   get "rgs_by_name" => "research_groups#search_rgs_by_name"
+  get "rgs_by_user" => "research_groups#search_rgs_by_user"
+  get "rgs_by_current_user" => "research_groups#search_rgs_by_current_user"
   get "rgs_by_class" => "research_groups#search_rgs_by_class"
   get "rgs_by_department" => "research_groups#search_rgs_by_department"
   get "rs_by_rg" => "research_subjects#search_rs_by_rg"

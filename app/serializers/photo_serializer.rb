@@ -24,5 +24,5 @@ class PhotoSerializer < ActiveModel::Serializer
   def picture
   	return object.picture.url
   end
-  
+
 end

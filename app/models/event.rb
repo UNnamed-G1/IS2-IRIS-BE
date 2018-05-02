@@ -100,7 +100,7 @@ class Event < ApplicationRecord
   scope :evs_by_author, -> (usr_id) {
           joins(:users)
             .where('users.id': usr_id)
-            .merge(EventUser.author)
+            .merge(EventUser.autor)
             .distinct
         }
 

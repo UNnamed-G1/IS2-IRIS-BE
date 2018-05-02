@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::API
     include Knock::Authenticable
 
-    UNAUTHORIZED_MESSAGE = "You are unauthorized to access this." 
+    UNAUTHORIZED_MESSAGE = "You are unauthorized to access this."
 
     def authorize_as_admin
         render_unauthorize unless current_user.is_admin?
@@ -15,7 +15,7 @@ class ApplicationController < ActionController::API
         render_unauthorize unless current_user.is_profesor?
     end
 
-    protected 
+    protected
         def unauthorized_entity(entity_name)
             render_unauthorize
         end
