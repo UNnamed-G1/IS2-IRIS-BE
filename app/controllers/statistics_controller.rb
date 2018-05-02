@@ -10,7 +10,7 @@ class StatisticsController < ApplicationController
         else
             render json:{
                 num_publications_by_users: num_publications_by_user
-            }, status: :error
+            }, status: :ok
         end
     end
 
@@ -35,6 +35,7 @@ class StatisticsController < ApplicationController
             }, status: :ok
         end
     end
+  
 
     def recent_publications_by_user
         user_id = params[:id]
@@ -63,40 +64,45 @@ class StatisticsController < ApplicationController
             }, status: :ok
         end
     end
+  
 
     def num_publications_by_user_and_type
         user_id = params[:id]
         data = Hash.new
-        user = User.find_by_id(user_id).name
-        num_pubs_by_user = Publication.num_publications_by_user(user_id)
+        data["user"] = User.find_by_id(user_id).name
+        data["publications"] = Publication.search_publications_by_user(user_id)
+        data["stats_publication"] = Hash.new
         publication_types = Publication.type_pubs.keys
-        if num_pubs_by_user == 0
-            render json:{
-                num_publications_by_user_and_type: "El usuario no registra publicaciones a la fecha"
+        if data["publications"].empty?
+            render json: {
+                message: "El usuario no registra publicaciones a la fecha",
             }, status: :error
         else
-            (publication_types).each { |pub_type| data[pub_type] = Publication.num_publications_by_user_and_type(user_id, pub_type) }
-            render json:{
-                num_publications_by_user_and_type: data
+            (publication_types).each { |type| data["stats_publication"][type.capitalize] = Publication .num_publications_by_user_and_type(user_id, type)}                
+                
+
+            render json: {
+                num_publications_by_user_and_type: data["stats_publication"]
             }, status: :ok
         end
     end
 
     def num_publications_by_rg_and_type
-        rg_id = params[:id]
+        rg_id = params[:id]    
         data = Hash.new
-        research_group_name = ResearchGroup.find_by_id(rg_id).name
-        num_pubs_by_rg = Publication.num_publications_by_rg(rg_id)
-        publication_types = Publication.type_pubs.keys 
-        if num_pubs_by_rg == 0
-            render json:{
-                num_publications_by_rg_and_type: "El grupo no registra publicaciones a la fecha"
+        data["research_group_name"] = ResearchGroup.find_by_id(rg_id).name
+        data["publications"] = Publication.search_publications_by_rg(rg_id)
+        data["stats_publication"] = Hash.new
+        publication_types = Publication.type_pubs.keys
+        if data["publications"].empty?
+            render json: {
+                message: "El grupo no registra publicaciones a la fecha",
             }, status: :error
         else
-            (publication_types).each { |pub_type| data[pub_type] = Publication.num_publications_by_rg_and_type(rg_id, pub_type) }
+            (publication_types).each { |type| data["stats_publication"][type.capitalize] = Publication .num_publications_by_rg_and_type(rg_id, type)}                
 
-            render json:{
-                num_publications_by_rg_and_type: data
+            render json: {
+                num_publications_by_rg_and_type: data["stats_publication"]
             }, status: :ok
         end
     end
@@ -104,19 +110,16 @@ class StatisticsController < ApplicationController
     def overall_num_pubs_by_users_in_rg
         rg_id = params[:id]
         data = Hash.new
-        num_users_by_rg = User.num_users_by_rg(rg_id)
-        research_group_name = ResearchGroup.find_by_id(rg_id).name
-        if num_users_by_rg == 0
-            render json:{
-                num_publications_by_rg_and_type: "El grupo no registra publicaciones a la fecha"
-            }, status: :error
-        else
-            data[research_group_name] = User.with_publications_count_in_rg(rg_id)
+        data["research_group_name"] = ResearchGroup.find_by_id(rg_id).name
+        data["users_in_rg"] = User.search_users_by_rg(rg_id)
+        data["stats_publication"] = Array.new
         
-            render json:{
-                overall_num_pubs_by_users_in_rg: data
-            }, status: :ok
-        end
+        data["stats_publication"] = User.with_publications_count_in_rg(rg_id)
+        
+        render json: {
+                overall_num_pubs_by_users_in_rg: data["stats_publication"],
+        }, status: :ok
+
     end
 
     def average_publications_in_a_period_by_rg #Monthly average in the last 3 or 6 months
@@ -133,20 +136,20 @@ class StatisticsController < ApplicationController
             time = 6
         end
 
-        data["num_publications_in_a_period_by_rg"] = Publication.num_publications_in_a_period_by_rg(rg_id, time)        
-        
+        data["num_publications_in_a_period_by_rg"] = Publication.num_publications_in_a_period_by_rg(rg_id, time)
+
         if data["num_publications_in_a_period_by_rg"] == 0
-            render json:{
-                average_publications_in_a_period_by_rg: "No se registran publicaciones en el periodo seleccionado"
+            render json: {
+                average_publications_in_a_period_by_rg: "No se registran publicaciones en el periodo seleccionado",
             }, status: :error
         else
-            data["stats_publication"] = data["num_publications_in_a_period_by_rg"] / time    
-            render json:{
-                average_publications_in_a_period_by_rg: data["stats_publication"]
+            data["stats_publication"] = data["num_publications_in_a_period_by_rg"] / time
+            render json: {
+                average_publications_in_a_period_by_rg: data["stats_publication"],
             }, status: :ok
-        end        
+        end
     end
-    
+
     def average_publications_in_a_period_by_user #Monthly average in the last 3 or 6 months
         user_id = params[:id]
         period = params[:period]
@@ -161,18 +164,17 @@ class StatisticsController < ApplicationController
             time = 6
         end
 
-        data["num_publications_in_a_period_by_user"] = Publication.num_publications_in_a_period_by_user(user_id, time)        
-        
-        if data["num_publications_in_a_period_by_user"] == 0
-            render json:{
-                average_publications_in_a_period_by_user: "No se registran publicaciones en el periodo seleccionado"
-            }, status: :error
-        else
-            data["stats_publication"] = data["num_publications_in_a_period_by_user"] / time    
-            render json:{
-                average_publications_in_a_period_by_user: data["stats_publication"]
-            }, status: :ok
-        end       
-    end  
+        data["num_publications_in_a_period_by_user"] = Publication.num_publications_in_a_period_by_user(user_id, time)
 
+        if data["num_publications_in_a_period_by_user"] == 0
+            render json: {
+                average_publications_in_a_period_by_user: "No se registran publicaciones en el periodo seleccionado",
+            }, status: :ok
+        else
+            data["stats_publication"] = data["num_publications_in_a_period_by_user"] / time
+            render json: {
+                average_publications_in_a_period_by_user: data["stats_publication"],
+            }, status: :ok
+        end
+    end
 end
