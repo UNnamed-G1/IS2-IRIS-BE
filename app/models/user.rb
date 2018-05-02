@@ -106,6 +106,10 @@ class User < ApplicationRecord
     where(id: usr_id).pluck(:name, :lastname)
   end
 
+  def self.get_name_and_lastname()
+    select("CONCAT(users.name,' ', users.lastname) AS fullname")
+  end  
+
   def self.search_users_by_rg(rg_id)
     select(:id, :name, :lastname, :email, :user_type).joins(:research_groups)
       .where("research_groups.id" => rg_id) if rg_id.present?

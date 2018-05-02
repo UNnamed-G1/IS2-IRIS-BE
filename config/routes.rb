@@ -74,7 +74,7 @@ Rails.application.routes.draw do
   get "statistics/overall_num_pubs_by_users_in_rg", to: "statistics#overall_num_pubs_by_users_in_rg"
   get "statistics/average_publications_in_a_period_by_rg", to: "statistics#average_publications_in_a_period_by_rg"
   get "statistics/average_publications_in_a_period_by_user", to: "statistics#average_publications_in_a_period_by_user"
-  
+  get "statistics/num_publications_of_users", to: "statistics#num_publications_of_users"
   resources :publications
   resources :research_groups
   resources :events
