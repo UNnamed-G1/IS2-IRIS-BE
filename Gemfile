@@ -34,6 +34,7 @@ gem 'faker', '~> 1.8', '>= 1.8.7'
 gem 'knock'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+gem 'groupdate'
 # serializers gem
 gem 'active_model_serializers', '~> 0.10.0'
 

@@ -71,7 +71,7 @@ end
 100.times do
     Publication.create(
         name: Faker::Hacker.abbreviation,
-        date: Faker::Time.backward(10),
+        date: Faker::Time.backward(180),
         abstract: Faker::Lorem.paragraph,
         brief_description: Faker::Hacker.say_something_smart,
         type_pub: Faker::Number.between(0,5),
@@ -127,13 +127,18 @@ end
 end
 
 100.times do
-   UserResearchGroup.create(
+    p = PublicationUser.create(
+        publication_id: Faker::Number.between(1,100),
+        user_id: Faker::Number.between(1,100)
+        
+    )
+    u = UserResearchGroup.create(
         joining_date: Faker::Time.backward(10),
         end_joining_date: Faker::Time.forward(2),
         state: Faker::Number.between(0,1),
         type_urg: Faker::Number.between(0,1),
-        user_id: Faker::Number.between(1,100),
-        research_group_id: Faker::Number.between(1,50)
+        user_id: p.user_id,
+        research_group_id: Faker::Number.between(1,100)
     )
 end
 

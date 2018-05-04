@@ -104,7 +104,7 @@ class User < ApplicationRecord
 
   def self.search_users_by_id(usr_id)
     where(id: usr_id).pluck(:name, :lastname)
-  end
+  end 
 
   def self.search_users_by_rg(rg_id)
     select(:id, :name, :lastname, :email, :user_type).joins(:research_groups)
@@ -130,11 +130,10 @@ class User < ApplicationRecord
       .where("events.id" => ev_id) if ev_id.present?
   end
 
-  scope :with_publications_count, -> {
-          joins(:publications)
-            .select("users.*, COUNT(publications.id) AS pubs_count")
-            .group("users.id")
-        }
+  def self.search_rgs_by_user(user_id)
+    select("research_groups.id, research_groups.name").joins(:research_groups)
+                      .where(id: user_id) if user_id.present?
+  end
 
   ##Queries for statistics
 
@@ -153,6 +152,23 @@ class User < ApplicationRecord
   def self.num_users_by_event(ev_id)
     joins(:events).where("events.id" => ev_id).count if ev_id.present?
   end
+
+  scope :with_publications_count, -> {
+    joins(:publications)
+      .select("users.*, COUNT(publications.id) AS pubs_count")
+      .order("pubs_count DESC")
+      .group("users.id")
+  }
+  
+  scope :with_publications_count_in_rg, -> (rg_id){
+    joins(:publications, :research_groups)
+      .where("research_groups.id" => rg_id)
+      .select(:id, "CONCAT(users.name,' ', users.lastname) AS fullname", "COUNT(publications.id) AS pubs_count")
+      .order("pubs_count DESC")
+      .group("users.id")
+  }    
+
+  #Queries for validations
 
   def is_member_of_research_group?(group_id)
     if User.joins(:research_groups).where("user_id = ? AND research_group_id = ?", id, group_id).first
