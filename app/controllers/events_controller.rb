@@ -9,7 +9,7 @@ class EventsController < ApplicationController
     render json: {
              events: events,
              total_pages: events.total_pages,
-           }, fields: %i[id name topic type_ev], include: [:photos]
+           }, fields: %i[id name topic type_ev], include: [:photos, :research_group]
   end
 
   # GET /events/1
@@ -17,7 +17,7 @@ class EventsController < ApplicationController
     if @event.errors.any?
       render json: @event.errors.messages
     else
-      render json: @event, include: [:photos]
+      render json: @event, include: [:photos, :research_group]
     end
   end
 
@@ -46,7 +46,7 @@ class EventsController < ApplicationController
           @event.photos.create(picture: picture)
         end
       end
-      render json: @event, include: [:photos]
+      render json: @event, include: [:photos, :research_group]
     else
       render json: @event.errors, status: :unprocessable_entity
     end
@@ -106,7 +106,7 @@ class EventsController < ApplicationController
     render json: {
              events: evs,
              total_pages: evs.total_pages,
-           }, include: []
+           }, include: [:research_group]
   end
 
   def news
@@ -119,7 +119,7 @@ class EventsController < ApplicationController
   def invite_users
     users_ids = params[:users_ids]
     event = Event.get_by_id(params[:id])
-    for user_id in users_ids do
+    for user_id in users_ids
       event.invite_user(User.find_by_id(user_id))
     end
     render json: {message: "Usuarios han sido invitados."}, status: :ok
