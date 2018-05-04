@@ -71,7 +71,7 @@ end
 100.times do
     Publication.create(
         name: Faker::Hacker.abbreviation,
-        date: Faker::Time.backward(10),
+        date: Faker::Time.backward(180),
         abstract: Faker::Lorem.paragraph,
         brief_description: Faker::Hacker.say_something_smart,
         type_pub: Faker::Number.between(0,5),
