@@ -32,7 +32,7 @@ class UsersController < ApplicationController
     if @user.save
       pic = params[:picture]
       @user.update(photo: Photo.create_photo(pic, @user)) if pic
-      UserMailer.sign_up_confirmation(@user).deliver_now
+      UserMailer.delay.sign_up_confirmation(@user)
       render json: @user, status: :created, location: @user, include: [:photo]
     else
       render json: @user.errors, status: :unprocessable_entity
