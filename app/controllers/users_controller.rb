@@ -30,9 +30,9 @@ class UsersController < ApplicationController
     @user = User.new (user_params)
 
     if @user.save
-      #pic = params[:picture]
-      #@user.update(photo: Photo.create_photo(pic, @user)) if pic
-      UserMailer.sign_up_confirmation(@user).deliver_now
+      pic = params[:picture]
+      @user.update(photo: Photo.create_photo(pic, @user)) if pic
+      UserMailer.delay.sign_up_confirmation(@user)
       render json: @user, status: :created, location: @user, include: [:photo]
     else
       render json: @user.errors, status: :unprocessable_entity
@@ -78,7 +78,7 @@ class UsersController < ApplicationController
     followed_user = User.find_by_id(params[:id_followed])
     result = Relationship.add_follower(current_user, followed_user)
     if result.errors.empty?
-      UserMailer.new_follower_mail(followed_user, current_user).deliver_now
+      UserMailer.delay.new_follower_mail(followed_user, current_user)
       render json: {message: "Acción realizada satisfactoriamente"}, status: :ok
     else
       render json: result.errors, status: :unprocessable_entity

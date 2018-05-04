@@ -36,7 +36,7 @@ class GoogleUserTokenController < ApplicationController
                 retrieved_user = User.find_by_email(data["email"])            
                 if !retrieved_user
                   retrieved_user = User.create_google_user(data)
-                  UserMailer.welcome_mail(retrieved_user).deliver_now
+                  UserMailer.delay.welcome_mail(retrieved_user)
                 end
                 retrieved_user
             end

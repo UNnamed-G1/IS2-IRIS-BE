@@ -20,6 +20,9 @@ module App
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
+
+    config.active_job.queue_adapter = :delayed_job
+
     config.enable_dependency_loading = true
     config.autoload_paths << Rails.root.join("lib")
     # Settings in config/environments/* take precedence over those specified here.
