@@ -134,7 +134,7 @@ end
     )
     pr = PublicationResearchGroup.create(
         publication_id: p.publication_id,
-        research_group_id: Faker::Number.between(1,100)
+        research_group_id: Faker::Number.between(1,50)
     )
     u = UserResearchGroup.create(
         joining_date: Faker::Time.backward(10),

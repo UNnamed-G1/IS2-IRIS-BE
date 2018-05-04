@@ -84,11 +84,7 @@ class Publication < ApplicationRecord
     def self.num_publications_by_rg(rg_id)
         joins(:research_groups).where('research_groups.id' => rg_id).count if rg_id.present?
     end
-
-    def self.num_publications_by_user(usr_id)
-        joins(:users).where('users.id' => usr_id).count if usr_id.present?
-    end
-
+    
     def self.num_publications_by_user_in_a_period(usr_id)
         joins(:users).where('users.id' => usr_id)
                      .group_by_period(:month, :date, range: 6.months.ago..Time.now, time_zone: "Bogota").count
