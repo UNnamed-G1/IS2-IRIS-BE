@@ -127,12 +127,12 @@ class StatisticsController < ApplicationController
         rg_id = params[:id]
         data = Hash.new
         data["research_group_name"] = ResearchGroup.find_by_id(rg_id).name
-        data["stats_publication"] = Hash.new
-        users_in_rg = User.with_publications_count_in_rg(rg_id)
-        (users_in_rg).each { |user| data["stats_publication"][user.fullname] = user.pubs_count}                
-
-        render json: {
-            overall_num_pubs_by_users_in_rg: data["stats_publication"],
+        data["users_in_rg"] = User.search_users_by_rg(rg_id)
+        data["stats_publication"] = Array.new
+        data["stats_publication"] = User.with_publications_count_in_rg(rg_id)
+        
+        render json:{
+            overall_num_pubs_by_users_in_rg: data["stats_publication"]
         }, status: :ok
 
     end
@@ -184,7 +184,7 @@ class StatisticsController < ApplicationController
         if data["num_publications_in_a_period_by_user"] == 0
             render json: {
                 average_publications_in_a_period_by_user: "No se registran publicaciones en el periodo seleccionado",
-            }, status: :ok
+            }, status: :error
         else
             data["stats_publication"] = data["num_publications_in_a_period_by_user"] / time
             render json: {
