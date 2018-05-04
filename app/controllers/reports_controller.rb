@@ -18,7 +18,7 @@ class ReportsController < ActionController::Base
 
   def send_report(report_name, template, data)
     template_path = BASE_TEMPLATE_PATH + template
-    ReportMailer.report_mail(current_user, report_name, template_path, data).deliver_now
+    ReportMailer.delay.report_mail(current_user, report_name, template_path, data)
     render json: {"message": "Acción realizada satisfactoriamente"}, status: :ok
   end
 
