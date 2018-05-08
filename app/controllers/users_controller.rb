@@ -141,6 +141,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def editable_events
+    events = Event.editable_events(current_user[:id], params[:page]).items(params[:page])
+    render json: {
+             events: events,
+             total_pages: events.total_pages,
+           }, include: [:research_group]
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

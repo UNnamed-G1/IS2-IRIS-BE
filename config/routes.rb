@@ -7,16 +7,7 @@ Rails.application.routes.draw do
   
   # MAILERS 
   post "comments", to: "incoming_mails#receive_comments"
-
   
-  # get "events_news" => "events#news"
-
-  # post "events/invite_users" => "events#invite_users" # params: users_ids & id
-  # post "events/remove_invitation" => "events#remove_invitation" # params: user_id & id
-  # get "events/invited_users" => "events#get_invited_users" # params: ?id="something"
-  # get "events/attendees" => "events#get_attendees" # params: ?id="something"
-  # get "events/authors" => "events#get_authors" # params: ?id="something"
-
   # post "schedules/set_as_busy" => "schedules#set_schedule_as_busy"
   # post "schedules/set_as_idle" => "schedules#set_schedule_as_idle"
 
@@ -30,8 +21,7 @@ Rails.application.routes.draw do
   # get "events_by_user" => "events#search_events_by_user"
   # get "events_by_state" => "events#search_events_by_state"
   # get "events_by_freq" => "events#search_events_by_freq"
-  # get "events_by_type" => "events#search_events_by_type"
-  # get "events_by_editable" => "events#evs_by_editable"
+  # get "events_by_type" => "events#search_events_by_type"  
   # get "publications_by_name" => "publications#search_publications_by_name"
   # get "publications_by_rg" => "publications#search_publications_by_rg"
   # get "publications_by_user" => "publications#search_publications_by_user"
@@ -77,6 +67,7 @@ Rails.application.routes.draw do
 
         post "follow", to: "users#follow_user" # param must be :id_followed
         post "unfollow", to: "users#unfollow_user" # param must be :id_followed
+        get "editable_events"
       end
 
       get "current"      
@@ -91,18 +82,31 @@ Rails.application.routes.draw do
 
   resources :research_groups do
     collection do 
-      get "news" => "research_groups#news"
+      get "news"
     end
     
     member do 
-      get "photo" => "research_groups#get_photo"
+      get "photo", to: "research_groups#get_photo"
       
-      post "join" => "research_groups#join_to_research_group"
+      post "join", to: "research_groups#join_to_research_group"
+    end
+  end
+    
+  resources :events do 
+    collection do
+      get "news"
+    end
+    member do
+      get "invited_users" => "events#get_invited_users"
+      get "attendees" => "events#get_attendees"
+      get "authors" => "events#get_authors"
+      
+      post "invite_users" # params: users_ids
+      post "remove_invitation" # params: user_id
     end
   end
 
   # resources :publications
-  # resources :events
   # resources :relationships
   # resources :photos
   # resources :careers
