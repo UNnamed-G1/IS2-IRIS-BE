@@ -35,13 +35,6 @@ Rails.application.routes.draw do
   # get "rs_by_user" => "research_subjects#search_rs_by_user"
   # get "find_schedules_by_user" => "schedules#find_schedules_by_user"
 
-  # #Reports
-
-  # get "reports/user_history", to: "reports#total_user_history"
-  # get "reports/rgs_history", to: "reports#total_rgs_history"
-  # get "reports/rep_by_user", to: "reports#history_by_user"
-  # get "reports/rep_by_rg", to: "reports#history_by_rg"
-
   # #Statistics
 
   # get "statistics/num_publications_by_user", to: "statistics#num_publications_by_user"
@@ -94,9 +87,9 @@ Rails.application.routes.draw do
       get "news"
     end
     member do
-      get "invited_users" => "events#get_invited_users"
-      get "attendees" => "events#get_attendees"
-      get "authors" => "events#get_authors"
+      get "invited_users", to: "events#get_invited_users"
+      get "attendees", to: "events#get_attendees"
+      get "authors", to: "events#get_authors"
       
       post "invite_users" # params: users_ids
       post "remove_invitation" # params: user_id
@@ -105,9 +98,16 @@ Rails.application.routes.draw do
 
   resources :schedules do 
     member do
-      put "set_as_idle" => "schedules#set_schedule_as_idle"
-      put "set_as_busy" => "schedules#set_schedule_as_busy"
+      put "set_as_idle", to: "schedules#set_schedule_as_idle"
+      put "set_as_busy", to: "schedules#set_schedule_as_busy"
     end
+  end
+
+  scope :reports do 
+    get "user_history", to: "reports#total_user_history"
+    get "research_groups_history", to: "reports#total_rgs_history"
+    get "users/:id/publications_history", to: "reports#history_by_user"
+    get "reports/research_group/:id/publications_history", to: "reports#history_by_rg"    
   end
 
 
