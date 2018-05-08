@@ -126,8 +126,6 @@ class StatisticsController < ApplicationController
     def overall_num_pubs_by_users_in_rg
         rg_id = params[:id]
         data = Hash.new
-        data["research_group_name"] = ResearchGroup.find_by_id(rg_id).name
-        data["users_in_rg"] = User.search_users_by_rg(rg_id)
         data["stats_publication"] = Array.new
         data["stats_publication"] = User.with_publications_count_in_rg(rg_id)
         

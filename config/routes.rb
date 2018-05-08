@@ -33,22 +33,7 @@ Rails.application.routes.draw do
   # get "rs_by_rg" => "research_subjects#search_rs_by_rg"
   # get "rs_by_name" => "research_subjects#search_rs_by_name"
   # get "rs_by_user" => "research_subjects#search_rs_by_user"
-  # get "find_schedules_by_user" => "schedules#find_schedules_by_user"
-
-  # #Statistics
-
-  # get "statistics/num_publications_by_user", to: "statistics#num_publications_by_user"
-  # get "statistics/num_publications_by_rg", to: "statistics#num_publications_by_rg"
-  # get "statistics/recent_publications_by_user", to: "statistics#recent_publications_by_user"
-  # get "statistics/recent_publications_by_rg", to: "statistics#recent_publications_by_rg"
-  # get "statistics/num_publications_by_user_and_type", to: "statistics#num_publications_by_user_and_type"
-  # get "statistics/num_publications_by_rg_and_type", to: "statistics#num_publications_by_rg_and_type"
-  # get "statistics/overall_num_pubs_by_users_in_rg", to: "statistics#overall_num_pubs_by_users_in_rg"
-  # get "statistics/average_publications_in_a_period_by_rg", to: "statistics#average_publications_in_a_period_by_rg"
-  # get "statistics/average_publications_in_a_period_by_user", to: "statistics#average_publications_in_a_period_by_user"
-  # get "statistics/num_publications_by_user_in_a_period", to: "statistics#num_publications_by_user_in_a_period"
-  # get "statistics/num_publications_by_rg_in_a_period", to: "statistics#num_publications_by_rg_in_a_period"
-
+  # get "find_schedules_by_user" => "schedules#find_schedules_by_user"  
   
   resources :users do
     collection do      
@@ -108,6 +93,30 @@ Rails.application.routes.draw do
     get "research_groups_history", to: "reports#total_rgs_history"
     get "users/:id/publications_history", to: "reports#history_by_user"
     get "reports/research_group/:id/publications_history", to: "reports#history_by_rg"    
+  end
+
+  scope :statistics do
+    scope :users do
+      scope ':id' do
+        get "num_publications", to: "statistics#num_publications_by_user"
+        get "recent_publications", to: "statistics#recent_publications_by_user"
+        get "num_publications_by_type", to: "statistics#num_publications_by_user_and_type"
+        get "average_publications_in_a_period", to: "statistics#average_publications_in_a_period_by_user"
+        get "num_publications_in_a_period", to: "statistics#num_publications_by_user_in_a_period"
+      end
+    end
+
+    scope :research_groups do 
+      scope ':id' do
+        get "num_publications", to: "statistics#num_publications_by_rg"
+        get "recent_publications", to: "statistics#recent_publications_by_rg"
+        get "num_publications_by_type", to: "statistics#num_publications_by_rg_and_type"
+        get "average_publications_in_a_period", to: "statistics#average_publications_in_a_period_by_rg"
+        get "num_publications_in_a_period", to: "statistics#num_publications_by_rg_in_a_period"
+      end
+    end
+
+    get "overall_num_pubs_by_users_in_rg", to: "statistics#overall_num_pubs_by_users_in_rg"
   end
 
 
