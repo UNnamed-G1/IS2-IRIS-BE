@@ -7,9 +7,6 @@ Rails.application.routes.draw do
   
   # MAILERS 
   post "comments", to: "incoming_mails#receive_comments"
-  
-  # post "schedules/set_as_busy" => "schedules#set_schedule_as_busy"
-  # post "schedules/set_as_idle" => "schedules#set_schedule_as_idle"
 
   # # Search
   # # Nota el simbolo '#' se traduce a la ruta como '%23'
@@ -106,6 +103,14 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :schedules do 
+    member do
+      put "set_as_idle" => "schedules#set_schedule_as_idle"
+      put "set_as_busy" => "schedules#set_schedule_as_busy"
+    end
+  end
+
+
   # resources :publications
   # resources :relationships
   # resources :photos
@@ -113,7 +118,6 @@ Rails.application.routes.draw do
   # resources :departments
   # resources :faculties
   # resources :research_subjects
-  # resources :schedules
   
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

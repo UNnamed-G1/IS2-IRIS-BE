@@ -141,6 +141,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /users/current/editable_events
   def editable_events
     events = Event.editable_events(current_user[:id], params[:page]).items(params[:page])
     render json: {
