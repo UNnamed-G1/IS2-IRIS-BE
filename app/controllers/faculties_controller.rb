@@ -47,6 +47,11 @@ class FacultiesController < ApplicationController
     end
   end
 
+  def search_departments
+    departments = Faculty.find(params[:id]).departments
+    render json: departments, include: []
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

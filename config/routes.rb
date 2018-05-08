@@ -9,13 +9,7 @@ Rails.application.routes.draw do
   post "comments", to: "incoming_mails#receive_comments"
 
   # # Search
-  # # Nota el simbolo '#' se traduce a la ruta como '%23'
-  # get "careers_by_rg" => "careers#search_careers_by_rg"
-  # get "careers_by_user" => "careers#search_careers_by_user"
-  # get "careers_by_dept" => "careers#search_careers_by_dept"
-  # get "depts_by_faculty" => "departments#search_deps_by_faculty"
-  # get "events_by_rg" => "events#search_events_by_rg"
-  # get "events_by_user" => "events#search_events_by_user"
+
   # get "events_by_state" => "events#search_events_by_state"
   # get "events_by_freq" => "events#search_events_by_freq"
   # get "events_by_type" => "events#search_events_by_type"  
@@ -62,7 +56,8 @@ Rails.application.routes.draw do
     
     member do 
       get "photo", to: "research_groups#get_photo"
-      
+      get "events", to: "research_groups#get_events"
+
       post "join", to: "research_groups#join_to_research_group"
     end
   end
@@ -119,13 +114,22 @@ Rails.application.routes.draw do
     get "overall_num_pubs_by_users_in_rg", to: "statistics#overall_num_pubs_by_users_in_rg"
   end
 
+  resources :departments do 
+    member do
+      get "careers", to: "departments#search_carrers"
+    end
+  end
+
+  resources :faculties do
+    member do
+      get "departments" => "faculties#search_departments"
+    end
+  end
 
   # resources :publications
   # resources :relationships
   # resources :photos
   # resources :careers
-  # resources :departments
-  # resources :faculties
   # resources :research_subjects
   
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

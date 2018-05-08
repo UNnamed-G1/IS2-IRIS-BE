@@ -69,15 +69,6 @@ class Event < ApplicationRecord
 
   ###Queries for searching
 
-  def self.search_events_by_rg(ev_id)
-    select(:id, :topic, :type_ev).where(research_group_id: ev_id) if ev_id.present?
-  end
-
-  def self.search_events_by_user(user_id)
-    select(:id, :topic, :type_ev).joins(:users)
-      .where("users.id" => user_id) if user_id.present?
-  end
-
   def self.search_events_by_state(status)
     select(:id, :topic, :type_ev).where(state: status) if status.present?
   end

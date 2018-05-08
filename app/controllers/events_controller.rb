@@ -106,22 +106,6 @@ class EventsController < ApplicationController
     render json: users, include: [], status: :ok
   end
 
-  def search_events_by_rg
-    events_by_rg = Event.search_events_by_rg(params[:id]).items(params[:page])
-    render json: {
-             events: events_by_rg,
-             total_pages: events_by_rg.total_pages,
-           }, fields: %i[id name topic type_ev], include: []
-  end
-
-  def search_events_by_user
-    events_by_user = Event.search_events_by_user(params[:id]).items(params[:page])
-    render json: {
-             events: events_by_user,
-             total_pages: events_by_user.total_pages,
-           }, fields: %i[id name topic type_ev], include: []
-  end
-
   def search_events_by_state
     events_by_state = Event.search_events_by_state(params[:status]).items(params[:page])
     render json: {

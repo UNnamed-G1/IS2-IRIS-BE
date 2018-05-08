@@ -86,6 +86,15 @@ class ResearchGroupsController < ApplicationController
     end
   end
 
+  def get_events
+    research_group = ResearchGroup.find(params[:id])
+    events_by_rg = research_group.get_events().items(params[:page])
+    render json: {
+             events: events_by_rg,
+             total_pages: events_by_rg.total_pages,
+           }, fields: %i[id name topic type_ev], include: []
+  end
+
   def search_rgs_by_career
     rgs_by_career = ResearchGroup.search_rgs_by_career(params[:id]).items(params[:page])
     render json: {

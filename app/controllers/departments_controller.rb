@@ -47,9 +47,10 @@ class DepartmentsController < ApplicationController
     end
   end
 
-  def search_deps_by_faculty
-    deps_by_faculty = Department.search_deps_by_faculty(params[:id])
-    render json: deps_by_faculty, include: []
+  # GET /departments/:id/careers
+  def search_carrers
+    careers = Department.find(params[:id]).careers
+    render json: careers, fields: [:id, :name], include: []
   end
 
   private

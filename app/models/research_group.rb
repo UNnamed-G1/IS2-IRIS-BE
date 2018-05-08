@@ -48,6 +48,10 @@ class ResearchGroup < ApplicationRecord
       paginate(page: p, per_page: 12)
     end
 
+    def get_events()
+        events.select(:id, :topic, :type_ev)
+    end
+
     ##Queries for searching
 
     def self.search_rgs_by_career(career_id)
