@@ -23,4 +23,12 @@ class ApplicationController < ActionController::API
         def render_unauthorize
             render json: [UNAUTHORIZED_MESSAGE], status: :unauthorized
         end
+
+        def get_mandatory_parameter(params, param_name)
+            if !params.key?(param_name)
+                render json: {error: "The parameter #{param_name} is required."}, statu: 400
+            else
+                return params[param_name]
+            end
+        end
 end

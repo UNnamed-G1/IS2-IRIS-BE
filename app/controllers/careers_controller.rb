@@ -49,7 +49,7 @@ class CareersController < ApplicationController
 
   # GET /careers/:id/research_groups
   def get_research_groups
-    career_id = params[:id]
+    career_id = get_mandatory_parameter(params, :id)
     career = Career.find(params[:id])
     research_groups = career.research_groups
 
