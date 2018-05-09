@@ -261,6 +261,10 @@ class User < ApplicationRecord
     end
   end
 
+  def get_publications
+    return publications.select(:id, :name, :type_pub, :date)
+  end
+
   private
 
   def put_username
