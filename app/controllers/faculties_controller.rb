@@ -1,6 +1,6 @@
 class FacultiesController < ApplicationController
   before_action :authenticate_user, except: %i[index show]
-  before_action :authorize_as_admin, except: %i[index show]
+  before_action :authorize_as_admin, except: %i[index show search_departments]
   before_action :set_faculty, only: %i[show update destroy]
 
   # GET /faculties

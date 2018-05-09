@@ -31,7 +31,7 @@ Rails.application.routes.draw do
         post "unfollow", to: "users#unfollow_user" # param must be :id_followed
         get "editable_events"
         get "schedule", to: "users#schedules"
-        get "research_groups" to: "users#research_groups_current"
+        get "research_groups", to: "users#research_groups_current"
       end
 
       get "current"      
@@ -50,10 +50,8 @@ Rails.application.routes.draw do
     end
     
     member do 
-      get "photo", to: "research_groups#get_photo"
-      get "events", to: "research_groups#get_events"
-
       post "join", to: "research_groups#join_to_research_group"
+      #post "leave", to: "research_groups#leave_from_research_group"
     end
   end
     
@@ -103,10 +101,10 @@ Rails.application.routes.draw do
         get "num_publications_by_type", to: "statistics#num_publications_by_rg_and_type"
         get "average_publications_in_a_period", to: "statistics#average_publications_in_a_period_by_rg"
         get "num_publications_in_a_period", to: "statistics#num_publications_by_rg_in_a_period"
+        get "overall_num_publications_by_members", to: "statistics#overall_num_pubs_by_users_in_rg"
       end
     end
 
-    get "overall_num_pubs_by_users_in_rg", to: "statistics#overall_num_pubs_by_users_in_rg"
   end
 
   resources :departments do 
