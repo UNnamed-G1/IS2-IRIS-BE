@@ -5,7 +5,7 @@ class ReportsController < ActionController::Base
   BASE_TEMPLATE_PATH = "../views/reports"
 
   def show(template, pdf_name)
-    template_path = BASE_TEMPLATE_PATH + template
+    template_path = BASE_TEMPLATE_PATH + template + ".pdf.erb"
 
     respond_to do |format|
       format.html
@@ -61,7 +61,7 @@ class ReportsController < ActionController::Base
     data = Hash.new
     user_id = params[:id]
     data['user'] = User.find_by_id(user_id)
-    data["publications"] = Publication.search_publications_by_user(user_id)
+    data["publications"] = data["user"].get_publications
     data["stats_publication"] = Array.new
     publication_types = Publication.type_pubs.values 
     for publication_type in publication_types do
@@ -83,15 +83,16 @@ class ReportsController < ActionController::Base
   def history_by_rg
     rg_id = params[:id]
     data = Hash.new
-    data["publications"] = Publication.search_publications_by_rg(rg_id)
-    data["research_group_name"] = ResearchGroup.find_by_id(rg_id).name
+    research_group = ResearchGroup.find_by_id(rg_id)
+    data["research_group_name"] = research_group.name
+    data["publications"] = research_group.get_publications
     data["stats_publication"] = Array.new
     publication_types = Publication.type_pubs.values 
     for publication_type in publication_types do
       data["stats_publication"][publication_type] = Publication.num_publications_by_rg_and_type(rg_id, publication_type)
     end
     puts data
-    template = "/rep_by_rg.pdf.erb"
+    template = "/rep_by_rg"
     pdf_name = "Report_Research_Group #{rg_id}"
     
     if params[:send] == "true"
