@@ -31,7 +31,7 @@ Rails.application.routes.draw do
         post "unfollow", to: "users#unfollow_user" # param must be :id_followed
         get "editable_events"
         get "schedule", to: "users#schedules"
-        get "research_groups" to: "users#research_groups_current"
+        get "research_groups", to: "users#research_groups_current"
       end
 
       get "current"      
