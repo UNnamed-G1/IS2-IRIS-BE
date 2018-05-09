@@ -80,7 +80,7 @@ Rails.application.routes.draw do
     get "user_history", to: "reports#total_user_history"
     get "research_groups_history", to: "reports#total_rgs_history"
     get "users/:id/publications_history", to: "reports#history_by_user"
-    get "reports/research_group/:id/publications_history", to: "reports#history_by_rg"    
+    get "research_group/:id/publications_history", to: "reports#history_by_rg"    
   end
 
   scope :statistics do
