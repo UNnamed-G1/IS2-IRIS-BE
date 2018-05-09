@@ -59,14 +59,6 @@ class SchedulesController < ApplicationController
     render json: {message: "Horario ha sido puesto como disponible."}, status: :ok
   end
 
-  def find_schedules_by_user
-    find_schedules_by_user = Schedule.find_schedules_by_user(params[:id]).items(params[:page])
-    render json: {
-            schedules: find_schedules_by_user,
-            total_pages: find_schedules_by_user.total_pages
-           }, fields: [:start_date], include: []
-  end
-
   private
 
   # Use callbacks to share common setup or constraints between actions.

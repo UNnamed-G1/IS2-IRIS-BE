@@ -50,27 +50,11 @@ class ResearchSubjectsController < ApplicationController
     end
   end
 
-  def search_rs_by_rg
-    rs_by_rg = ResearchSubject.search_rs_by_rg(params[:id]).items(params[:page])
-    render json: {
-             research_subjects: rs_by_rg,
-             total_pages: rs_by_rg.total_pages,
-           }, fields: %i[id name], include: []
-  end
-
   def search_rs_by_name
     rs_by_name = ResearchSubject.search_rs_by_name(params[:keywords]).items(params[:page])
     render json: {
              research_subjects: rs_by_name,
              total_pages: rs_by_name.total_pages,
-           }, fields: %i[id name], include: []
-  end
-
-  def search_rs_by_user
-    rs_by_user = ResearchSubject.search_rs_by_user(params[:id]).items(params[:page])
-    render json: {
-             research_subjects: rs_by_user,
-             total_pages: rs_by_user.total_pages,
            }, fields: %i[id name], include: []
   end
 

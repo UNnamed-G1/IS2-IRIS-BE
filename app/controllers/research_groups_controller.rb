@@ -95,25 +95,12 @@ class ResearchGroupsController < ApplicationController
            }, fields: %i[id name topic type_ev], include: []
   end
 
-  def search_rgs_by_career
-    rgs_by_career = ResearchGroup.search_rgs_by_career(params[:id]).items(params[:page])
-    render json: {
-             research_groups: rgs_by_career,
-             total_pages: rgs_by_career.total_pages,
-           }, fields: %i[id name], include: []
-  end
-
   def search_rgs_by_name
     rgs_by_name = ResearchGroup.search_rgs_by_name(params[:keywords]).items(params[:page])
     render json: {
              research_groups: rgs_by_name,
              total_pages: rgs_by_name.total_pages,
            }, fields: %i[id name], include: []
-  end
-
-  def search_rgs_by_user
-    rgs_by_user = ResearchGroup.get_rgs_by_user(params[:id])
-    render json: rgs_by_user, fields: %i[id name], include: []
   end
 
   def search_rgs_by_current_user

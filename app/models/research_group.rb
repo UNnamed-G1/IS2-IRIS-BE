@@ -63,10 +63,6 @@ class ResearchGroup < ApplicationRecord
         where(id: rg_id).name
     end
 
-    def self.get_rgs_by_user(user_id)
-      select(:id, :name).joins(:members).where('members.id'=> user_id) if user_id.present?
-    end
-
     def self.get_name_by_publ(publ_id)
       joins(:publications).where('publications.id' => publ_id).pluck(:name) if publ_id.present?
     end

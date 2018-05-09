@@ -47,6 +47,15 @@ class CareersController < ApplicationController
     end
   end
 
+  # GET /careers/:id/research_groups
+  def get_research_groups
+    career_id = params[:id]
+    career = Career.find(params[:id])
+    research_groups = career.research_groups
+
+    render json: research_groups, include: [], status: :ok
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

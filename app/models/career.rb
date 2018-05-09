@@ -36,4 +36,12 @@ class Career < ApplicationRecord
   validates :snies_code, uniqueness: { message: "Código SNIES ya ha sido usado en otro registro."}
   validates :snies_code, numericality: { only_integer: true, message: "El código SNIES debe ser un número."}
 
+  def search_rgs_by_career
+    rgs_by_career = ResearchGroup.search_rgs_by_career(params[:id]).items(params[:page])
+    render json: {
+             research_groups: rgs_by_career,
+             total_pages: rgs_by_career.total_pages,
+           }, fields: %i[id name], include: []
+  end
+
 end

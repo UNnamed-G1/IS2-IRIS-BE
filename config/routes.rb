@@ -9,25 +9,18 @@ Rails.application.routes.draw do
   post "comments", to: "incoming_mails#receive_comments"
 
   # # Search
-
-  # get "events_by_state" => "events#search_events_by_state"
-  # get "events_by_freq" => "events#search_events_by_freq"
-  # get "events_by_type" => "events#search_events_by_type"  
-  # get "publications_by_name" => "publications#search_publications_by_name"
-  # get "publications_by_rg" => "publications#search_publications_by_rg"
-  # get "publications_by_user" => "publications#search_publications_by_user"
-  # get "publications_by_type" => "publications#search_publications_by_type"
-  # get "p_by_rg_and_type" => "publications#search_p_by_rg_and_type"
-  # get "rgs_by_career" => "research_groups#search_rgs_by_career"
-  # get "rgs_by_name" => "research_groups#search_rgs_by_name"
-  # get "rgs_by_user" => "research_groups#search_rgs_by_user"
-  # get "rgs_by_current_user" => "research_groups#search_rgs_by_current_user"
-  # get "rgs_by_class" => "research_groups#search_rgs_by_class"
-  # get "rgs_by_department" => "research_groups#search_rgs_by_department"
-  # get "rs_by_rg" => "research_subjects#search_rs_by_rg"
-  # get "rs_by_name" => "research_subjects#search_rs_by_name"
-  # get "rs_by_user" => "research_subjects#search_rs_by_user"
-  # get "find_schedules_by_user" => "schedules#find_schedules_by_user"  
+  get "events_by_state" => "events#search_events_by_state"
+  get "events_by_freq" => "events#search_events_by_freq"
+  get "events_by_type" => "events#search_events_by_type"  
+  get "publications_by_name" => "publications#search_publications_by_name"
+  get "publications_by_type" => "publications#search_publications_by_type"
+ 
+  get "p_by_rg_and_type" => "publications#search_p_by_rg_and_type"
+  get "rgs_by_name" => "research_groups#search_rgs_by_name"
+  get "rgs_by_user" => "research_groups#search_rgs_by_user"
+  get "rgs_by_class" => "research_groups#search_rgs_by_class"
+  get "rgs_by_department" => "research_groups#search_rgs_by_department"
+  get "rs_by_name" => "research_subjects#search_rs_by_name"
   
   resources :users do
     collection do      
@@ -37,6 +30,8 @@ Rails.application.routes.draw do
         post "follow", to: "users#follow_user" # param must be :id_followed
         post "unfollow", to: "users#unfollow_user" # param must be :id_followed
         get "editable_events"
+        get "schedule", to: "users#schedules"
+        get "research_groups" to: "users#research_groups_current"
       end
 
       get "current"      
@@ -122,15 +117,20 @@ Rails.application.routes.draw do
 
   resources :faculties do
     member do
-      get "departments" => "faculties#search_departments"
+      get "departments", to: "faculties#search_departments"
     end
   end
 
-  # resources :publications
-  # resources :relationships
-  # resources :photos
-  # resources :careers
-  # resources :research_subjects
+  resources :careers do
+    member do
+      get "research_groups", to: "careers#get_research_groups"
+    end
+  end
+
+  resources :publications
+  resources :relationships
+  resources :photos
+  resources :research_subjects
   
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -71,7 +71,7 @@ class UsersController < ApplicationController
 
   # GET /get_user/:username
   def get_user_by_username
-    user = User.byUsername(params[:username])
+    user = User.find_by_username(params[:username])
     render json: user, include: [:photo, :career, :research_groups, :events, :publications, :research_subjects]
   end
 
@@ -97,7 +97,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # POST /users/current/following
+  # GET /users/current/following
   def current_user_following
     result = {}
     result["following"] = current_user.get_following
@@ -148,6 +148,19 @@ class UsersController < ApplicationController
              events: events,
              total_pages: events.total_pages,
            }, include: [:research_group]
+  end
+
+  def schedules
+    schedules = current_user.schedules.items(params[:page])
+    render json: {
+            schedules: schedules,
+            total_pages: schedules.total_pages
+           }, fields: [:start_date], include: []
+  end
+
+  def research_groups_current
+    research_groups = current_user.research_groups
+    render json: research_groups, fields: %i[id name], include: [], status: :ok
   end
 
   private
