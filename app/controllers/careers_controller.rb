@@ -49,10 +49,8 @@ class CareersController < ApplicationController
 
   # GET /careers/:id/research_groups
   def get_research_groups
-    career_id = get_mandatory_parameter(params, :id)
-    career = Career.find(params[:id])
-    research_groups = career.research_groups
-
+    set_career
+    research_groups = @career.research_groups
     render json: research_groups, include: [], status: :ok
   end
 
@@ -60,7 +58,8 @@ class CareersController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_career
-    @career = Career.find(params[:id])
+    career_id = get_mandatory_parameter(params, :id)
+    @career = Career.find(career_id)
   end
 
   # Only allow a trusted parameter "white list" through.
