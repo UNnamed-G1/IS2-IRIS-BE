@@ -48,6 +48,10 @@ class ResearchGroup < ApplicationRecord
       paginate(page: p, per_page: 12)
     end
 
+    def get_events()
+        events.select(:id, :topic, :type_ev)
+    end
+
     ##Queries for searching
 
     def self.search_rgs_by_career(career_id)
@@ -57,10 +61,6 @@ class ResearchGroup < ApplicationRecord
 
     def self.get_rgname_by_id(rg_id)
         where(id: rg_id).name
-    end
-
-    def self.get_rgs_by_user(user_id)
-      select(:id, :name).joins(:members).where('members.id'=> user_id) if user_id.present?
     end
 
     def self.get_name_by_publ(publ_id)
@@ -98,6 +98,10 @@ class ResearchGroup < ApplicationRecord
 
     def self.find_by_id(research_group_id)
         return ResearchGroup.find(research_group_id)
+    end
+
+    def get_publications
+        return publications.select(:id, :name, :type_pub, :date)
     end
 
 end

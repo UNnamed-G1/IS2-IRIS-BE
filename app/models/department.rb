@@ -24,8 +24,4 @@ class Department < ApplicationRecord
   validates :name, presence: { message: Proc.new { ApplicationRecord.presence_msg("nombre") } }
   validates :name, length: {maximum: 100, too_long: "Se permiten máximo %´{count} caracteres para el campo nombre."}
 
-  def self.search_deps_by_faculty(fac_id)
-      select(:id, :name).joins(:faculties)
-                        .where('faculties.id' => fac_id) if fac_id.present?
-  end
 end

@@ -47,19 +47,13 @@ class CareersController < ApplicationController
     end
   end
 
-  def search_careers_by_rg
-    careers_by_rg = Career.search_careers_by_rg(params[:id])
-    render json: careers_by_rg, include: []
-  end
+  # GET /careers/:id/research_groups
+  def get_research_groups
+    career_id = params[:id]
+    career = Career.find(params[:id])
+    research_groups = career.research_groups
 
-  def search_careers_by_user
-    careers_by_user = Career.search_careers_by_user(params[:id])
-    render json: careers_by_user, include: []
-  end
-
-  def search_careers_by_dept
-    careers_by_dept = Career.search_careers_by_dept(params[:id])
-    render json: careers_by_dept, include: []
+    render json: research_groups, include: [], status: :ok
   end
 
   private

@@ -59,22 +59,6 @@ class PublicationsController < ApplicationController
            }, fields: %i[id name type_pub], include: []
   end
 
-  def search_publications_by_rg
-    publications = Publication.search_publications_by_rg(params[:id]).items(params[:page])
-    render json: {
-            publications: publications,
-            total_pages: publications.total_pages
-           }, fields: %i[id name type_pub], include: []
-  end
-
-  def search_publications_by_user
-    publications_by_user = Publication.search_publications_by_user(params[:id]).items(params[:page])
-    render json: {
-            publications: publications_by_user,
-            total_pages: publications_by_user.total_pages
-           }, fields: %i[id name type_pub], include: []
-  end
-
   def search_publications_by_type
     publications_by_type = Publication.search_publications_by_type(params[:type]).items(params[:page])
     render json: {

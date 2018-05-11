@@ -87,8 +87,9 @@ class StatisticsController < ApplicationController
     def num_publications_by_user_and_type
         user_id = params[:id]
         data = Hash.new
-        data["user"] = User.find_by_id(user_id).name
-        data["publications"] = Publication.search_publications_by_user(user_id)
+        user = User.find_by_id(user_id)
+        data["user"] = user.name
+        data["publications"] = user.get_publications
         data["stats_publication"] = Hash.new
         publication_types = Publication.type_pubs.keys
         if data["publications"].empty?
@@ -106,8 +107,9 @@ class StatisticsController < ApplicationController
     def num_publications_by_rg_and_type
         rg_id = params[:id]    
         data = Hash.new
-        data["research_group_name"] = ResearchGroup.find_by_id(rg_id).name
-        data["publications"] = Publication.search_publications_by_rg(rg_id)
+        research_group = ResearchGroup.find_by_id(rg_id)
+        data["research_group_name"] = research_group.name
+        data["publications"] = research_group.get_publications
         data["stats_publication"] = Hash.new
         publication_types = Publication.type_pubs.keys
         if data["publications"].empty?
@@ -126,8 +128,6 @@ class StatisticsController < ApplicationController
     def overall_num_pubs_by_users_in_rg
         rg_id = params[:id]
         data = Hash.new
-        data["research_group_name"] = ResearchGroup.find_by_id(rg_id).name
-        data["users_in_rg"] = User.search_users_by_rg(rg_id)
         data["stats_publication"] = Array.new
         data["stats_publication"] = User.with_publications_count_in_rg(rg_id)
         

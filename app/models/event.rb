@@ -69,15 +69,6 @@ class Event < ApplicationRecord
 
   ###Queries for searching
 
-  def self.search_events_by_rg(ev_id)
-    select(:id, :topic, :type_ev).where(research_group_id: ev_id) if ev_id.present?
-  end
-
-  def self.search_events_by_user(usr_id)
-    select(:id, :topic, :type_ev).joins(:users)
-      .where("users.id" => usr_id) if usr_id.present?
-  end
-
   def self.search_events_by_state(status)
     select(:id, :topic, :type_ev).where(state: status) if status.present?
   end
@@ -92,38 +83,38 @@ class Event < ApplicationRecord
 
   scope :public_evs, -> { where(type_ev: 1) }
 
-  scope :private_evs_by_user, -> (usr_id) {
+  scope :private_evs_by_user, -> (user_id) {
             joins(:users)
-            .where('users.id': usr_id, type_ev: 0)
+            .where('users.id': user_id, type_ev: 0)
         }
 
-  scope :evs_by_author, -> (usr_id) {
+  scope :evs_by_author, -> (user_id) {
           joins(:users)
-            .where('users.id': usr_id)
+            .where('users.id': user_id)
             .merge(EventUser.autor)
             .distinct
         }
 
-  scope :evs_by_lider, -> (usr_id) {
+  scope :evs_by_lider, -> (user_id) {
           joins(:users, :research_group)
             .merge(
               ResearchGroup
                 .joins(:user_research_groups)
-                .where('user_research_groups.user_id': usr_id)
+                .where('user_research_groups.user_id': user_id)
                 .merge(UserResearchGroup.lider)
             )
             .distinct
         }
 
-  scope :evs_by_editable, -> (usr_id, page) {
-          union_scope(evs_by_author(usr_id),
-                      evs_by_lider(usr_id))
+  scope :editable_events, -> (user_id, page) {
+          union_scope(evs_by_author(user_id),
+                      evs_by_lider(user_id))
             .paginate(page: page, per_page: 12)
         }
 
-  scope :evs_by_usr_and_type, -> (usr_id) {
+  scope :evs_by_usr_and_type, -> (user_id) {
           union_scope(public_evs,
-                      private_evs_by_user(usr_id))
+                      private_evs_by_user(user_id))
         }
 
   def self.news

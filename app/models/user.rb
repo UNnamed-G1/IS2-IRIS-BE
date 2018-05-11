@@ -98,7 +98,7 @@ class User < ApplicationRecord
   end
 
   ###Queries for searching
-  def self.byUsername(username)
+  def self.find_by_username(username)
     find_by(username: username)
   end
 
@@ -260,6 +260,10 @@ class User < ApplicationRecord
     else
       return false
     end
+  end
+
+  def get_publications
+    return publications.select(:id, :name, :type_pub, :date)
   end
 
   private

@@ -47,19 +47,13 @@ class SchedulesController < ApplicationController
     end
   end
 
-  def find_schedules_by_user
-    find_schedules_by_user = Schedule.find_schedules_by_user(params[:id]).items(params[:page])
-    render json: {
-            schedules: find_schedules_by_user,
-            total_pages: find_schedules_by_user.total_pages
-           }, fields: [:start_date], include: []
-  end
-
+  # PUT /schedules/:id/set_as_idle
   def set_schedule_as_busy
     current_user.add_schedule(params[:id_schedule])
     render json: {message: "Horario ha sido seleccionado."}, status: :ok
   end
-
+  
+  # PUT /schedules/:id/set_as_busy
   def set_schedule_as_idle
     current_user.remove_schedule(params[:id_schedule])
     render json: {message: "Horario ha sido puesto como disponible."}, status: :ok

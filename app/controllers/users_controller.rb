@@ -63,17 +63,19 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /users/current
   def current
     fields = [:id, :email, :username, :name, :lastname, :full_name, :user_type, :google_sign_up]
     render json: current_user, fields: fields, include: [:photo]
   end
 
-  # GET /user_by_username?username=:username
-  def by_username
-    user = User.byUsername(params[:username])
+  # GET /get_user/:username
+  def get_user_by_username
+    user = User.find_by_username(params[:username])
     render json: user, include: [:photo, :career, :research_groups, :events, :publications, :research_subjects]
   end
 
+  # POST /users/current/follow 
   def follow_user
     followed_user = User.find_by_id(params[:id_followed])
     result = Relationship.add_follower(current_user, followed_user)
@@ -84,7 +86,26 @@ class UsersController < ApplicationController
       render json: result.errors, status: :unprocessable_entity
     end
   end
+  
+  # POST /users/current/unfollow 
+  def unfollow_user
+    user_to_unfollow = User.find_by_id(params[:id_followed])
+    if current_user.unfollow(user_to_unfollow)
+      render json: {message: "Has dejado de seguir a este usuario."}, status: :ok
+    else
+      render json: {message: "Error: el error no ha sido especificado"}, status: 500
+    end
+  end
 
+  # GET /users/current/following
+  def current_user_following
+    result = {}
+    result["following"] = current_user.get_following
+    result["count"] = current_user.count_following
+    render json: result, include: [:photo], status: :ok
+  end
+
+  # GET /users/:id/following
   def following
     result = {}
     if params.has_key?(:id)
@@ -102,6 +123,7 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /users/:id/followers
   def followers
     result = {}
     if params.has_key?(:id)
@@ -119,20 +141,26 @@ class UsersController < ApplicationController
     end
   end
 
-  def curr_following
-    result = {}
-    result["following"] = current_user.get_following
-    result["count"] = current_user.count_following
-    render json: result, include: [:photo], status: :ok
+  # GET /users/current/editable_events
+  def editable_events
+    events = Event.editable_events(current_user[:id], params[:page]).items(params[:page])
+    render json: {
+             events: events,
+             total_pages: events.total_pages,
+           }, include: [:research_group]
   end
 
-  def unfollow_user
-    user_to_unfollow = User.find_by_id(params[:id_followed])
-    if current_user.unfollow(user_to_unfollow)
-      render json: {message: "Has dejado de seguir a este usuario."}, status: :ok
-    else
-      render json: {message: "Error: el error no ha sido especificado"}, status: 500
-    end
+  def schedules
+    schedules = current_user.schedules.items(params[:page])
+    render json: {
+            schedules: schedules,
+            total_pages: schedules.total_pages
+           }, fields: [:start_date], include: []
+  end
+
+  def research_groups_current
+    research_groups = current_user.research_groups
+    render json: research_groups, fields: %i[id name], include: [], status: :ok
   end
 
   private
