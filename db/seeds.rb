@@ -74,7 +74,7 @@ end
         date: Faker::Time.backward(180),
         abstract: Faker::Lorem.paragraph,
         brief_description: Faker::Hacker.say_something_smart,
-        type_pub: Faker::Number.between(0,5),
+        publication_type: Faker::Number.between(0,5),
         document: seed_document("publication_document")
     )
 end

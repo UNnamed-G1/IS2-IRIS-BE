@@ -56,7 +56,7 @@ class PublicationsController < ApplicationController
     render json: {
             research_groups: publications_by_name,
             total_pages: publications_by_name.total_pages
-           }, fields: %i[id name type_pub], include: []
+           }, fields: %i[id name publication_type], include: []
   end
 
   def search_publications_by_type
@@ -64,7 +64,7 @@ class PublicationsController < ApplicationController
     render json: {
             publications: publications_by_type,
             total_pages: publications_by_type.total_pages
-            }, fields: %i[id name type_pub], include: []
+            }, fields: %i[id name publication_type], include: []
   end
 
   def search_p_by_rg_and_type
@@ -72,7 +72,7 @@ class PublicationsController < ApplicationController
     render json: {
             publications: p_by_rg_and_type,
             total_pages: p_by_rg_and_type.total_pages
-           }, fields: %i[id name type_pub], include: []
+           }, fields: %i[id name publication_type], include: []
   end
 
   private
@@ -84,7 +84,7 @@ class PublicationsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def publication_params
-    params.require(:publication).permit(:name, :date, :abstract, :document, :brief_description, :type_pub)
+    params.require(:publication).permit(:name, :date, :abstract, :document, :brief_description, :publication_type)
   end
 
   def is_lider_research_group_publication?

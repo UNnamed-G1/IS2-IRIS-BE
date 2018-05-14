@@ -19,13 +19,13 @@ class PublicationSerializer < ActiveModel::Serializer
   attributes :id, :name, :date, :abstract, :document
   attributes :brief_description
 
-  attribute :type_pub, key: :publication_type
+  attribute :publication_type
 
   has_many :research_groups
   has_many :users
 
-  def type_pub
-    return object.type_pub.capitalize
+  def publication_type
+    return object.publication_type.capitalize
   end
 
   def document
