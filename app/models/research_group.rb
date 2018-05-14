@@ -49,7 +49,7 @@ class ResearchGroup < ApplicationRecord
     end
 
     def get_events()
-        events.select(:id, :topic, :type_ev)
+        events.select(:id, :topic, :event_type)
     end
 
     ##Queries for searching

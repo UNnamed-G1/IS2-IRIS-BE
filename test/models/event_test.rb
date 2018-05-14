@@ -7,7 +7,7 @@
 #  name              :string           not null
 #  topic             :text             not null
 #  description       :text             not null
-#  type_ev           :integer          not null
+#  event_type        :integer          not null
 #  date              :datetime         not null
 #  frequence         :integer          not null
 #  duration          :time             not null

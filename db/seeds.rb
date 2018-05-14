@@ -85,7 +85,7 @@ end
         name: Faker::Name.name,
         topic: Faker::Lorem.sentence,
         description: Faker::Hacker.say_something_smart,
-        type_ev: Faker::Number.between(0,1),
+        event_type: Faker::Number.between(0,1),
         date: Faker::Time.backward(20),
         frequence: Faker::Number.between(0,1),
         duration: "01:18:19",

@@ -92,7 +92,7 @@ class ResearchGroupsController < ApplicationController
     render json: {
              events: events_by_rg,
              total_pages: events_by_rg.total_pages,
-           }, fields: %i[id name topic type_ev], include: []
+           }, fields: %i[id name topic event_type], include: []
   end
 
   def search_rgs_by_name
