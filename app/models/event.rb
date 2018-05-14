@@ -35,9 +35,9 @@ class Event < ApplicationRecord
   has_many :photos, as: :imageable
   belongs_to :research_group
 
-  enum event_type: [:privado, :publico]
-  enum frequence: [:unico, :repetitivo]
-  enum state: [:activo, :inactivo]
+  enum event_type: [:Privado, :Público]
+  enum frequence: ["Único", :Repetitivo]
+  enum state: [:Activo, :Inactivo]
 
   validates :name, presence: {message: Proc.new { ApplicationRecord.presence_msg("nombre") }}
   validates :topic, presence: {message: Proc.new { ApplicationRecord.presence_msg("tema") }}
@@ -60,11 +60,11 @@ class Event < ApplicationRecord
   end
 
   def is_public?
-    return event_type == "publico"
+    return event_type == "Público"
   end
 
   def is_private?
-    return event_type == "private"
+    return event_type == "Privado"
   end
 
   ###Queries for searching

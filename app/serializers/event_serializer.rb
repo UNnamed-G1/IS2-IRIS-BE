@@ -40,18 +40,6 @@ class EventSerializer < ActiveModel::Serializer
   has_many :photos
   belongs_to :research_group
 
-  def event_type
-    return object.event_type.capitalize
-  end
-
-  def frequence
-    return object.frequence.capitalize
-  end
-
-  def state
-    return object.state.capitalize
-  end
-
   def duration
     return object.duration.to_formatted_s(:time)
   end 
