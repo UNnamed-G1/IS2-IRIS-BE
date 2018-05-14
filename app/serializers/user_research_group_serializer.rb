@@ -31,11 +31,4 @@ class UserResearchGroupSerializer < ActiveModel::Serializer
   belongs_to :user
   belongs_to :research_group
 
-  def member_type
-    return object.member_type.capitalize
-  end
-
-  def state
-    return object.state.capitalize
-  end
 end
