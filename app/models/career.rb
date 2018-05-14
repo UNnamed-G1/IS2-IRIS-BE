@@ -25,7 +25,7 @@ class Career < ApplicationRecord
   has_many :users, dependent: :delete_all
   belongs_to :department
 
-  enum degree_type: [ :pregado, :maestria, :doctorado]
+  enum degree_type: [ :Pregrado, :Maestría, :Doctorado]
 
   validates :name, presence: { message: Proc.new { ApplicationRecord.presence_msg("nombre") } }
   validates :snies_code, presence: { message: Proc.new { ApplicationRecord.presence_msg("código SNIES") } }
