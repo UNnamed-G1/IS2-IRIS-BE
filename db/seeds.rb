@@ -180,5 +180,5 @@ User.create(
     email: "admin@unal.edu.co",
     password: 'admin',
     password_confirmation: 'admin',
-    user_type: 'admin'
+    user_type: 'Administrador'
 )

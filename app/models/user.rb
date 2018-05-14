@@ -50,7 +50,7 @@ class User < ApplicationRecord
 
   belongs_to :career, optional: true
 
-  enum user_type: [:estudiante, :profesor, :admin]
+  enum user_type: [:Estudiante, :Profesor, :Administrador]
 
   validates :name, presence: {message: Proc.new { ApplicationRecord.presence_msg("nombre") }}, on: [:create, :update]
   validates :lastname, presence: {message: Proc.new { ApplicationRecord.presence_msg("apellido") }}, on: [:create, :update]
@@ -86,15 +86,15 @@ class User < ApplicationRecord
   end
 
   def is_admin?
-    return user_type == "admin"
+    return user_type == "Administrador"
   end
 
   def is_student?
-    return user_type == "estudiante"
+    return user_type == "Estudiante"
   end
 
-  def is_profesor?
-    return user_type == "profesor"
+  def is_Profesor?
+    return user_type == "Profesor"
   end
 
   ###Queries for searching
