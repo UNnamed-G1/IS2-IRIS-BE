@@ -74,7 +74,7 @@ end
         date: Faker::Time.backward(180),
         abstract: Faker::Lorem.paragraph,
         brief_description: Faker::Hacker.say_something_smart,
-        type_pub: Faker::Number.between(0,5),
+        publication_type: Faker::Number.between(0,5),
         document: seed_document("publication_document")
     )
 end
@@ -85,7 +85,7 @@ end
         name: Faker::Name.name,
         topic: Faker::Lorem.sentence,
         description: Faker::Hacker.say_something_smart,
-        type_ev: Faker::Number.between(0,1),
+        event_type: Faker::Number.between(0,1),
         date: Faker::Time.backward(20),
         frequence: Faker::Number.between(0,1),
         duration: "01:18:19",
@@ -136,7 +136,7 @@ end
         joining_date: Faker::Time.backward(10),
         end_joining_date: Faker::Time.forward(2),
         state: Faker::Number.between(0,1),
-        type_urg: Faker::Number.between(0,1),
+        member_type: Faker::Number.between(0,1),
         user_id: p.user_id,
         research_group_id: Faker::Number.between(1,100)
     )
@@ -180,5 +180,5 @@ User.create(
     email: "admin@unal.edu.co",
     password: 'admin',
     password_confirmation: 'admin',
-    user_type: 'admin'
+    user_type: 'Administrador'
 )

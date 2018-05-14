@@ -5,7 +5,7 @@
 #  id            :bigint(8)        not null, primary key
 #  name          :string(100)      not null
 #  snies_code    :bigint(8)        not null
-#  degree_type   :integer          default("pregado"), not null
+#  degree_type   :integer          default("Pregrado"), not null
 #  department_id :bigint(8)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null

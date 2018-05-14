@@ -9,7 +9,7 @@
 #  email                :string           not null
 #  password_digest      :string
 #  professional_profile :text
-#  user_type            :integer          default("estudiante"), not null
+#  user_type            :integer          default("Estudiante"), not null
 #  phone                :string(20)
 #  office               :string(20)
 #  cvlac_link           :text
@@ -50,7 +50,7 @@ class User < ApplicationRecord
 
   belongs_to :career, optional: true
 
-  enum user_type: [:estudiante, :profesor, :admin]
+  enum user_type: [:Estudiante, :Profesor, :Administrador]
 
   validates :name, presence: {message: Proc.new { ApplicationRecord.presence_msg("nombre") }}, on: [:create, :update]
   validates :lastname, presence: {message: Proc.new { ApplicationRecord.presence_msg("apellido") }}, on: [:create, :update]
@@ -86,15 +86,15 @@ class User < ApplicationRecord
   end
 
   def is_admin?
-    return user_type == "admin"
+    return user_type == "Administrador"
   end
 
   def is_student?
-    return user_type == "estudiante"
+    return user_type == "Estudiante"
   end
 
-  def is_profesor?
-    return user_type == "profesor"
+  def is_Profesor?
+    return user_type == "Profesor"
   end
 
   ###Queries for searching
@@ -244,7 +244,7 @@ class User < ApplicationRecord
     return user_research_groups.create(
              joining_date: Time.new,
              state: 1,
-             type_urg: 0,
+             member_type: 0,
              research_group: research_group,
            )
   end
@@ -262,7 +262,7 @@ class User < ApplicationRecord
   end
 
   def get_publications
-    return publications.select(:id, :name, :type_pub, :date)
+    return publications.select(:id, :name, :publication_type, :date)
   end
 
   private
