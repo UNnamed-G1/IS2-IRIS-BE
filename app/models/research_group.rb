@@ -54,11 +54,6 @@ class ResearchGroup < ApplicationRecord
 
     ##Queries for searching
 
-    def self.search_rgs_by_career(career_id)
-        select(:id, :name).joins(:careers)
-                          .where('careers.id' => career_id) if career_id.present?
-    end
-
     def self.get_rgname_by_id(rg_id)
         where(id: rg_id).name
     end
