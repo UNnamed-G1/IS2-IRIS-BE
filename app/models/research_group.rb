@@ -86,6 +86,12 @@ class ResearchGroup < ApplicationRecord
               .group("research_groups.id")
           }
           
+    def search_recent_publications
+        publications.select(:id, :name, :type_pub, :date)
+                                        .where('publications.created_at > ?', 1.week.ago)
+                                        .limit(3)
+    end
+
     def member_is_lider?(member)
         m = user_research_groups.find_by(user_id: member.id)
         return m.type_urg == "lider"

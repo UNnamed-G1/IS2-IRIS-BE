@@ -58,7 +58,8 @@ class StatisticsController < ApplicationController
 
     def recent_publications_by_user
         user_id = params[:id]
-        recent_publications_by_user = Publication.search_recent_publications_by_user(user_id)
+        user = User.find(user_id)
+        recent_publications_by_user = user.search_recent_publications
         if recent_publications_by_user.empty?
             render json:{
                 message: "No hay publicaciones recientes"
@@ -72,7 +73,8 @@ class StatisticsController < ApplicationController
     
     def recent_publications_by_rg
         rg_id = params[:id]
-        recent_publications_by_rg = Publication.search_recent_publications_by_rg(rg_id)
+        research_group = ResearchGroup.find(rg_id)
+        recent_publications_by_rg = research_group.search_recent_publications
         if recent_publications_by_rg.empty?
             render json:{
                 message: "No hay publicaciones recientes"

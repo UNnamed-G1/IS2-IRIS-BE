@@ -265,6 +265,12 @@ class User < ApplicationRecord
     return publications.select(:id, :name, :type_pub, :date)
   end
 
+  def search_recent_publications
+    return publications.select(:id, :name, :type_pub, :date)
+                        .where('publications.created_at > ?', 1.week.ago)
+                        .limit(3)
+  end
+
   private
 
   def put_username
