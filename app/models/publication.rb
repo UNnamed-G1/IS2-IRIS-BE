@@ -21,7 +21,7 @@ class Publication < ApplicationRecord
 
     mount_uploader :document, DocumentUploader
 
-    enum publication_type: [:software, :articulo, :tesis, :libro, :monografia, :patente]
+    enum publication_type: [:Software, :Artículo, :Tesis, :Libro, :Monografía, :Patente]
 
     validates :name, presence: { message: Proc.new { ApplicationRecord.presence_msg("nombre") } }
     validates :date, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha") } }
