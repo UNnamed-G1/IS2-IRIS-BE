@@ -8,7 +8,7 @@
 #  abstract          :text             not null
 #  document          :text
 #  brief_description :string(500)      not null
-#  type_pub          :integer          not null
+#  publication_type  :integer          not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
