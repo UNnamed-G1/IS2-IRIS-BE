@@ -93,7 +93,7 @@ class ResearchGroup < ApplicationRecord
           
     def member_is_lider?(member)
         m = user_research_groups.find_by(user_id: member.id)
-        return m.type_urg == "lider"
+        return m.member_type == "lider"
     end
 
     def self.find_by_id(research_group_id)

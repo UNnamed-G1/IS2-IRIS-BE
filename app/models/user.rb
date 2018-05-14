@@ -244,7 +244,7 @@ class User < ApplicationRecord
     return user_research_groups.create(
              joining_date: Time.new,
              state: 1,
-             type_urg: 0,
+             member_type: 0,
              research_group: research_group,
            )
   end

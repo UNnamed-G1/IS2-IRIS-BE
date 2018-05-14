@@ -26,13 +26,13 @@ class UserResearchGroupSerializer < ActiveModel::Serializer
   type :member
   attributes :id, :joining_date, :end_joining_date, :state
 
-  attribute :type_urg, key: :member_type
+  attribute :member_type
 
   belongs_to :user
   belongs_to :research_group
 
-  def type_urg
-    return object.type_urg.capitalize
+  def member_type
+    return object.member_type.capitalize
   end
 
   def state
