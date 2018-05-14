@@ -4,8 +4,8 @@
 #
 #  joining_date      :date             not null
 #  end_joining_date  :date
-#  state             :integer          default("retirado"), not null
-#  type_urg          :integer          default("miembro"), not null
+#  state             :integer          default("Retirado"), not null
+#  member_type       :integer          default("Miembro"), not null
 #  user_id           :bigint(8)
 #  research_group_id :bigint(8)
 #  created_at        :datetime         not null
@@ -26,16 +26,9 @@ class UserResearchGroupSerializer < ActiveModel::Serializer
   type :member
   attributes :id, :joining_date, :end_joining_date, :state
 
-  attribute :type_urg, key: :member_type
+  attribute :member_type
 
   belongs_to :user
   belongs_to :research_group
 
-  def type_urg
-    return object.type_urg.capitalize
-  end
-
-  def state
-    return object.state.capitalize
-  end
 end

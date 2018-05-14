@@ -7,7 +7,7 @@
 #  name              :string           not null
 #  topic             :text             not null
 #  description       :text             not null
-#  type_ev           :integer          not null
+#  event_type        :integer          not null
 #  date              :datetime         not null
 #  frequence         :integer          not null
 #  duration          :time             not null
@@ -35,19 +35,19 @@ class Event < ApplicationRecord
   has_many :photos, as: :imageable
   belongs_to :research_group
 
-  enum type_ev: [:privado, :publico]
-  enum frequence: [:unico, :repetitivo]
-  enum state: [:activo, :inactivo]
+  enum event_type: [:Privado, :Público]
+  enum frequence: ["Único", :Repetitivo]
+  enum state: [:Activo, :Inactivo]
 
   validates :name, presence: {message: Proc.new { ApplicationRecord.presence_msg("nombre") }}
   validates :topic, presence: {message: Proc.new { ApplicationRecord.presence_msg("tema") }}
   validates :description, presence: {message: Proc.new { ApplicationRecord.presence_msg("descripción") }}
   validates :state, presence: {message: Proc.new { ApplicationRecord.presence_msg("estado") }}
-  validates :type_ev, presence: {message: Proc.new { ApplicationRecord.presence_msg("tipo de evento") }}
+  validates :event_type, presence: {message: Proc.new { ApplicationRecord.presence_msg("tipo de evento") }}
   validates :date, presence: {message: Proc.new { ApplicationRecord.presence_msg("fecha") }}
   validates :frequence, presence: {message: Proc.new { ApplicationRecord.presence_msg("frecuencia") }}
   validates :duration, presence: {message: Proc.new { ApplicationRecord.presence_msg("tiempo de duración") }}
-  validates :type_ev, inclusion: {in: type_evs, message: "El tipo de evento seleccionado no es valido."}
+  validates :event_type, inclusion: {in: event_types, message: "El tipo de evento seleccionado no es valido."}
   validates :frequence, inclusion: {in: frequences, message: "El tipo de evento seleccionada no es valida."}
   validates :state, inclusion: {in: states, message: "El estado seleccionado no es valido."}
 
@@ -60,38 +60,38 @@ class Event < ApplicationRecord
   end
 
   def is_public?
-    return type_ev == "publico"
+    return event_type == "Público"
   end
 
   def is_private?
-    return type_ev == "private"
+    return event_type == "Privado"
   end
 
   ###Queries for searching
 
   def self.search_events_by_state(status)
-    select(:id, :topic, :type_ev).where(state: status) if status.present?
+    select(:id, :topic, :event_type).where(state: status) if status.present?
   end
 
   def self.search_events_by_freq(freq)
-    select(:id, :topic, :type_ev).where(frequence: freq) if freq.present?
+    select(:id, :topic, :event_type).where(frequence: freq) if freq.present?
   end
 
   def self.search_events_by_type(type)
-    select(:id, :topic, :type_ev).where(type_ev: type) if type.present?
+    select(:id, :topic, :event_type).where(event_type: type) if type.present?
   end
 
-  scope :public_evs, -> { where(type_ev: 1) }
+  scope :public_evs, -> { where(event_type: 1) }
 
   scope :private_evs_by_user, -> (user_id) {
             joins(:users)
-            .where('users.id': user_id, type_ev: 0)
+            .where('users.id': user_id, event_type: 0)
         }
 
   scope :evs_by_author, -> (user_id) {
           joins(:users)
             .where('users.id': user_id)
-            .merge(EventUser.autor)
+            .merge(EventUser.Autor)
             .distinct
         }
 
@@ -101,7 +101,7 @@ class Event < ApplicationRecord
               ResearchGroup
                 .joins(:user_research_groups)
                 .where('user_research_groups.user_id': user_id)
-                .merge(UserResearchGroup.lider)
+                .merge(UserResearchGroup.Líder)
             )
             .distinct
         }
@@ -133,14 +133,14 @@ class Event < ApplicationRecord
   def add_author(user)
     return event_users.create(
       user: user,
-      type_user_event: "autor"
+      type_user_event: "Autor"
     )
   end
 
   def invite_user(user)
     return event_users.create(
       user: user,
-      type_user_event: "invitado"
+      type_user_event: "Invitado"
     )
   end
 
@@ -155,15 +155,15 @@ class Event < ApplicationRecord
   end
 
   def get_invited_users
-    return users.where('event_users.type_user_event': "invitado")
+    return users.where('event_users.type_user_event': "Invitado")
   end
 
   def get_attendees
-    return users.where('event_users.type_user_event': "asistente")
+    return users.where('event_users.type_user_event': "Asistente")
   end
 
   def get_authors
-    return users.where('event_users.type_user_event': "autor")
+    return users.where('event_users.type_user_event': "Autor")
   end
 
 end

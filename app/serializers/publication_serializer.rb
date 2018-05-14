@@ -8,7 +8,7 @@
 #  abstract          :text             not null
 #  document          :text
 #  brief_description :string(500)      not null
-#  type_pub          :integer          not null
+#  publication_type  :integer          not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
@@ -19,14 +19,10 @@ class PublicationSerializer < ActiveModel::Serializer
   attributes :id, :name, :date, :abstract, :document
   attributes :brief_description
 
-  attribute :type_pub, key: :publication_type
+  attribute :publication_type
 
   has_many :research_groups
   has_many :users
-
-  def type_pub
-    return object.type_pub.capitalize
-  end
 
   def document
     return object.document.url

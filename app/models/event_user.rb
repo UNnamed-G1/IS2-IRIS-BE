@@ -2,7 +2,7 @@
 #
 # Table name: event_users
 #
-#  type_user_event :integer          default("invitado"), not null
+#  type_user_event :integer          default("Invitado"), not null
 #  user_id         :bigint(8)
 #  event_id        :bigint(8)
 #  created_at      :datetime         not null
@@ -23,7 +23,7 @@ class EventUser < ApplicationRecord
     belongs_to :user
     belongs_to :event
 
-    enum type_user_event: [:invitado, :asistente, :autor]
+    enum type_user_event: [:Invitado, :Asistente, :Autor]
 
     validates :type_user_event, presence: :true
     validates :type_user_event, inclusion: {in: type_user_events, message: "El tipo de usuario no es válido"}
