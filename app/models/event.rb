@@ -91,7 +91,7 @@ class Event < ApplicationRecord
   scope :evs_by_author, -> (user_id) {
           joins(:users)
             .where('users.id': user_id)
-            .merge(EventUser.autor)
+            .merge(EventUser.Autor)
             .distinct
         }
 
@@ -101,7 +101,7 @@ class Event < ApplicationRecord
               ResearchGroup
                 .joins(:user_research_groups)
                 .where('user_research_groups.user_id': user_id)
-                .merge(UserResearchGroup.lider)
+                .merge(UserResearchGroup.Líder)
             )
             .distinct
         }
@@ -133,14 +133,14 @@ class Event < ApplicationRecord
   def add_author(user)
     return event_users.create(
       user: user,
-      type_user_event: "autor"
+      type_user_event: "Autor"
     )
   end
 
   def invite_user(user)
     return event_users.create(
       user: user,
-      type_user_event: "invitado"
+      type_user_event: "Invitado"
     )
   end
 
@@ -155,15 +155,15 @@ class Event < ApplicationRecord
   end
 
   def get_invited_users
-    return users.where('event_users.type_user_event': "invitado")
+    return users.where('event_users.type_user_event': "Invitado")
   end
 
   def get_attendees
-    return users.where('event_users.type_user_event': "asistente")
+    return users.where('event_users.type_user_event': "Asistente")
   end
 
   def get_authors
-    return users.where('event_users.type_user_event': "autor")
+    return users.where('event_users.type_user_event': "Autor")
   end
 
 end
