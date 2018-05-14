@@ -22,6 +22,11 @@ Rails.application.routes.draw do
   get "rgs_by_department" => "research_groups#search_rgs_by_department"
   get "rs_by_name" => "research_subjects#search_rs_by_name"
   
+  scope :searching do
+    get "events/", to: "search#search_events_by_name"
+  end
+
+
   resources :users do
     collection do      
       scope :current do # Puts /current path before the route
