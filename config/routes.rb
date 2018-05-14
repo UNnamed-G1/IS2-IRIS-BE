@@ -12,7 +12,6 @@ Rails.application.routes.draw do
   get "events_by_state" => "events#search_events_by_state"
   get "events_by_freq" => "events#search_events_by_freq"
   get "events_by_type" => "events#search_events_by_type"  
-  get "publications_by_name" => "publications#search_publications_by_name"
   get "publications_by_type" => "publications#search_publications_by_type"
  
   get "p_by_rg_and_type" => "publications#search_p_by_rg_and_type"
@@ -22,8 +21,9 @@ Rails.application.routes.draw do
   get "rgs_by_department" => "research_groups#search_rgs_by_department"
   get "rs_by_name" => "research_subjects#search_rs_by_name"
   
-  scope :searching do
-    get "events/", to: "search#search_events_by_name"
+  scope :search do
+    get "events", to: "search#search_events_by_name"
+    get "publications", to: "search#search_publications_by_name"
   end
 
 

@@ -35,10 +35,10 @@ class Publication < ApplicationRecord
       paginate(page: p, per_page: 12)
     end
 
-    ###Queries for seaching
+    # QUERIES FOR SEARCHING
 
     def self.search_publications_by_name(keywords)
-        select(:id, :name, :publication_type).where("name LIKE ?","%#{keywords}%") if keywords.present?
+        select(:id, :name, :publication_type, :abstract).where("upper(name) LIKE ?","%#{keywords}%")
     end
 
     def self.search_recent_publications_by_user(user_id)
