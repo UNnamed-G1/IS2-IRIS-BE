@@ -50,8 +50,8 @@ class CareersController < ApplicationController
   # GET /careers/:id/research_groups
   def get_research_groups
     career_id = params[:id]
-    career = Career.find(params[:id])
-    research_groups = career.research_groups
+    career = Career.find(career_id)
+    research_groups = career.get_research_groups
 
     render json: research_groups, include: [], status: :ok
   end
