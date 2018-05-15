@@ -67,7 +67,13 @@ class Event < ApplicationRecord
     return event_type == "Privado"
   end
 
-  ###Queries for searching
+  # QUERIES FOR SEARCHING
+
+  def self.search_events_by_name(keywords)
+    return select(:id, :name, :event_type, :topic, :description, :state)
+            .where("upper(name) LIKE ? AND event_type = ? AND state = ?","%#{keywords}%", event_types[:Público], states[:Activo])
+            .order(name: :asc)
+  end
 
   def self.search_events_by_state(status)
     select(:id, :topic, :event_type).where(state: status) if status.present?

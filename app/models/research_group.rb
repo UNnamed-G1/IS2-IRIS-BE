@@ -52,12 +52,7 @@ class ResearchGroup < ApplicationRecord
         events.select(:id, :topic, :event_type)
     end
 
-    ##Queries for searching
-
-    def self.search_rgs_by_career(career_id)
-        select(:id, :name).joins(:careers)
-                          .where('careers.id' => career_id) if career_id.present?
-    end
+    # QUERIES FOR SEARCHING
 
     def self.get_rgname_by_id(rg_id)
         where(id: rg_id).name
@@ -68,7 +63,10 @@ class ResearchGroup < ApplicationRecord
     end
 
     def self.search_rgs_by_name(keywords)
-        select(:id, :name).where("name LIKE ?","%#{keywords}%") if keywords.present?
+        select(:id, :name, :description, :classification)
+            .where("upper(name) LIKE ?","%#{keywords}%")
+            .includes(:photo)
+            .order(name: :asc)
     end
 
     def self.search_rgs_by_class(cl_type)
@@ -91,6 +89,12 @@ class ResearchGroup < ApplicationRecord
               .group("research_groups.id")
           }
           
+    def search_recent_publications
+        publications.select(:id, :name, :type_pub, :date)
+                                        .where('publications.created_at > ?', 1.week.ago)
+                                        .limit(3)
+    end
+
     def member_is_lider?(member)
         m = user_research_groups.find_by(user_id: member.id)
         return m.member_type == "Líder"
@@ -102,6 +106,10 @@ class ResearchGroup < ApplicationRecord
 
     def get_publications
         return publications.select(:id, :name, :publication_type, :date)
+    end
+
+    def publications_by_type(type)
+        publications.search_publications_by_type(type)
     end
 
 end
