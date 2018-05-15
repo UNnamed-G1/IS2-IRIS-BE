@@ -14,7 +14,6 @@ Rails.application.routes.draw do
   get "events_by_type" => "events#search_events_by_type"  
   get "publications_by_type" => "publications#search_publications_by_type"
  
-  get "p_by_rg_and_type" => "publications#search_p_by_rg_and_type"
   get "rgs_by_name" => "research_groups#search_rgs_by_name"
   get "rgs_by_user" => "research_groups#search_rgs_by_user"
   get "rgs_by_class" => "research_groups#search_rgs_by_class"

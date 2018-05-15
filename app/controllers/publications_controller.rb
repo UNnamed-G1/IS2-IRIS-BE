@@ -67,14 +67,6 @@ class PublicationsController < ApplicationController
             }, fields: %i[id name publication_type], include: []
   end
 
-  def search_p_by_rg_and_type
-    p_by_rg_and_type = Publication.search_p_by_rg_and_type(params[:id], params[:type]).items(params[:page])
-    render json: {
-            publications: p_by_rg_and_type,
-            total_pages: p_by_rg_and_type.total_pages
-           }, fields: %i[id name publication_type], include: []
-  end
-
   private
 
   # Use callbacks to share common setup or constraints between actions.

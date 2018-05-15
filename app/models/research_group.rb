@@ -105,4 +105,8 @@ class ResearchGroup < ApplicationRecord
         return publications.select(:id, :name, :publication_type, :date)
     end
 
+    def publications_by_type(type)
+        publications.search_publications_by_type(type)
+    end
+
 end

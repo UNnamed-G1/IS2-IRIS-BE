@@ -39,27 +39,10 @@ class Publication < ApplicationRecord
 
     def self.search_publications_by_name(keywords)
         select(:id, :name, :publication_type, :abstract).where("upper(name) LIKE ?","%#{keywords}%")
-    end
-
-    def self.search_recent_publications_by_user(user_id)
-        select(:id, :name, :publication_type, :date).joins(:users)
-                                       .where('publications.created_at > ? AND users.id = ?', 1.week.ago, user_id)
-                                       .limit(3)
-    end     
+    end 
     
-    def self.search_recent_publications_by_rg(rg_id)
-        select(:id, :name, :publication_type, :date).joins(:research_groups)
-                                       .where('publications.created_at > ? AND research_groups.id = ?', 1.week.ago, rg_id)
-                                       .limit(3)
-    end
-    
-
     def self.search_publications_by_type(type)
-        select(:id, :name, :publication_type).where(publication_type: type) if type.present?
-    end
-
-    def self.search_p_by_rg_and_type(rg_id, type)
-        search_publications_by_rg(rg_id).search_publications_by_type(type)
+        where(publication_type: publication_types[type])
     end
 
     def self.get_research_groups(publication_id)
