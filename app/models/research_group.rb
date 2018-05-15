@@ -63,7 +63,7 @@ class ResearchGroup < ApplicationRecord
     end
 
     def self.search_rgs_by_name(keywords)
-        select(:id, :name).where("name LIKE ?","%#{keywords}%") if keywords.present?
+        select(:id, :name, :description, :classification).where("upper(name) LIKE ?","%#{keywords}%").includes(:photo)
     end
 
     def self.search_rgs_by_class(cl_type)

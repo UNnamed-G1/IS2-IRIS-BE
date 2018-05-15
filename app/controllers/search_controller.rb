@@ -1,6 +1,6 @@
 class SearchController < ApplicationController
 
-    def search_events_by_name
+    def events_by_name
         keywords = params[:keywords].upcase
         page = params[:page]
         events_by_name = Event.search_events_by_name(keywords).items(page)
@@ -13,7 +13,7 @@ class SearchController < ApplicationController
                state: :ok
     end
 
-    def search_publications_by_name
+    def publications_by_name
         keywords = params[:keywords].upcase
         page = params[:page]
         publications = Publication.search_publications_by_name(keywords).items(page)
@@ -24,6 +24,19 @@ class SearchController < ApplicationController
             fields: %i[id name publication_type abstract], 
             include: [],
             state: :ok
+    end
+
+    def research_groups_by_name
+        keywords = params[:keywords].upcase
+        page = params[:page]
+        research_groups = ResearchGroup.search_rgs_by_name(keywords).items(page)
+        data = {}
+        data["research_groups"] = research_groups
+        data["total_pages"] = research_groups.total_pages
+        render json: data,
+            include: [:photo],
+            fields: [:id, :name, :description, :classification],
+            state: :ok            
     end
 
 end
