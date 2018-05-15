@@ -107,7 +107,9 @@ class User < ApplicationRecord
     search += "or upper(concat(name, ' ', lastname)) LIKE ? "
     search += "or upper(username) LIKE ?"
     keywords = "%#{keywords}%"
-    where(search, keywords, keywords, keywords, keywords).includes(:photo)
+    where(search, keywords, keywords, keywords, keywords)
+      .includes(:photo)
+      .order(name: :asc, lastname: :asc, username: :asc)
   end
 
   ##Queries for statistics

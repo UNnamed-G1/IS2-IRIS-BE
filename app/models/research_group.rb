@@ -52,7 +52,7 @@ class ResearchGroup < ApplicationRecord
         events.select(:id, :topic, :event_type)
     end
 
-    ##Queries for searching
+    # QUERIES FOR SEARCHING
 
     def self.get_rgname_by_id(rg_id)
         where(id: rg_id).name
@@ -63,7 +63,10 @@ class ResearchGroup < ApplicationRecord
     end
 
     def self.search_rgs_by_name(keywords)
-        select(:id, :name, :description, :classification).where("upper(name) LIKE ?","%#{keywords}%").includes(:photo)
+        select(:id, :name, :description, :classification)
+            .where("upper(name) LIKE ?","%#{keywords}%")
+            .includes(:photo)
+            .order(name: :asc)
     end
 
     def self.search_rgs_by_class(cl_type)

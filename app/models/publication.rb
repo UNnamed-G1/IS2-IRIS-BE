@@ -38,7 +38,7 @@ class Publication < ApplicationRecord
     # QUERIES FOR SEARCHING
 
     def self.search_publications_by_name(keywords)
-        select(:id, :name, :publication_type, :abstract).where("upper(name) LIKE ?","%#{keywords}%")
+        select(:id, :name, :publication_type, :abstract).where("upper(name) LIKE ?","%#{keywords}%").order(name: :asc)
     end 
     
     def self.search_publications_by_type(type)
