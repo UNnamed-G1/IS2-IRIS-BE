@@ -39,4 +39,20 @@ class SearchController < ApplicationController
             state: :ok            
     end
 
+    def users_by_name_or_username
+        keywords = params[:keywords].upcase
+        page = params[:page]
+        users = User.search_by_name(keywords).items(page, 12)
+        serialized_users = ActiveModel::Serializer::CollectionSerializer.new(
+                users, 
+                each_serializer: UserSerializer,
+            )
+        render json: {
+                    users: serialized_users,
+                    total_pages: users.total_pages
+                },
+                include: :photo, 
+                state: :ok
+    end
+
 end

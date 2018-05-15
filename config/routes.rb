@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     get "events", to: "search#events_by_name"
     get "publications", to: "search#publications_by_name"
     get "research_groups", to: "search#research_groups_by_name"
+    get "users", to: "search#users_by_name_or_username"
   end
 
 

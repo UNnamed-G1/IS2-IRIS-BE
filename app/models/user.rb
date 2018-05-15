@@ -102,6 +102,14 @@ class User < ApplicationRecord
     find_by(username: username)
   end
 
+  def self.search_by_name(keywords)
+    search = "upper(name) LIKE ? or upper(lastname) LIKE ? "
+    search += "or upper(concat(name, ' ', lastname)) LIKE ? "
+    search += "or upper(username) LIKE ?"
+    keywords = "%#{keywords}%"
+    where(search, keywords, keywords, keywords, keywords).includes(:photo)
+  end
+
   ##Queries for statistics
 
   def self.num_users_by_rg(group_id)
