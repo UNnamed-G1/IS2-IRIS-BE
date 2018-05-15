@@ -101,7 +101,7 @@ class User < ApplicationRecord
   def self.find_by_username(username)
     find_by(username: username)
   end
-
+  
   def self.search_by_name(keywords)
     search = "upper(name) LIKE ? or upper(lastname) LIKE ? "
     search += "or upper(concat(name, ' ', lastname)) LIKE ? "
