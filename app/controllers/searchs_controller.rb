@@ -1,5 +1,6 @@
 class SearchController < ApplicationController
 
+    # GET /search/events?keywords=words&page=1
     def events_by_name
         keywords = params[:keywords].upcase
         page = params[:page]
@@ -13,6 +14,7 @@ class SearchController < ApplicationController
                state: :ok
     end
 
+    # GET /search/publications?keywords=words&page=1
     def publications_by_name
         keywords = params[:keywords].upcase
         page = params[:page]
@@ -26,6 +28,7 @@ class SearchController < ApplicationController
             state: :ok
     end
 
+    # GET /search/research_groups?keywords=words&page=1
     def research_groups_by_name
         keywords = params[:keywords].upcase
         page = params[:page]
@@ -39,6 +42,7 @@ class SearchController < ApplicationController
             state: :ok            
     end
 
+    # GET /search/users?keywords=words&page=1
     def users_by_name_or_username
         keywords = params[:keywords].upcase
         page = params[:page]

@@ -8,16 +8,17 @@ Rails.application.routes.draw do
   # MAILERS 
   post "comments", to: "incoming_mails#receive_comments"
 
-  # # Search
+  # ROUTES NOT USED YET
   get "events_by_state" => "events#search_events_by_state"
   get "events_by_freq" => "events#search_events_by_freq"
   get "events_by_type" => "events#search_events_by_type"  
   get "publications_by_type" => "publications#search_publications_by_type"
-   
+  
   get "rgs_by_class" => "research_groups#search_rgs_by_class"
   get "rgs_by_department" => "research_groups#search_rgs_by_department"
   get "rs_by_name" => "research_subjects#search_rs_by_name"
   
+  # SEARCH
   scope :search do
     get "events", to: "search#events_by_name"
     get "publications", to: "search#publications_by_name"
