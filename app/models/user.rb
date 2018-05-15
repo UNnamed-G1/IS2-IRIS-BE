@@ -97,42 +97,9 @@ class User < ApplicationRecord
     return user_type == "Profesor"
   end
 
-  ###Queries for searching
+  # QUERIES FOR SEARCHING
   def self.find_by_username(username)
     find_by(username: username)
-  end
-
-  def self.search_users_by_id(usr_id)
-    where(id: usr_id).pluck(:name, :lastname)
-  end 
-
-  def self.search_users_by_rg(rg_id)
-    select(:id, :name, :lastname, :email, :user_type).joins(:research_groups)
-      .where("research_groups.id" => rg_id) if rg_id.present?
-  end
-
-  def self.get_name_by_publ(publ_id)
-    joins(:publications).where("publications.id" => publ_id).pluck(:name, :lastname) if publ_id.present?
-  end
-
-  def self.search_users_by_publ(publ_id)
-    select(:id, :name, :lastname, :email, :user_type).joins(:publications)
-      .where("publications.id" => publ_id) if publ_id.present?
-  end
-
-  def self.search_users_by_rs(rs_id)
-    select(:id, :name, :lastname, :email, :user_type).joins(:research_subjects)
-      .where("research_subjects.id" => rs_id) if rs_id.present?
-  end
-
-  def self.search_users_by_event(ev_id)
-    select(:id, :name, :lastname, :email, :user_type).joins(:events)
-      .where("events.id" => ev_id) if ev_id.present?
-  end
-
-  def self.search_rgs_by_user(user_id)
-    select("research_groups.id, research_groups.name").joins(:research_groups)
-                      .where(id: user_id) if user_id.present?
   end
 
   ##Queries for statistics

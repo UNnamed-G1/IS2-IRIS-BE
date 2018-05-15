@@ -13,8 +13,7 @@ Rails.application.routes.draw do
   get "events_by_freq" => "events#search_events_by_freq"
   get "events_by_type" => "events#search_events_by_type"  
   get "publications_by_type" => "publications#search_publications_by_type"
- 
-  get "rgs_by_user" => "research_groups#search_rgs_by_user"
+   
   get "rgs_by_class" => "research_groups#search_rgs_by_class"
   get "rgs_by_department" => "research_groups#search_rgs_by_department"
   get "rs_by_name" => "research_subjects#search_rs_by_name"
