@@ -6,7 +6,7 @@ class CreatePublications < ActiveRecord::Migration[5.1]
       t.text :abstract, null: false
       t.text :document
       t.string :brief_description, limit: 500, null: false
-      t.integer :type_pub, null: false
+      t.integer :publication_type, null: false
 
       t.timestamps
     end

@@ -14,7 +14,7 @@ class Schedule < ApplicationRecord
   has_many :schedule_users, dependent: :delete_all
   has_many :users, through: :schedule_users
 
-  enum day_week: [:lunes, :martes, :miercoles, :jueves, :viernes, :sabado, :domingo]
+  enum day_week: [:Lunes, :Martes, :Miércoles, :Jueves, :Viernes, :Sábado, :Domingo]
 
   validates :start_hour, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha de inicio") } }
   validates :day_week, inclusion: {in: day_weeks, message: "El tipo de día de la semana no es válido."}

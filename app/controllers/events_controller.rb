@@ -9,7 +9,7 @@ class EventsController < ApplicationController
     render json: {
              events: events,
              total_pages: events.total_pages,
-           }, fields: %i[id name topic type_ev], include: [:photos, :research_group]
+           }, fields: %i[id name topic event_type], include: [:photos, :research_group]
   end
 
   # GET /events/1
@@ -111,7 +111,7 @@ class EventsController < ApplicationController
     render json: {
              events: events_by_state,
              total_pages: events_by_state.total_pages,
-           }, fields: %i[id name topic type_ev], include: []
+           }, fields: %i[id name topic event_type], include: []
   end
 
   def search_events_by_freq
@@ -119,7 +119,7 @@ class EventsController < ApplicationController
     render json: {
              events: events_by_freq,
              total_pages: events_by_freq.total_pages,
-           }, fields: %i[id name topic type_ev], include: []
+           }, fields: %i[id name topic event_type], include: []
   end
 
   def search_events_by_type
@@ -127,7 +127,7 @@ class EventsController < ApplicationController
     render json: {
              events: events_by_type,
              total_pages: events_by_type.total_pages,
-           }, fields: %i[id name topic type_ev], include: []
+           }, fields: %i[id name topic event_type], include: []
   end
 
   private
@@ -139,7 +139,7 @@ class EventsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def event_params
-    params.require(:event).permit(:name, :topic, :description, :type_ev, :date, :frequence, :duration, :state, :research_group_id, :latitude, :longitude, :address)
+    params.require(:event).permit(:name, :topic, :description, :event_type, :date, :frequence, :duration, :state, :research_group_id, :latitude, :longitude, :address)
   end
 
   def authorize_as_author_or_lider

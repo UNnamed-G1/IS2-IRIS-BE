@@ -5,7 +5,7 @@ class CreateEvents < ActiveRecord::Migration[5.1]
       t.string :name, null: false
       t.text :topic, null: false
       t.text :description, null: false
-      t.integer :type_ev, null: false #enum
+      t.integer :event_type, null: false #enum
       t.datetime :date, null: false
       t.integer :frequence, null: false #enum
       t.time :duration, null: false

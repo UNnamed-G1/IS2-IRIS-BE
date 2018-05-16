@@ -5,7 +5,7 @@
 #  id            :bigint(8)        not null, primary key
 #  name          :string(100)      not null
 #  snies_code    :bigint(8)        not null
-#  degree_type   :integer          default("pregado"), not null
+#  degree_type   :integer          default("Pregrado"), not null
 #  department_id :bigint(8)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
@@ -25,7 +25,7 @@ class Career < ApplicationRecord
   has_many :users, dependent: :delete_all
   belongs_to :department
 
-  enum degree_type: [ :pregado, :maestria, :doctorado]
+  enum degree_type: [ :Pregrado, :Maestría, :Doctorado]
 
   validates :name, presence: { message: Proc.new { ApplicationRecord.presence_msg("nombre") } }
   validates :snies_code, presence: { message: Proc.new { ApplicationRecord.presence_msg("código SNIES") } }
@@ -36,12 +36,8 @@ class Career < ApplicationRecord
   validates :snies_code, uniqueness: { message: "Código SNIES ya ha sido usado en otro registro."}
   validates :snies_code, numericality: { only_integer: true, message: "El código SNIES debe ser un número."}
 
-  def search_rgs_by_career
-    rgs_by_career = ResearchGroup.search_rgs_by_career(params[:id]).items(params[:page])
-    render json: {
-             research_groups: rgs_by_career,
-             total_pages: rgs_by_career.total_pages,
-           }, fields: %i[id name], include: []
+  def get_research_groups
+    return research_groups.select(:id, :name)
   end
 
 end
