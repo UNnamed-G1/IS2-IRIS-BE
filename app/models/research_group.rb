@@ -7,10 +7,11 @@
 #  description         :text             not null
 #  strategic_focus     :text             not null
 #  research_priorities :text             not null
-#  foundation_date     :date             not null
-#  classification      :integer          not null
-#  date_classification :date             not null
+#  foundation_date     :date
+#  classification      :integer
+#  date_classification :date
 #  url                 :string
+#  state               :integer          not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #
@@ -29,20 +30,19 @@ class ResearchGroup < ApplicationRecord
     has_one :photo, as: :imageable
 
     enum classification: [:A, :B, :C, :D]
+    enum state: [:Solicitud, :Activo]
 
     validates :name, presence: { message: Proc.new { ApplicationRecord.presence_msg("nombre") } }
     validates :description, presence: { message: Proc.new { ApplicationRecord.presence_msg("descripción") } }
     validates :strategic_focus, presence: { message: Proc.new { ApplicationRecord.presence_msg("enfoque estratégico") } }
     validates :research_priorities, presence: { message: Proc.new { ApplicationRecord.presence_msg("prioridades de investigación") } }
-    validates :foundation_date, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha de creación") } }
-    validates :classification, presence: { message: Proc.new { ApplicationRecord.presence_msg("clasificación") } }
-    validates :date_classification, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha de clasificación") } }
 
     validates :name, length: {maximum: 100, too_long: "Se permiten máximo %{count} caracteres para el campo nombre."}
     validates :description, length: { maximum: 1000, too_long: "Se permiten maximo %{count} caracteres para el campo descripción." }
     validates :strategic_focus, length: { maximum: 1000, too_long: "Se permiten maximo %{count} caracteres para el campo enfoque estratégico." }
     validates :research_priorities, length: { maximum: 1000, too_long: "Se permiten maximo %{count} caracteres para el campo prioridades de investigación." }
     validates :classification, inclusion: { in: classifications, message: "El tipo de clasificación no es válido."}
+    validates :state, inclusion: { in: states, message: "El estado seleccionado no es válido."}
 
     def self.items(p)
       paginate(page: p, per_page: 12)

@@ -155,6 +155,20 @@ class ResearchGroupsController < ApplicationController
     render json: {"message": "Acción realizada correctamente."}, status: :ok
   end 
 
+  # POST /research_groups/request_create
+  def request_create
+    @research_group = ResearchGroup.new(research_group_params)
+
+    if @research_group.save
+      picture = params[:picture]
+      @research_group.update(photo: Photo.create_photo(picture, @research_group)) if picture
+      @research_group.add_member(User.find(current_user.id), :Líder)
+      render json: @research_group, status: :created, location: @research_group, include: [:photo]
+    else
+      render json: @research_group.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -164,7 +178,7 @@ class ResearchGroupsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def research_group_params
-    params.require(:research_group).permit(:name, :description, :strategic_focus, :research_priorities, :foundation_date, :classification, :date_classification, :url)
+    params.require(:research_group).permit(:name, :description, :strategic_focus, :research_priorities, :foundation_date, :classification, :date_classification, :url, :state)
   end
 
   def authorize_update

@@ -59,7 +59,8 @@ end
         foundation_date: Faker::Time.backward,
         classification: Faker::Number.between(0, 3),
         date_classification: Faker::Time.backward(10),
-        url: Faker::Internet.url
+        url: Faker::Internet.url,
+        state: Faker::Number.between(0, 1)
     )
     rg.update(photo: Photo.create(
         picture: seed_image("research_group_image"),
@@ -134,7 +135,6 @@ end
     )
     u = UserResearchGroup.create(
         joining_date: Faker::Time.backward(10),
-        end_joining_date: Faker::Time.forward(2),
         state: Faker::Number.between(0,1),
         member_type: Faker::Number.between(0,1),
         user_id: p.user_id,

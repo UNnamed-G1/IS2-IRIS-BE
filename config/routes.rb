@@ -56,6 +56,7 @@ Rails.application.routes.draw do
   resources :research_groups do
     collection do 
       get "news"
+      post "request_create"
     end
     
     member do 
