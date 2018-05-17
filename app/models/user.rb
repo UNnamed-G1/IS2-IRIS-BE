@@ -9,7 +9,7 @@
 #  email                :string           not null
 #  password_digest      :string
 #  professional_profile :text
-#  user_type            :integer          default("estudiante"), not null
+#  user_type            :integer          default("Estudiante"), not null
 #  phone                :string(20)
 #  office               :string(20)
 #  cvlac_link           :text
@@ -50,7 +50,7 @@ class User < ApplicationRecord
 
   belongs_to :career, optional: true
 
-  enum user_type: [:estudiante, :profesor, :admin]
+  enum user_type: [:Estudiante, :Profesor, :Administrador]
 
   validates :name, presence: {message: Proc.new { ApplicationRecord.presence_msg("nombre") }}, on: [:create, :update]
   validates :lastname, presence: {message: Proc.new { ApplicationRecord.presence_msg("apellido") }}, on: [:create, :update]
@@ -86,53 +86,30 @@ class User < ApplicationRecord
   end
 
   def is_admin?
-    return user_type == "admin"
+    return user_type == "Administrador"
   end
 
   def is_student?
-    return user_type == "estudiante"
+    return user_type == "Estudiante"
   end
 
-  def is_profesor?
-    return user_type == "profesor"
+  def is_Profesor?
+    return user_type == "Profesor"
   end
 
-  ###Queries for searching
+  # QUERIES FOR SEARCHING
   def self.find_by_username(username)
     find_by(username: username)
   end
-
-  def self.search_users_by_id(usr_id)
-    where(id: usr_id).pluck(:name, :lastname)
-  end 
-
-  def self.search_users_by_rg(rg_id)
-    select(:id, :name, :lastname, :email, :user_type).joins(:research_groups)
-      .where("research_groups.id" => rg_id) if rg_id.present?
-  end
-
-  def self.get_name_by_publ(publ_id)
-    joins(:publications).where("publications.id" => publ_id).pluck(:name, :lastname) if publ_id.present?
-  end
-
-  def self.search_users_by_publ(publ_id)
-    select(:id, :name, :lastname, :email, :user_type).joins(:publications)
-      .where("publications.id" => publ_id) if publ_id.present?
-  end
-
-  def self.search_users_by_rs(rs_id)
-    select(:id, :name, :lastname, :email, :user_type).joins(:research_subjects)
-      .where("research_subjects.id" => rs_id) if rs_id.present?
-  end
-
-  def self.search_users_by_event(ev_id)
-    select(:id, :name, :lastname, :email, :user_type).joins(:events)
-      .where("events.id" => ev_id) if ev_id.present?
-  end
-
-  def self.search_rgs_by_user(user_id)
-    select("research_groups.id, research_groups.name").joins(:research_groups)
-                      .where(id: user_id) if user_id.present?
+  
+  def self.search_by_name(keywords)
+    search = "upper(name) LIKE ? or upper(lastname) LIKE ? "
+    search += "or upper(concat(name, ' ', lastname)) LIKE ? "
+    search += "or upper(username) LIKE ?"
+    keywords = "%#{keywords}%"
+    where(search, keywords, keywords, keywords, keywords)
+      .includes(:photo)
+      .order(name: :asc, lastname: :asc, username: :asc)
   end
 
   ##Queries for statistics
@@ -244,7 +221,7 @@ class User < ApplicationRecord
     return user_research_groups.create(
              joining_date: Time.new,
              state: 1,
-             type_urg: 0,
+             member_type: 0,
              research_group: research_group,
            )
   end
@@ -262,7 +239,13 @@ class User < ApplicationRecord
   end
 
   def get_publications
+    return publications.select(:id, :name, :publication_type, :date)
+  end
+
+  def search_recent_publications
     return publications.select(:id, :name, :type_pub, :date)
+                        .where('publications.created_at > ?', 1.week.ago)
+                        .limit(3)
   end
 
   private

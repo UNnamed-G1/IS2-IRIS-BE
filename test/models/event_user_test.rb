@@ -2,7 +2,7 @@
 #
 # Table name: event_users
 #
-#  type_user_event :integer          default("invitado"), not null
+#  type_user_event :integer          default("Invitado"), not null
 #  user_id         :bigint(8)
 #  event_id        :bigint(8)
 #  created_at      :datetime         not null
