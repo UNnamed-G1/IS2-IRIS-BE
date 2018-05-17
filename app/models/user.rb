@@ -218,12 +218,19 @@ class User < ApplicationRecord
   end
 
   def request_join_research_group(research_group)
-    return user_research_groups.create(
-             joining_date: Time.new,
-             state: :Activo,
-             member_type: :Solicitante,
-             research_group: research_group,
-           )
+    if research_groups.where(id: research_group.id).any?
+      state = UserResearchGroup.states[:Activo]
+      type = UserResearchGroup.member_types[:Solicitante]
+      sql = "UPDATE user_research_groups SET member_type = #{type}, state = #{state} WHERE user_id = #{id} AND research_group_id = #{research_group.id}"
+      ActiveRecord::Base.connection.execute(sql)
+    else
+      return user_research_groups.create(
+              joining_date: Time.new,
+              state: :Activo,
+              member_type: :Solicitante,
+              research_group: research_group,
+            )
+    end
   end
 
   def cancel_request_join_research_group(research_group)
