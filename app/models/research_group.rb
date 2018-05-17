@@ -112,4 +112,13 @@ class ResearchGroup < ApplicationRecord
         publications.search_publications_by_type(type)
     end
 
+    def add_member(user, member_type)
+        return user_research_groups.create(
+            user: user,
+            joining_date: Date.today.to_s,
+            state: :Activo,
+            member_type: member_type,            
+        )
+    end
+
 end

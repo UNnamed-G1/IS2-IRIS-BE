@@ -124,6 +124,15 @@ class ResearchGroupsController < ApplicationController
            }, fields: %i[id name], include: []
   end
 
+  def add_members
+    users = params[:users]
+    research_group = ResearchGroup.find(params[:id])
+    users.each do |user|
+      research_group.add_member(User.find(user[:id]), user[:member_type])
+    end
+    render json: {"message": "Miembros agregados satisfactoriamente."}, status: :ok
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
