@@ -121,16 +121,16 @@ class ResearchGroup < ApplicationRecord
         )
     end
 
-    def change_member_as_retired(user_id)
-        state = UserResearchGroup.states[:Retirado]
+    def change_state_user(user_id, state)
+        state = UserResearchGroup.states[state]
         sql = "UPDATE user_research_groups SET state = #{state} WHERE user_id = #{user_id} AND research_group_id = #{id}"
         ActiveRecord::Base.connection.execute(sql)
         return user_research_groups.where("user_id": user_id).first
     end
 
-    def change_member_as_active(user_id)
-        state = UserResearchGroup.states[:Activo]
-        sql = "UPDATE user_research_groups SET state = #{state} WHERE user_id = #{user_id} AND research_group_id = #{id}"
+    def change_type_user(user_id, member_type)
+        type = UserResearchGroup.member_types[member_type]
+        sql = "UPDATE user_research_groups SET member_type = #{type} WHERE user_id = #{user_id} AND research_group_id = #{id}"
         ActiveRecord::Base.connection.execute(sql)
         return user_research_groups.where("user_id": user_id).first
     end

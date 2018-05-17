@@ -116,8 +116,8 @@ class ResearchGroupsController < ApplicationController
            }, fields: %i[id name], include: []
   end
 
-  # POST /research_groups/:id/add_memebers
-  def add_members
+  # POST /research_groups/:id/add_users
+  def add_users
     users = params[:users]
     research_group = ResearchGroup.find(params[:id])
     users.each do |user|
@@ -126,19 +126,27 @@ class ResearchGroupsController < ApplicationController
     render json: {"message": "Miembros agregados satisfactoriamente."}, status: :ok
   end
 
-  # PUT /research_groups/:id/member_as_retired/:user_id
-  def change_member_as_retired
+  # PUT /research_groups/:id/user_as_retired/:user_id
+  def change_user_as_retired
     user_id = params[:user_id]
     research_group = ResearchGroup.find(params[:id])
-    research_group.change_member_as_retired(user_id)
+    research_group.change_state_user(user_id, :Retirado)
     render json: {"message": "Miembro actualizado correctamente."}, status: :ok
   end
 
-  # PUT /research_groups/:id/active_member/:user_id
-  def change_member_as_active
+  # PUT /research_groups/:id/user_as_active/:user_id
+  def change_user_as_active
     user_id = params[:user_id]
     research_group = ResearchGroup.find(params[:id])
-    research_group.change_member_as_active(user_id)
+    research_group.change_state_user(user_id, :Activo)
+    render json: {"message": "Miembro actualizado correctamente."}, status: :ok
+  end
+
+  # PUT /research_groups/:id/user_as_lider/:user_id
+  def change_user_as_lider
+    user_id = params[:user_id]
+    research_group = ResearchGroup.find(params[:id])
+    research_group.change_type_user(user_id, :Líder)
     render json: {"message": "Miembro actualizado correctamente."}, status: :ok
   end
 
