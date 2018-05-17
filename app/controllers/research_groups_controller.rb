@@ -158,6 +158,14 @@ class ResearchGroupsController < ApplicationController
     render json: {"message": "Miembro actualizado correctamente."}, status: :ok
   end
 
+  
+  def remove_user
+    user = User.find(params[:user_id])
+    research_group = ResearchGroup.find(params[:id])
+    research_group.remove_user(user)
+    render json: {"message": "Acción realizada correctamente."}, status: :ok
+  end 
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

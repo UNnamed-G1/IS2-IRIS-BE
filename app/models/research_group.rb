@@ -135,4 +135,8 @@ class ResearchGroup < ApplicationRecord
         return user_research_groups.where("user_id": user_id).first
     end
 
+    def remove_user(user)
+        return users.delete(user)
+    end
+
 end
