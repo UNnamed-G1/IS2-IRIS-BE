@@ -217,11 +217,11 @@ class User < ApplicationRecord
     end
   end
 
-  def join_research_group(research_group)
+  def request_join_research_group(research_group)
     return user_research_groups.create(
              joining_date: Time.new,
-             state: 1,
-             member_type: 0,
+             state: :Activo,
+             member_type: :Solicitante,
              research_group: research_group,
            )
   end

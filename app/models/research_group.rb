@@ -136,7 +136,7 @@ class ResearchGroup < ApplicationRecord
     end
 
     def remove_user(user)
-        return users.delete(user)
+        return members.delete(user)
     end
 
 end

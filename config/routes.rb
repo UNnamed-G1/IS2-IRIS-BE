@@ -37,6 +37,8 @@ Rails.application.routes.draw do
         get "editable_events"
         get "schedule", to: "users#schedules"
         get "research_groups", to: "users#research_groups_current"
+        
+        post "request_join_research_group", to: "users#request_join_research_group"
       end
 
       get "current"      
@@ -55,15 +57,15 @@ Rails.application.routes.draw do
     end
     
     member do 
-      post "join", to: "research_groups#join_to_research_group"
       post "add_users", to: "research_groups#add_users"
       
-      put "user_as_retired/:user_id", to: "research_groups#change_user_as_retired"
-      put "user_as_active/:user_id", to: "research_groups#change_user_as_active"
-      put "user_as_lider/:user_id", to: "research_groups#change_user_as_lider"
-      put "user_as_member/:user_id", to: "research_groups#change_user_as_member"
+      put "user_as_retired", to: "research_groups#change_user_as_retired"
+      put "user_as_active", to: "research_groups#change_user_as_active"
+      put "user_as_lider", to: "research_groups#change_user_as_lider"
+      put "user_as_member", to: "research_groups#change_user_as_member"
+      put "accept_request", to: "research_groups#change_user_as_member"
       
-      delete "reject_joining_request/:user_id", to: "research_groups#remove_user"
+      delete "reject_request", to: "research_groups#remove_user"
     end
   end
     

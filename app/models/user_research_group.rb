@@ -27,7 +27,7 @@ class UserResearchGroup < ApplicationRecord
   belongs_to :research_group, class_name: "ResearchGroup"
   
   enum state: [:Retirado, :Activo]
-  enum member_type: [:Miembro, :Líder]
+  enum member_type: [:Miembro, :Líder, :Solicitante]
   
   validates :joining_date, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha de vinculación") } }
   validates :member_type, presence: { message: Proc.new { ApplicationRecord.presence_msg("tipo de miembro del grupo") } }

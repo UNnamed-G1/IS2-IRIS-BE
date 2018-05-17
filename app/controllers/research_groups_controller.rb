@@ -66,18 +66,6 @@ class ResearchGroupsController < ApplicationController
     render json: research_groups, fields: fields, include: [:photo], status: :ok
   end
 
-  # POST /research_groups/:id/join
-  def join_to_research_group
-    research_group = ResearchGroup.find(params[:id])
-    result = current_user.join_research_group(research_group)
-    if result.errors.any?
-      render json: result.errors.messages, status: :unprocessable_entity
-    else
-      ResearchGroupMailer.delay.welcome_research_group(current_user, research_group)
-      render json: {"message": "Ahora eres miembro del grupo de investigación."}, status: :ok
-    end
-  end
-
   def get_events
     research_group = ResearchGroup.find(params[:id])
     events_by_rg = research_group.get_events().items(params[:page])
@@ -126,7 +114,7 @@ class ResearchGroupsController < ApplicationController
     render json: {"message": "Miembros agregados satisfactoriamente."}, status: :ok
   end
 
-  # PUT /research_groups/:id/user_as_retired/:user_id
+  # PUT /research_groups/:id/user_as_retired?user_id=1
   def change_user_as_retired
     user_id = params[:user_id]
     research_group = ResearchGroup.find(params[:id])
@@ -134,7 +122,7 @@ class ResearchGroupsController < ApplicationController
     render json: {"message": "Miembro actualizado correctamente."}, status: :ok
   end
 
-  # PUT /research_groups/:id/user_as_active/:user_id
+  # PUT /research_groups/:id/user_as_active?user_id=1
   def change_user_as_active
     user_id = params[:user_id]
     research_group = ResearchGroup.find(params[:id])
@@ -142,7 +130,7 @@ class ResearchGroupsController < ApplicationController
     render json: {"message": "Miembro actualizado correctamente."}, status: :ok
   end
 
-  # PUT /research_groups/:id/user_as_lider/:user_id
+  # PUT /research_groups/:id/user_as_lider?user_id=1
   def change_user_as_lider
     user_id = params[:user_id]
     research_group = ResearchGroup.find(params[:id])
@@ -150,7 +138,8 @@ class ResearchGroupsController < ApplicationController
     render json: {"message": "Miembro actualizado correctamente."}, status: :ok
   end
 
-  # PUT /research_groups/:id/user_as_member/:user_id
+  # PUT /research_groups/:id/accept_request?user_id=1
+  # PUT /research_groups/:id/user_as_member?user_id=1
   def change_user_as_member
     user_id = params[:user_id]
     research_group = ResearchGroup.find(params[:id])
@@ -158,7 +147,7 @@ class ResearchGroupsController < ApplicationController
     render json: {"message": "Miembro actualizado correctamente."}, status: :ok
   end
 
-  
+  # DELETE /research_groups/:id/reject_request?user_id=1
   def remove_user
     user = User.find(params[:user_id])
     research_group = ResearchGroup.find(params[:id])

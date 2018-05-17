@@ -158,6 +158,18 @@ class UsersController < ApplicationController
            }, fields: [:start_date], include: []
   end
 
+  # POST /users/current/request_join_research_group/:id
+  def request_join_research_group
+    research_group = ResearchGroup.find(params[:id])
+    result = current_user.request_join_research_group(research_group)
+    if result.errors.any?
+      render json: result.errors.messages, status: :unprocessable_entity
+    else
+      # ResearchGroupMailer.delay.welcome_research_group(current_user, research_group)
+      render json: {"message": "Solicitud de vinculación enviada correctamente."}, status: :ok
+    end
+  end
+
   def research_groups_current
     research_groups = current_user.research_groups
     render json: research_groups, fields: %i[id name], include: [], status: :ok
