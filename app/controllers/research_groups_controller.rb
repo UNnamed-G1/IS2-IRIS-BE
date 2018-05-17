@@ -59,14 +59,6 @@ class ResearchGroupsController < ApplicationController
     end
   end
 
-  # GET /research_groups/:id/photo
-  def get_photo
-    set_research_group
-    response = {}
-    response["photo"] = @research_group.photo.picture.url
-    render json: response, status: :ok
-  end
-
   # GET /research_groups/news
   def news
     research_groups = ResearchGroup.news
@@ -139,6 +131,14 @@ class ResearchGroupsController < ApplicationController
     user_id = params[:user_id]
     research_group = ResearchGroup.find(params[:id])
     research_group.change_member_as_retired(user_id)
+    render json: {"message": "Miembro actualizado correctamente."}, status: :ok
+  end
+
+  # PUT /research_groups/:id/active_member/:user_id
+  def change_member_as_active
+    user_id = params[:user_id]
+    research_group = ResearchGroup.find(params[:id])
+    research_group.change_member_as_active(user_id)
     render json: {"message": "Miembro actualizado correctamente."}, status: :ok
   end
 

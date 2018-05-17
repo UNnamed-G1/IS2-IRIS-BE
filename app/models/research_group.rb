@@ -128,4 +128,11 @@ class ResearchGroup < ApplicationRecord
         return user_research_groups.where("user_id": user_id).first
     end
 
+    def change_member_as_active(user_id)
+        state = UserResearchGroup.states[:Activo]
+        sql = "UPDATE user_research_groups SET state = #{state} WHERE user_id = #{user_id} AND research_group_id = #{id}"
+        ActiveRecord::Base.connection.execute(sql)
+        return user_research_groups.where("user_id": user_id).first
+    end
+
 end
