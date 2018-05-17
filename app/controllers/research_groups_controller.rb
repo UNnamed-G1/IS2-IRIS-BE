@@ -169,6 +169,17 @@ class ResearchGroupsController < ApplicationController
     end
   end
 
+  def accept_new_group
+    research_group = ResearchGroup.find(params.require(:id))
+
+    if research_group.update(state: :Activo)
+      render json: {"message": "El grupo ha sido aceptado satisfactoriamente."}, status: :ok
+    else
+      render json: {"error": "Error no especificado."}, status: 400
+    end
+    
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
