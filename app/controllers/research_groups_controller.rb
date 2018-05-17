@@ -150,6 +150,14 @@ class ResearchGroupsController < ApplicationController
     render json: {"message": "Miembro actualizado correctamente."}, status: :ok
   end
 
+  # PUT /research_groups/:id/user_as_member/:user_id
+  def change_user_as_member
+    user_id = params[:user_id]
+    research_group = ResearchGroup.find(params[:id])
+    research_group.change_type_user(user_id, :Miembro)
+    render json: {"message": "Miembro actualizado correctamente."}, status: :ok
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

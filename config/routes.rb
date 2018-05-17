@@ -61,6 +61,7 @@ Rails.application.routes.draw do
       put "user_as_retired/:user_id", to: "research_groups#change_user_as_retired"
       put "user_as_active/:user_id", to: "research_groups#change_user_as_active"
       put "user_as_lider/:user_id", to: "research_groups#change_user_as_lider"
+      put "user_as_member/:user_id", to: "research_groups#change_user_as_member"
     end
   end
     
