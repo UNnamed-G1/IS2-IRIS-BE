@@ -169,15 +169,26 @@ class ResearchGroupsController < ApplicationController
     end
   end
 
+  # PUT /research_groups/:id/accept_new_group
   def accept_new_group
     research_group = ResearchGroup.find(params.require(:id))
 
-    if research_group.update(state: :Activo)
+    if research_group.update(state: :Aceptado)
       render json: {"message": "El grupo ha sido aceptado satisfactoriamente."}, status: :ok
     else
       render json: {"error": "Error no especificado."}, status: 400
     end
-    
+  end
+
+  # PUT /research_groups/:id/reject_new_group
+  def reject_new_group
+    research_group = ResearchGroup.find(params.require(:id))
+
+    if research_group.update(state: :Rechazado)
+      render json: {"message": "El grupo ha sido rechazado."}, status: :ok
+    else
+      render json: {"error": "Error no especificado."}, status: 400
+    end
   end
 
   private

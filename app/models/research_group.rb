@@ -30,7 +30,7 @@ class ResearchGroup < ApplicationRecord
     has_one :photo, as: :imageable
 
     enum classification: [:A, :B, :C, :D]
-    enum state: [:Solicitud, :Activo]
+    enum state: [:Solicitado, :Aceptado, :Rechazado]
 
     validates :name, presence: { message: Proc.new { ApplicationRecord.presence_msg("nombre") } }
     validates :description, presence: { message: Proc.new { ApplicationRecord.presence_msg("descripción") } }
