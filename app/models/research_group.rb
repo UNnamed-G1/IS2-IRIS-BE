@@ -121,4 +121,11 @@ class ResearchGroup < ApplicationRecord
         )
     end
 
+    def change_member_as_retired(user_id)
+        state = UserResearchGroup.states[:Retirado]
+        sql = "UPDATE user_research_groups SET state = #{state} WHERE user_id = #{user_id} AND research_group_id = #{id}"
+        ActiveRecord::Base.connection.execute(sql)
+        return user_research_groups.where("user_id": user_id).first
+    end
+
 end

@@ -124,6 +124,7 @@ class ResearchGroupsController < ApplicationController
            }, fields: %i[id name], include: []
   end
 
+  # POST /research_groups/:id/add_memebers
   def add_members
     users = params[:users]
     research_group = ResearchGroup.find(params[:id])
@@ -131,6 +132,14 @@ class ResearchGroupsController < ApplicationController
       research_group.add_member(User.find(user[:id]), user[:member_type])
     end
     render json: {"message": "Miembros agregados satisfactoriamente."}, status: :ok
+  end
+
+  # PUT /research_groups/:id/member_as_retired/:user_id
+  def change_member_as_retired
+    user_id = params[:user_id]
+    research_group = ResearchGroup.find(params[:id])
+    research_group.change_member_as_retired(user_id)
+    render json: {"message": "Miembro actualizado correctamente."}, status: :ok
   end
 
   private

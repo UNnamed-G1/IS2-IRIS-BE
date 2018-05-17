@@ -57,6 +57,8 @@ Rails.application.routes.draw do
     member do 
       post "join", to: "research_groups#join_to_research_group"
       post "add_members", to: "research_groups#add_members"
+      
+      put "member_as_retired/:user_id", to: "research_groups#change_member_as_retired"
       #post "leave", to: "research_groups#leave_from_research_group"
     end
   end
