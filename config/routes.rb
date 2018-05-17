@@ -62,6 +62,7 @@ Rails.application.routes.draw do
     member do 
       post "add_users", to: "research_groups#add_users"
       put "accept_new_group"
+      delete "reject_new_group", to: "research_groups#destroy"
 
       put "user_as_retired", to: "research_groups#change_user_as_retired"
       put "user_as_active", to: "research_groups#change_user_as_active"
