@@ -158,7 +158,7 @@ class UsersController < ApplicationController
            }, fields: [:start_date], include: []
   end
 
-  # POST /users/current/request_join_research_group/:id
+  # POST /users/current/request_join_research_group?id=1
   def request_join_research_group
     research_group = ResearchGroup.find(params[:id])
     result = current_user.request_join_research_group(research_group)
@@ -168,6 +168,13 @@ class UsersController < ApplicationController
       # ResearchGroupMailer.delay.welcome_research_group(current_user, research_group)
       render json: {"message": "Solicitud de vinculación enviada correctamente."}, status: :ok
     end
+  end
+
+  # DELETE /users/current/cancel_request?id=1
+  def cancel_request_join_research_group
+    research_group = ResearchGroup.find(params[:id])
+    result = current_user.cancel_request_join_research_group(research_group)
+    render json: {"message": "Solicitud de vinculación cancelada."}, status: :ok
   end
 
   def research_groups_current

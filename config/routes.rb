@@ -39,6 +39,8 @@ Rails.application.routes.draw do
         get "research_groups", to: "users#research_groups_current"
         
         post "request_join_research_group", to: "users#request_join_research_group"
+        
+        delete "cancel_request", to: "users#cancel_request_join_research_group"
       end
 
       get "current"      

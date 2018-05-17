@@ -226,6 +226,10 @@ class User < ApplicationRecord
            )
   end
 
+  def cancel_request_join_research_group(research_group)
+    return research_groups.delete(research_group)
+  end
+
   def add_schedule(schedule_id)
     return schedule_users.create(schedule: Schedule.find(schedule_id))
   end
