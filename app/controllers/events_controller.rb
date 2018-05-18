@@ -130,6 +130,16 @@ class EventsController < ApplicationController
            }, fields: %i[id name topic event_type], include: []
   end
 
+  def self.remider_event
+    puts "Cron"
+    events = Event.next_day_events
+    events.each do |event|
+      events.users.each do |user|
+        puts "Reminder for #{user.username}"
+      end
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

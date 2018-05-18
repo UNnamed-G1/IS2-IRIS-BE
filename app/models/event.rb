@@ -172,4 +172,8 @@ class Event < ApplicationRecord
     return users.where('event_users.type_user_event': "Autor")
   end
 
+  def self.next_day_events    
+    return Event.all.where("date >= ? AND date < ?", Date.tomorrow, 2.days.from_now)
+  end
+
 end
