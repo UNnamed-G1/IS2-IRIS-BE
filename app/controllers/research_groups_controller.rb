@@ -191,6 +191,7 @@ class ResearchGroupsController < ApplicationController
     end
   end
 
+  # GET /research_groups/:id/available_users
   def available_users_to_add
     research_group = ResearchGroup.find(params.require(:id))
     users = research_group.available_users
