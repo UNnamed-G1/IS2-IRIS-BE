@@ -119,7 +119,7 @@ class ResearchGroupsController < ApplicationController
     user_id = params[:user_id]
     research_group = ResearchGroup.find(params[:id])
     research_group.change_state_user(user_id, :Retirado)
-    render json: {"message": "Miembro actualizado correctamente."}, status: :ok
+    render json: research_group, status: :ok
   end
 
   # PUT /research_groups/:id/user_as_active?user_id=1
@@ -127,7 +127,7 @@ class ResearchGroupsController < ApplicationController
     user_id = params[:user_id]
     research_group = ResearchGroup.find(params[:id])
     research_group.change_state_user(user_id, :Activo)
-    render json: {"message": "Miembro actualizado correctamente."}, status: :ok
+    render json: research_group, status: :ok
   end
 
   # PUT /research_groups/:id/user_as_lider?user_id=1
@@ -135,7 +135,7 @@ class ResearchGroupsController < ApplicationController
     user_id = params[:user_id]
     research_group = ResearchGroup.find(params[:id])
     research_group.change_type_user(user_id, :Líder)
-    render json: {"message": "Miembro actualizado correctamente."}, status: :ok
+    render json: research_group, status: :ok
   end
 
   # PUT /research_groups/:id/accept_request?user_id=1
@@ -144,7 +144,7 @@ class ResearchGroupsController < ApplicationController
     user_id = params[:user_id]
     research_group = ResearchGroup.find(params[:id])
     research_group.change_type_user(user_id, :Miembro)
-    render json: {"message": "Miembro actualizado correctamente."}, status: :ok
+    render json: research_group, status: :ok
   end
 
   # DELETE /research_groups/:id/reject_request?user_id=1
@@ -152,7 +152,7 @@ class ResearchGroupsController < ApplicationController
     user = User.find(params[:user_id])
     research_group = ResearchGroup.find(params[:id])
     research_group.remove_user(user)
-    render json: {"message": "Acción realizada correctamente."}, status: :ok
+    render json: research_group, status: :ok
   end 
 
   # POST /research_groups/request_create
