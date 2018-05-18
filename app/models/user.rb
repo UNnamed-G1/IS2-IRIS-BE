@@ -177,7 +177,7 @@ class User < ApplicationRecord
   end
 
   def is_author_event?(event_id)
-    result = event_users.where("user_id = ? AND event_id = ?", id, event_id).autor.first
+    result = event_users.where("user_id = ? AND event_id = ?", id, event_id).Autor.first
 
     if result
       return true

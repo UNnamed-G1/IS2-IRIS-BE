@@ -18,7 +18,7 @@ class ResearchGroupsController < ApplicationController
     if @research_group.errors.any?
       render json: @research_group.errors.messages
     else
-      render json: @research_group, include: [:members, "members.user", :publications, :events, :research_subjects, :photo] # This is an example of associations that are brought
+      render json: @research_group, include: [:members, "members.user", :publications, :events, "events.photos", :research_subjects, :photo] # This is an example of associations that are brought
     end
   end
 
@@ -122,6 +122,15 @@ class ResearchGroupsController < ApplicationController
              research_groups: rgs_by_department,
              total_pages: rgs_by_department.total_pages,
            }, fields: %i[id name], include: []
+  end
+
+  def add_members
+    users = params[:users]
+    research_group = ResearchGroup.find(params[:id])
+    users.each do |user|
+      research_group.add_member(User.find(user[:id]), user[:member_type])
+    end
+    render json: {"message": "Miembros agregados satisfactoriamente."}, status: :ok
   end
 
   private

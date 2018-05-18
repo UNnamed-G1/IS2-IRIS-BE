@@ -63,7 +63,7 @@ class ReportsController < ActionController::Base
     data['user'] = User.find_by_id(user_id)
     data["publications"] = data["user"].get_publications
     data["stats_publication"] = Array.new
-    publication_types = Publication.publication_type.values 
+    publication_types = Publication.publication_types.values 
     for publication_type in publication_types do
       data["stats_publication"][publication_type] = Publication.num_publications_by_user_and_type(user_id, publication_type)
     end

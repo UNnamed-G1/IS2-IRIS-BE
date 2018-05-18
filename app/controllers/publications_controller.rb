@@ -18,7 +18,7 @@ class PublicationsController < ApplicationController
     if @publication.errors.any?
       render json: @publication.errors.messages
     else
-      render json: @publication, include: []
+      render json: @publication, include: [:users, "users.photo"]
     end
   end
 

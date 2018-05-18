@@ -93,7 +93,7 @@ class StatisticsController < ApplicationController
         data["user"] = user.name
         data["publications"] = user.get_publications
         data["stats_publication"] = Hash.new
-        publication_types = Publication.type_pubs.keys
+        publication_types = Publication.publication_types.keys
         if data["publications"].empty?
             render json: {
                 message: "El usuario no registra publicaciones a la fecha",
@@ -113,7 +113,7 @@ class StatisticsController < ApplicationController
         data["research_group_name"] = research_group.name
         data["publications"] = research_group.get_publications
         data["stats_publication"] = Hash.new
-        publication_types = Publication.type_pubs.keys
+        publication_types = Publication.publication_types.keys
         if data["publications"].empty?
             render json: {
                 message: "El grupo no registra publicaciones a la fecha",
