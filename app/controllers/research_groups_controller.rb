@@ -110,6 +110,7 @@ class ResearchGroupsController < ApplicationController
     research_group = ResearchGroup.find(params[:id])
     users.each do |user|
       research_group.add_member(User.find(user[:id]), user[:member_type])
+      ResearchGroupMailer.delay.welcome_research_group(current_user, research_group)
     end
     render json: {"message": "Miembros agregados satisfactoriamente."}, status: :ok
   end

@@ -165,7 +165,6 @@ class UsersController < ApplicationController
     if result.errors.any?
       render json: result.errors.messages, status: :unprocessable_entity
     else
-      # ResearchGroupMailer.delay.welcome_research_group(current_user, research_group)
       render json: {"message": "Solicitud de vinculación enviada correctamente."}, status: :ok
     end
   end
