@@ -191,6 +191,12 @@ class ResearchGroupsController < ApplicationController
     end
   end
 
+  def available_users_to_add
+    research_group = ResearchGroup.find(params.require(:id))
+    users = research_group.available_users
+    render json: users, fields: [:id, :full_name, :username, :user_type], include: [], each_serializer: UserSerializer, status: :ok
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

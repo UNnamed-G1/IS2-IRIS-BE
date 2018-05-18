@@ -113,12 +113,19 @@ class ResearchGroup < ApplicationRecord
     end
 
     def add_member(user, member_type)
-        return user_research_groups.create(
-            user: user,
-            joining_date: Date.today.to_s,
-            state: :Activo,
-            member_type: member_type,            
-        )
+        if research_groups.where(id: research_group.id).any?
+            state = UserResearchGroup.states[:Activo]
+            type = UserResearchGroup.member_types[member_type]
+            sql = "UPDATE user_research_groups SET member_type = #{type}, state = #{state} WHERE user_id = #{id} AND user_id = #{user.id}"
+            ActiveRecord::Base.connection.execute(sql)
+        else
+            return user_research_groups.create(
+                joining_date: Date.today.to_s,
+                state: :Activo,
+                member_type: member_type,  
+                user: user,
+            )
+        end        
     end
 
     def change_state_user(user_id, state)
@@ -137,6 +144,14 @@ class ResearchGroup < ApplicationRecord
 
     def remove_user(user)
         return members.delete(user)
+    end    
+
+    def available_users
+        types = [UserResearchGroup.member_types[:Miembro], UserResearchGroup.member_types[:Líder]]
+        state = UserResearchGroup.states[:Activo]
+        users = user_research_groups.where.not("member_type IN (?) AND state = ?", types, state).pluck(:user_id)
+        # return users
+        return User.all_except(users)
     end
 
 end

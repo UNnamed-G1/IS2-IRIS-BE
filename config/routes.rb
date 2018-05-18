@@ -6,17 +6,7 @@ Rails.application.routes.draw do
   post "google_login", to: "google_user_token#create"
   
   # MAILERS 
-  post "comments", to: "incoming_mails#receive_comments"
-
-  # ROUTES NOT USED YET
-  get "events_by_state" => "events#search_events_by_state"
-  get "events_by_freq" => "events#search_events_by_freq"
-  get "events_by_type" => "events#search_events_by_type"  
-  get "publications_by_type" => "publications#search_publications_by_type"
-  
-  get "rgs_by_class" => "research_groups#search_rgs_by_class"
-  get "rgs_by_department" => "research_groups#search_rgs_by_department"
-  get "rs_by_name" => "research_subjects#search_rs_by_name"
+  post "comments", to: "incoming_mails#receive_comments"  
   
   # SEARCH
   scope :search do
@@ -60,6 +50,8 @@ Rails.application.routes.draw do
     end
     
     member do 
+      get "available_users", to: "research_groups#available_users_to_add"
+
       post "add_users", to: "research_groups#add_users"
       
       put "accept_new_group"
@@ -149,6 +141,16 @@ Rails.application.routes.draw do
   resources :relationships
   resources :photos
   resources :research_subjects
+
+  # # ROUTES NOT USED YET
+  # get "events_by_state" => "events#search_events_by_state"
+  # get "events_by_freq" => "events#search_events_by_freq"
+  # get "events_by_type" => "events#search_events_by_type"  
+  # get "publications_by_type" => "publications#search_publications_by_type"
   
+  # get "rgs_by_class" => "research_groups#search_rgs_by_class"
+  # get "rgs_by_department" => "research_groups#search_rgs_by_department"
+  # get "rs_by_name" => "research_subjects#search_rs_by_name"
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

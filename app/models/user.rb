@@ -259,6 +259,8 @@ class User < ApplicationRecord
                         .limit(3)
   end
 
+  scope :all_except, -> (user_id) { where.not(id: user_id) }
+
   private
 
   def put_username
