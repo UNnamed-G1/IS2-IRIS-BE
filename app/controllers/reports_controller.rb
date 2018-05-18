@@ -63,7 +63,7 @@ class ReportsController < ActionController::Base
     data['user'] = User.find_by_id(user_id)
     data["publications"] = data["user"].get_publications
     data["stats_publication"] = Array.new
-    publication_types = Publication.type_pubs.values 
+    publication_types = Publication.publication_type.values 
     for publication_type in publication_types do
       data["stats_publication"][publication_type] = Publication.num_publications_by_user_and_type(user_id, publication_type)
     end
@@ -87,7 +87,7 @@ class ReportsController < ActionController::Base
     data["research_group_name"] = research_group.name
     data["publications"] = research_group.get_publications
     data["stats_publication"] = Array.new
-    publication_types = Publication.type_pubs.values 
+    publication_types = Publication.publication_types.values 
     for publication_type in publication_types do
       data["stats_publication"][publication_type] = Publication.num_publications_by_rg_and_type(rg_id, publication_type)
     end
@@ -96,7 +96,7 @@ class ReportsController < ActionController::Base
     pdf_name = "Report_Research_Group #{rg_id}"
     
     if params[:send] == "true"
-      data["report_description"] = "publicaciones realizada por un
+      data["report_description"] = "publicaciones realizadas por un
                                     Grupo de Investigación"
       send_report(pdf_name, template, data)
     else

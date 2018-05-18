@@ -87,7 +87,7 @@ Rails.application.routes.draw do
     get "users/:id/publications_history", to: "reports#history_by_user"
     get "research_group/:id/publications_history", to: "reports#history_by_rg"    
   end
-
+  
   scope :statistics do
     scope :users do
       scope ':id' do
