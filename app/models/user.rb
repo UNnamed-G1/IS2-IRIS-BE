@@ -260,6 +260,7 @@ class User < ApplicationRecord
   end
 
   scope :all_except, -> (user_id) { where.not(id: user_id) }
+  scope :except_admin, -> () { where.not(user_type: user_types[:Administrador]) }
 
   private
 

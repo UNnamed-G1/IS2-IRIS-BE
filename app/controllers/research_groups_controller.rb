@@ -192,10 +192,15 @@ class ResearchGroupsController < ApplicationController
     end
   end
 
-  # GET /research_groups/:id/available_users
+  # GET /research_groups/:id/available_users?keywords=words
   def available_users_to_add
     research_group = ResearchGroup.find(params.require(:id))
-    users = research_group.available_users
+    keywords = params[:keywords]
+    if keywords.empty?
+      users = User.order("RANDOM()").limit(10)
+    else
+      users = research_group.search_available_users(keywords.upcase)
+    end
     render json: users, fields: [:id, :full_name, :username, :user_type], include: [], each_serializer: UserSerializer, status: :ok
   end
 

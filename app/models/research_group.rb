@@ -113,7 +113,7 @@ class ResearchGroup < ApplicationRecord
     end
 
     def add_member(user, member_type)
-        if research_groups.where(id: research_group.id).any?
+        if user_research_groups.where(user_id: user.id).any?
             state = UserResearchGroup.states[:Activo]
             type = UserResearchGroup.member_types[member_type]
             sql = "UPDATE user_research_groups SET member_type = #{type}, state = #{state} WHERE user_id = #{id} AND user_id = #{user.id}"
@@ -146,12 +146,12 @@ class ResearchGroup < ApplicationRecord
         return members.delete(user)
     end    
 
-    def available_users
+    def search_available_users(keywords)
         types = [UserResearchGroup.member_types[:Miembro], UserResearchGroup.member_types[:Líder]]
         state = UserResearchGroup.states[:Activo]
         users = user_research_groups.where.not("member_type IN (?) AND state = ?", types, state).pluck(:user_id)
-        # return users
-        return User.all_except(users)
+        
+        return User.search_by_name(keywords).all_except(users).except_admin().limit(10)
     end
 
 end
