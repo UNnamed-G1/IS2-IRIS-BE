@@ -75,6 +75,7 @@ end
         abstract: Faker::Lorem.paragraph,
         brief_description: Faker::Hacker.say_something_smart,
         publication_type: Faker::Number.between(0,5),
+        distinction_type: Faker::Number.between(0,2),
         document: seed_document("publication_document")
     )
 end
