@@ -76,7 +76,7 @@ class Publication < ApplicationRecord
     def self.num_publications_by_type(type)
         where(publication_type: type).count if type.present?
     end
-    
+
     def self.num_publications_in_a_period_by_rg(rg_id, period)#3 or 6 months
         joins(:research_groups).where('research_groups.id = ? AND publications.created_at > ?', rg_id , period.months.ago).count
     end
@@ -89,4 +89,18 @@ class Publication < ApplicationRecord
         joins(:research_groups).where('research_groups.id' => rg_id, publication_type: type).count
     end
 
+    def self.num_meritorious_publications_by_user(usr_id)
+        joins(:users).where('users.id = ? AND publications.distinction_type = ?', usr_id, 1)
+                     .count if usr_id.present?
+    end
+
+    def self.num_laureate_publications_by_user(usr_id)
+        joins(:users).where('users.id = ? AND publications.distinction_type = ?', usr_id, 2)
+                     .count if usr_id.present?
+    end
+    
+    def self.num_undistincted_publications_by_user(usr_id)
+        joins(:users).where('users.id = ? AND publications.distinction_type = ?', usr_id, 0)
+                     .count if usr_id.present?
+    end       
 end
