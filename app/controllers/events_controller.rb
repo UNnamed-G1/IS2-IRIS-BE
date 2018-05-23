@@ -89,21 +89,21 @@ class EventsController < ApplicationController
   def get_invited_users
     event = Event.get_by_id(params[:id])
     users = event.get_invited_users
-    render json: users, include: [], status: :ok
+    render json: users, include: [:photo], status: :ok
   end
 
   # GET /events/:id/attendees
   def get_attendees
     event = Event.get_by_id(params[:id])
     users = event.get_attendees
-    render json: users, include: [], status: :ok
+    render json: users, include: [:photo], status: :ok
   end
 
   # GET /events/:id/authors
   def get_authors
     event = Event.get_by_id(params[:id])
     users = event.get_authors
-    render json: users, include: [], status: :ok
+    render json: users, include: [:photo], status: :ok
   end
 
   def search_events_by_state
