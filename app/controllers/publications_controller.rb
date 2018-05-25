@@ -67,6 +67,8 @@ class PublicationsController < ApplicationController
             }, fields: %i[id name publication_type], include: []
   end
 
+  
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -76,7 +78,7 @@ class PublicationsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def publication_params
-    params.require(:publication).permit(:name, :date, :abstract, :document, :brief_description, :publication_type)
+    params.require(:publication).permit(:name, :date, :abstract, :document, :brief_description, :publication_type, :isRequest)
   end
 
   def is_lider_research_group_publication?
