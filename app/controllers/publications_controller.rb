@@ -66,8 +66,17 @@ class PublicationsController < ApplicationController
             total_pages: publications_by_type.total_pages
             }, fields: %i[id name publication_type], include: []
   end
-
   
+  # PUT /publications/:id/accept_publication
+  def accept_publication
+    set_publication
+    @publication.isRequest = false
+    if @publication.save 
+      render json:  @publication, include: [], status: :ok
+    else
+      render json: {"error": "There was an error trying to update the user"} 
+    end
+  end
 
   private
 

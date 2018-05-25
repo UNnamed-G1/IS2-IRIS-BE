@@ -9,6 +9,7 @@
 #  document          :text
 #  brief_description :string(500)      not null
 #  publication_type  :integer          not null
+#  isRequest         :boolean          default(TRUE), not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
