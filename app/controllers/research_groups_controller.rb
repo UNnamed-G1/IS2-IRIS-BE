@@ -18,7 +18,7 @@ class ResearchGroupsController < ApplicationController
     if @research_group.errors.any?
       render json: @research_group.errors.messages
     else
-      render json: @research_group, include: [:members, "members.user", :publications, :events, "events.photos", :research_subjects, :photo] # This is an example of associations that are brought
+      render json: @research_group, include: [:members, "members.user", "members.user.photo", :publications, :events, "events.photos", :research_subjects, :photo] # This is an example of associations that are brought
     end
   end
 
