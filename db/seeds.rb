@@ -87,7 +87,7 @@ end
         topic: Faker::Lorem.sentence,
         description: Faker::Hacker.say_something_smart,
         event_type: Faker::Number.between(0,1),
-        date: Faker::Time.backward(20),
+        date: Faker::Time.forward(20),
         frequence: Faker::Number.between(0,1),
         duration: "01:18:19",
         state: Faker::Number.between(0,1),
@@ -135,13 +135,16 @@ end
         user_id: Faker::Number.between(1,100)
         
     )
-
+    prg = PublicationResearchGroup(
+        publication_id: p.publication_id,
+        research_group_id: Faker::Number.between(1,50)
+    )    
     u = UserResearchGroup.create(
         joining_date: Faker::Time.backward(10),
-        state: Faker::Number.between(0,1),
+        state: 0,
         member_type: Faker::Number.between(0,1),
         user_id: p.user_id,
-        research_group_id: Faker::Number.between(1,50)
+        research_group_id: prg.research_group_id
     )
 end
 
@@ -149,7 +152,7 @@ end
     EventUser.create(
         type_user_event: Faker::Number::between(0, 2),
         user_id: Faker::Number.between(1,100),
-        event_id: Faker::Number.between(1,50)
+        event_id: Faker::Number.between(3,50)
     )
 end
 
@@ -240,7 +243,7 @@ UserResearchGroup.create(
 
 3.times do
 
-    estudiante = UserResearchGroup.create(
+    UserResearchGroup.create(
         joining_date: Faker::Time.backward(8),
         state: 0,
         member_type: "Miembro",
@@ -248,7 +251,7 @@ UserResearchGroup.create(
         research_group_id: Faker::Number.between(1,50)
     )
 
-    profesor = UserResearchGroup.create(
+    UserResearchGroup.create(
         joining_date: Faker::Time.backward(10),
         state: 0,
         member_type: "Miembro",
