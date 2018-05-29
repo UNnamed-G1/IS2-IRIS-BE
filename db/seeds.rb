@@ -68,7 +68,7 @@ end
 end
 
 
-100.times do
+1000.times do
     Publication.create(
         name: Faker::Hacker.abbreviation,
         date: Faker::Time.backward(180),
@@ -133,17 +133,14 @@ end
         user_id: Faker::Number.between(1,100)
         
     )
-    pr = PublicationResearchGroup.create(
-        publication_id: p.publication_id,
-        research_group_id: Faker::Number.between(1,50)
-    )
+
     u = UserResearchGroup.create(
         joining_date: Faker::Time.backward(10),
         end_joining_date: Faker::Time.forward(2),
         state: Faker::Number.between(0,1),
         member_type: Faker::Number.between(0,1),
         user_id: p.user_id,
-        research_group_id: pr.research_group_id
+        research_group_id: Faker::Number.between(1,50)
     )
 end
 
@@ -179,6 +176,8 @@ User.all.each do |usr|
     usr.publications = Publication.all.sample(rand(0..3))
 end
 
+##Default users
+
 User.create(
     name: "admin",
     lastname: "admin",
@@ -187,3 +186,97 @@ User.create(
     password_confirmation: 'admin',
     user_type: 'Administrador'
 )
+leader = User.create(
+    name: "Juan",
+    lastname: "Cruz",
+    username: "leader",
+    email: "leader"+"@unal.edu.co",
+    professional_profile: Faker::Lorem.paragraph,
+    user_type: "Profesor",
+    phone: Faker::PhoneNumber.cell_phone,
+    office: Faker::Commerce.department(1),
+    cvlac_link: Faker::Internet.url,
+    career_id: 3,
+    password: 'password',
+    password_confirmation: 'password'
+)
+leader.update(photo: Photo.create(
+    picture: seed_image("user_image"),
+    imageable: leader
+))
+student = User.create(
+    name: "Mario",
+    lastname: "Rojas",
+    username: "student",
+    email: "student"+"@unal.edu.co",
+    professional_profile: Faker::Lorem.paragraph,
+    user_type: "Estudiante",
+    phone: Faker::PhoneNumber.cell_phone,
+    office: Faker::Commerce.department(1),
+    cvlac_link: Faker::Internet.url,
+    career_id: 6,
+    password: 'password',
+    password_confirmation: 'password'
+)
+student.update(photo: Photo.create(
+    picture: seed_image("user_image"),
+    imageable: student
+))
+
+
+#Professor will be leader of one group and member but not leader 
+#of three other groups by default, as well as the student will belong to 3 research groups
+UserResearchGroup.create(
+    joining_date: Faker::Time.backward(10),
+    end_joining_date: Faker::Time.forward(2),
+    state: Faker::Number.between(0,1),
+    member_type: "Líder",
+    user_id: leader.id,
+    research_group_id: 1
+)
+#Linking default users to research groups
+3.times do
+
+    estudiante = UserResearchGroup.create(
+        joining_date: Faker::Time.backward(10),
+        end_joining_date: Faker::Time.forward(2),
+        state: Faker::Number.between(0,1),
+        member_type: "Miembro",
+        user_id: student.id,
+        research_group_id: Faker::Number.between(1,50)
+    )
+
+    profesor = UserResearchGroup.create(
+        joining_date: Faker::Time.backward(10),
+        end_joining_date: Faker::Time.forward(2),
+        state: Faker::Number.between(0,1),
+        member_type: "Miembro",
+        user_id: leader.id,
+        research_group_id: Faker::Number.between(2,50)
+    )  
+
+end
+#Linking publications to default users
+20.times do
+    PublicationUser.create(
+        publication_id: Faker::Number.between(1,100),
+        user_id: student.id  
+    )
+    PublicationUser.create(
+        publication_id: Faker::Number.between(1,100),
+        user_id: leader.id
+    )
+
+end
+#Linking research subjects to default users
+4.times do
+    ResearchSubjectUser.create(
+        user_id: student.id,
+        research_subject_id: Faker::Number.between(1,50)
+    )
+    ResearchSubjectUser.create(
+        user_id: leader.id,
+        research_subject_id: Faker::Number.between(1,50)
+    )
+end
+

@@ -138,9 +138,10 @@ class User < ApplicationRecord
   }
   
   scope :with_publications_count_in_rg, -> (rg_id){
-    joins(:publications, :research_groups)
-      .select(:id, "CONCAT(users.name,' ', users.lastname) AS fullname", "COUNT(publications.id) AS pubs_count")
-      .where("research_groups.id" => rg_id)
+    josins(:publications, :research_groups)
+      .select(:id, "CONCAT(users.name,' ', users.lastname) AS fullname", 
+              "COUNT(publications.id) AS pubs_count")
+      .where("research_groups.id = ?", rg_id)
       .order("pubs_count DESC")
       .group("users.id")
   }   

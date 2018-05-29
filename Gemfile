@@ -21,6 +21,7 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'bootstrap-sass', '~> 3.3.7'
 gem "d3-rails"
+gem 'table_print'
 
 gem 'httparty'
 # Use Capistrano for deployment
