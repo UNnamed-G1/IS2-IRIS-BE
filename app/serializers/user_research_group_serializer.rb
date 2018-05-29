@@ -23,7 +23,7 @@
 
 class UserResearchGroupSerializer < ActiveModel::Serializer
   type :member
-  attributes :id, :joining_date, :end_joining_date, :state
+  attributes :id, :joining_date, :state
 
   attribute :member_type
 
