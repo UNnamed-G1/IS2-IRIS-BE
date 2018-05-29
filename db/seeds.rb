@@ -230,7 +230,7 @@ student.update(photo: Photo.create(
 
 UserResearchGroup.create(
     joining_date: Faker::Time.backward(10),
-    state: 1,
+    state: 0,
     member_type: "Líder",
     user_id: leader.id,
     research_group_id: 1
@@ -242,7 +242,7 @@ UserResearchGroup.create(
 
     estudiante = UserResearchGroup.create(
         joining_date: Faker::Time.backward(8),
-        state: 1,
+        state: 0,
         member_type: "Miembro",
         user_id: student.id,
         research_group_id: Faker::Number.between(1,50)
@@ -250,7 +250,7 @@ UserResearchGroup.create(
 
     profesor = UserResearchGroup.create(
         joining_date: Faker::Time.backward(10),
-        state: 1,
+        state: 0,
         member_type: "Miembro",
         user_id: leader.id,
         research_group_id: Faker::Number.between(2,50)
