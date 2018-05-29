@@ -79,7 +79,7 @@ class PublicationsController < ApplicationController
   end
 
   # PUT /publications/:id/reject_publication
-  def accept_publication
+  def reject_publication
     set_publication
     @publication.state = states[:Rechazado]
     if @publication.save 
