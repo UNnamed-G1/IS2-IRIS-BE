@@ -74,10 +74,21 @@ class PublicationsController < ApplicationController
     if @publication.save 
       render json:  @publication, include: [], status: :ok
     else
-      render json: {"error": "There was an error trying to update the user"} 
+      render json: {"error": "There was an error trying to update the publication."} 
     end
   end
 
+  # PUT /publications/:id/reject_publication
+  def accept_publication
+    set_publication
+    @publication.state = states[:Rechazado]
+    if @publication.save 
+      render json:  @publication, include: [], status: :ok
+    else
+      render json: {"error": "There was an error trying to update the publication."} 
+    end
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.

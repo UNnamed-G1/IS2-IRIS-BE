@@ -140,6 +140,7 @@ Rails.application.routes.draw do
   resources :publications do
     member do
       put "accept_publication"
+      put "reject_publication"
     end
   end
   
