@@ -131,11 +131,11 @@ end
 
 100.times do
     p = PublicationUser.create(
-        publication_id: Faker::Number.between(1,100),
+        publication_id: Faker::Number.between(1,1000),
         user_id: Faker::Number.between(1,100)
         
     )
-    prg = PublicationResearchGroup(
+    prg = PublicationResearchGroup.create(
         publication_id: p.publication_id,
         research_group_id: Faker::Number.between(1,50)
     )    
@@ -265,11 +265,11 @@ end
 
 20.times do
     PublicationUser.create(
-        publication_id: Faker::Number.between(1,100),
+        publication_id: Faker::Number.between(1,1000),
         user_id: student.id  
     )
     PublicationUser.create(
-        publication_id: Faker::Number.between(1,100),
+        publication_id: Faker::Number.between(1,1000),
         user_id: leader.id
     )
 end

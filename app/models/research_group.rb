@@ -89,12 +89,6 @@ class ResearchGroup < ApplicationRecord
               .group("research_groups.id")
           }     
     
-    scope :with_user_publications_count, -> (rg_id){
-            joins(:members, :publications)
-            .select(:id, "CONCAT(members.name,' ', members.lastname) AS fullname", 
-                    "COUNT(publications.id) AS pubs_count")
-    }
-    
     def search_recent_publications
         publications.select(:id, :name, :type_pub, :date)
                                         .where('publications.created_at > ?', 1.week.ago)
