@@ -36,7 +36,7 @@ class Event < ApplicationRecord
   belongs_to :research_group
 
   enum event_type: [:Privado, :Público]
-  enum frequence: ["Único", :Repetitivo]
+  enum frequence: [:Unico, :Repetitivo]
   enum state: [:Activo, :Inactivo]
 
   validates :name, presence: {message: Proc.new { ApplicationRecord.presence_msg("nombre") }}

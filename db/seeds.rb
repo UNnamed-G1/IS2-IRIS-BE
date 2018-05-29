@@ -67,7 +67,6 @@ end
     ))
 end
 
-
 1000.times do
     Publication.create(
         name: Faker::Hacker.abbreviation,
@@ -147,8 +146,8 @@ end
 30.times do
     EventUser.create(
         type_user_event: Faker::Number::between(0, 2),
-        user_id: Faker::Number.between(1,10),
-        event_id: Faker::Number.between(1,10)
+        user_id: Faker::Number.between(1,100),
+        event_id: Faker::Number.between(1,50)
     )
 end
 
@@ -226,21 +225,24 @@ student.update(photo: Photo.create(
 
 #Professor will be leader of one group and member but not leader 
 #of three other groups by default, as well as the student will belong to 3 research groups
+
 UserResearchGroup.create(
     joining_date: Faker::Time.backward(10),
     end_joining_date: Faker::Time.forward(2),
-    state: Faker::Number.between(0,1),
+    state: 1,
     member_type: "Líder",
     user_id: leader.id,
     research_group_id: 1
 )
+
 #Linking default users to research groups
+
 3.times do
 
     estudiante = UserResearchGroup.create(
-        joining_date: Faker::Time.backward(10),
+        joining_date: Faker::Time.backward(8),
         end_joining_date: Faker::Time.forward(2),
-        state: Faker::Number.between(0,1),
+        state: 1,
         member_type: "Miembro",
         user_id: student.id,
         research_group_id: Faker::Number.between(1,50)
@@ -249,14 +251,16 @@ UserResearchGroup.create(
     profesor = UserResearchGroup.create(
         joining_date: Faker::Time.backward(10),
         end_joining_date: Faker::Time.forward(2),
-        state: Faker::Number.between(0,1),
+        state: 1,
         member_type: "Miembro",
         user_id: leader.id,
         research_group_id: Faker::Number.between(2,50)
     )  
 
 end
+
 #Linking publications to default users
+
 20.times do
     PublicationUser.create(
         publication_id: Faker::Number.between(1,100),
@@ -266,9 +270,10 @@ end
         publication_id: Faker::Number.between(1,100),
         user_id: leader.id
     )
-
 end
+
 #Linking research subjects to default users
+
 4.times do
     ResearchSubjectUser.create(
         user_id: student.id,
@@ -280,3 +285,31 @@ end
     )
 end
 
+##Linking events to default users
+
+5.times do 
+    EventUser.create(
+        type_user_event: Faker::Number.between(0,1),
+        user_id: student.id,
+        event_id: Faker::Number.between(1,50)
+    )
+    EventUser.create(
+        type_user_event: Faker::Number.between(0,1),
+        user_id: leader.id,
+        event_id: Faker::Number.between(3,50)
+    )              
+end
+
+##Default leader will be author of first two events
+
+EventUser.create(
+    type_user_event: 2,
+    user_id: leader.id,
+    event_id: 1
+)
+
+EventUser.create(
+    type_user_event: 2,
+    user_id: leader.id,
+    event_id: 2
+)
