@@ -90,7 +90,9 @@ end
         date: Faker::Time.backward(20),
         frequence: Faker::Number.between(0,1),
         duration: "01:18:19",
-        state: Faker::Number.between(0,1)
+        state: Faker::Number.between(0,1),
+        latitude:  Float(4.63858),
+        longitude: Float(-74.0841)
     )
     5.times do
       e.photos.create(
@@ -228,20 +230,18 @@ student.update(photo: Photo.create(
 
 UserResearchGroup.create(
     joining_date: Faker::Time.backward(10),
-    end_joining_date: Faker::Time.forward(2),
     state: 1,
     member_type: "Líder",
     user_id: leader.id,
     research_group_id: 1
 )
 
-#Linking default users to research groups
+#Linking default users to research groups as members
 
 3.times do
 
     estudiante = UserResearchGroup.create(
         joining_date: Faker::Time.backward(8),
-        end_joining_date: Faker::Time.forward(2),
         state: 1,
         member_type: "Miembro",
         user_id: student.id,
@@ -250,7 +250,6 @@ UserResearchGroup.create(
 
     profesor = UserResearchGroup.create(
         joining_date: Faker::Time.backward(10),
-        end_joining_date: Faker::Time.forward(2),
         state: 1,
         member_type: "Miembro",
         user_id: leader.id,
