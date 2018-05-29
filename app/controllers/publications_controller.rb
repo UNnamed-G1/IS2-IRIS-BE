@@ -70,7 +70,7 @@ class PublicationsController < ApplicationController
   # PUT /publications/:id/accept_publication
   def accept_publication
     set_publication
-    @publication.isRequest = false
+    @publication.state = states[:Aceptado]
     if @publication.save 
       render json:  @publication, include: [], status: :ok
     else
@@ -87,7 +87,7 @@ class PublicationsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def publication_params
-    params.require(:publication).permit(:name, :date, :abstract, :document, :brief_description, :publication_type, :isRequest)
+    params.require(:publication).permit(:name, :date, :abstract, :document, :brief_description, :publication_type, :state)
   end
 
   def is_lider_research_group_publication?

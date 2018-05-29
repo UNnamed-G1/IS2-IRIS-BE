@@ -9,7 +9,7 @@
 #  document          :text
 #  brief_description :string(500)      not null
 #  publication_type  :integer          not null
-#  isRequest         :boolean          default(TRUE), not null
+#  state             :integer          default("Solicitado"), not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
@@ -18,7 +18,7 @@ class PublicationSerializer < ActiveModel::Serializer
   type :publication
 
   attributes :id, :name, :date, :abstract, :document
-  attributes :brief_description, :isRequest
+  attributes :brief_description, :state
 
   attribute :publication_type
 
