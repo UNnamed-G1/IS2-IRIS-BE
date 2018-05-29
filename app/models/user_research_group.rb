@@ -3,7 +3,6 @@
 # Table name: user_research_groups
 #
 #  joining_date      :date             not null
-#  end_joining_date  :date
 #  state             :integer          default("Retirado"), not null
 #  member_type       :integer          default("Miembro"), not null
 #  user_id           :bigint(8)
@@ -27,7 +26,7 @@ class UserResearchGroup < ApplicationRecord
   belongs_to :research_group, class_name: "ResearchGroup"
   
   enum state: [:Retirado, :Activo]
-  enum member_type: [:Miembro, :Líder]
+  enum member_type: [:Miembro, :Líder, :Solicitante]
   
   validates :joining_date, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha de vinculación") } }
   validates :member_type, presence: { message: Proc.new { ApplicationRecord.presence_msg("tipo de miembro del grupo") } }

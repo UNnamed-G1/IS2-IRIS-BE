@@ -219,13 +219,24 @@ class User < ApplicationRecord
     end
   end
 
-  def join_research_group(research_group)
-    return user_research_groups.create(
-             joining_date: Time.new,
-             state: 1,
-             member_type: 0,
-             research_group: research_group,
-           )
+  def request_join_research_group(research_group)
+    if research_groups.where(id: research_group.id).any?
+      state = UserResearchGroup.states[:Activo]
+      type = UserResearchGroup.member_types[:Solicitante]
+      sql = "UPDATE user_research_groups SET member_type = #{type}, state = #{state} WHERE user_id = #{id} AND research_group_id = #{research_group.id}"
+      ActiveRecord::Base.connection.execute(sql)
+    else
+      return user_research_groups.create(
+              joining_date: Time.new,
+              state: :Activo,
+              member_type: :Solicitante,
+              research_group: research_group,
+            )
+    end
+  end
+
+  def cancel_request_join_research_group(research_group)
+    return research_groups.delete(research_group)
   end
 
   def add_schedule(schedule_id)
@@ -249,6 +260,9 @@ class User < ApplicationRecord
                         .where('publications.created_at > ?', 1.week.ago)
                         .limit(3)
   end
+
+  scope :all_except, -> (user_id) { where.not(id: user_id) }
+  scope :except_admin, -> () { where.not(user_type: user_types[:Administrador]) }
 
   private
 

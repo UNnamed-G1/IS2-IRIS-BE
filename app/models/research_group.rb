@@ -7,10 +7,11 @@
 #  description         :text             not null
 #  strategic_focus     :text             not null
 #  research_priorities :text             not null
-#  foundation_date     :date             not null
-#  classification      :integer          not null
-#  date_classification :date             not null
+#  foundation_date     :date
+#  classification      :integer
+#  date_classification :date
 #  url                 :string
+#  state               :integer          not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #
@@ -29,20 +30,19 @@ class ResearchGroup < ApplicationRecord
     has_one :photo, as: :imageable
 
     enum classification: [:A, :B, :C, :D]
+    enum state: [:Solicitado, :Aceptado, :Rechazado]
 
     validates :name, presence: { message: Proc.new { ApplicationRecord.presence_msg("nombre") } }
     validates :description, presence: { message: Proc.new { ApplicationRecord.presence_msg("descripción") } }
     validates :strategic_focus, presence: { message: Proc.new { ApplicationRecord.presence_msg("enfoque estratégico") } }
     validates :research_priorities, presence: { message: Proc.new { ApplicationRecord.presence_msg("prioridades de investigación") } }
-    validates :foundation_date, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha de creación") } }
-    validates :classification, presence: { message: Proc.new { ApplicationRecord.presence_msg("clasificación") } }
-    validates :date_classification, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha de clasificación") } }
 
     validates :name, length: {maximum: 100, too_long: "Se permiten máximo %{count} caracteres para el campo nombre."}
     validates :description, length: { maximum: 1000, too_long: "Se permiten maximo %{count} caracteres para el campo descripción." }
     validates :strategic_focus, length: { maximum: 1000, too_long: "Se permiten maximo %{count} caracteres para el campo enfoque estratégico." }
     validates :research_priorities, length: { maximum: 1000, too_long: "Se permiten maximo %{count} caracteres para el campo prioridades de investigación." }
     validates :classification, inclusion: { in: classifications, message: "El tipo de clasificación no es válido."}
+    validates :state, inclusion: { in: states, message: "El estado seleccionado no es válido."}
 
     def self.items(p)
       paginate(page: p, per_page: 12)
@@ -119,11 +119,44 @@ class ResearchGroup < ApplicationRecord
     end
 
     def add_member(user, member_type)
-        return user_research_groups.create(
-            user: user,
-            joining_date: Date.today.to_s,
-            state: :Activo,
-            member_type: member_type,            
-        )
+        if user_research_groups.where(user_id: user.id).any?
+            state = UserResearchGroup.states[:Activo]
+            type = UserResearchGroup.member_types[member_type]
+            sql = "UPDATE user_research_groups SET member_type = #{type}, state = #{state} WHERE user_id = #{id} AND user_id = #{user.id}"
+            ActiveRecord::Base.connection.execute(sql)
+        else
+            return user_research_groups.create(
+                joining_date: Date.today.to_s,
+                state: :Activo,
+                member_type: member_type,  
+                user: user,
+            )
+        end        
+    end
+
+    def change_state_user(user_id, state)
+        state = UserResearchGroup.states[state]
+        sql = "UPDATE user_research_groups SET state = #{state} WHERE user_id = #{user_id} AND research_group_id = #{id}"
+        ActiveRecord::Base.connection.execute(sql)
+        return user_research_groups.where("user_id": user_id).first
+    end
+
+    def change_type_user(user_id, member_type)
+        type = UserResearchGroup.member_types[member_type]
+        sql = "UPDATE user_research_groups SET member_type = #{type} WHERE user_id = #{user_id} AND research_group_id = #{id}"
+        ActiveRecord::Base.connection.execute(sql)
+        return user_research_groups.where("user_id": user_id).first
+    end
+
+    def remove_user(user)
+        return members.delete(user)
+    end    
+
+    def search_available_users(keywords)
+        types = [UserResearchGroup.member_types[:Miembro], UserResearchGroup.member_types[:Líder]]
+        state = UserResearchGroup.states[:Activo]
+        users = user_research_groups.where.not("member_type IN (?) AND state = ?", types, state).pluck(:user_id)
+        
+        return User.search_by_name(keywords).all_except(users).except_admin().limit(10)
     end
 end

@@ -6,7 +6,7 @@ class StatisticsController < ApplicationController
         if num_publications_by_user == 0
             render json:{
                 message: "El usuario no registra publicaciones hasta el momento"
-            }, status: :error
+            }, status: :ok
         else
             render json:{
                 num_publications_by_users: num_publications_by_user
@@ -20,7 +20,7 @@ class StatisticsController < ApplicationController
         if num_publications_by_rg == 0
             render json:{
                 message: "El grupo no registra publicaciones hasta el momento"
-            }, status: :error
+            }, status: :ok
         else    
             render json:{
                 num_publications_by_rg: num_publications_by_rg
@@ -34,7 +34,7 @@ class StatisticsController < ApplicationController
         if num_publications_by_user == 0
             render json:{
                 message: "El usuario solicitado no registra publicaciones"
-            }, status: :error
+            }, status: :ok
         else
             render json:{
                 num_publications_of_users_in_a_period: Publication.num_publications_by_user_in_a_period(user_id)
@@ -48,7 +48,7 @@ class StatisticsController < ApplicationController
         if num_publications_by_rg == 0
             render json:{
                 message: "El grupo solicitado no registra publicaciones"
-            }, status: :error
+            }, status: :ok
         else
             render json:{
                 num_publications_of_users_in_a_period: Publication.num_publications_by_rg_in_a_period(rg_id)
@@ -63,7 +63,7 @@ class StatisticsController < ApplicationController
         if recent_publications_by_user.empty?
             render json:{
                 message: "No hay publicaciones recientes"
-            }, status: :error
+            }, status: :ok
         else    
             render json:{
                 recent_publications_by_user: recent_publications_by_user
@@ -78,7 +78,7 @@ class StatisticsController < ApplicationController
         if recent_publications_by_rg.empty?
             render json:{
                 message: "No hay publicaciones recientes"
-            }, status: :error
+            }, status: :ok
         else    
             render json:{
                 recent_publications_by_rg: recent_publications_by_rg
@@ -97,7 +97,7 @@ class StatisticsController < ApplicationController
         if data["publications"].empty?
             render json: {
                 message: "El usuario no registra publicaciones a la fecha",
-            }, status: :error
+            }, status: :ok
         else
             (publication_types).each { |type| data["stats_publication"][type.capitalize] = Publication .num_publications_by_user_and_type(user_id, type)}                
             render json: {
@@ -117,7 +117,7 @@ class StatisticsController < ApplicationController
         if data["publications"].empty?
             render json: {
                 message: "El grupo no registra publicaciones a la fecha",
-            }, status: :error
+            }, status: :ok
         else
             (publication_types).each { |type| data["stats_publication"][type.capitalize] = Publication .num_publications_by_rg_and_type(rg_id, type)}                
 
@@ -158,7 +158,7 @@ class StatisticsController < ApplicationController
         if data["num_publications_in_a_period_by_rg"] == 0
             render json: {
                 average_publications_in_a_period_by_rg: "No se registran publicaciones en el periodo seleccionado",
-            }, status: :error
+            }, status: :ok
         else
             data["stats_publication"] = data["num_publications_in_a_period_by_rg"] / time
             render json: {
@@ -186,7 +186,7 @@ class StatisticsController < ApplicationController
         if data["num_publications_in_a_period_by_user"] == 0
             render json: {
                 average_publications_in_a_period_by_user: "No se registran publicaciones en el periodo seleccionado",
-            }, status: :error
+            }, status: :ok
         else
             data["stats_publication"] = data["num_publications_in_a_period_by_user"] / time
             render json: {

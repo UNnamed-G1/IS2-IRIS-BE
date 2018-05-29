@@ -7,10 +7,11 @@
 #  description         :text             not null
 #  strategic_focus     :text             not null
 #  research_priorities :text             not null
-#  foundation_date     :date             not null
-#  classification      :integer          not null
-#  date_classification :date             not null
+#  foundation_date     :date
+#  classification      :integer
+#  date_classification :date
 #  url                 :string
+#  state               :integer          not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #

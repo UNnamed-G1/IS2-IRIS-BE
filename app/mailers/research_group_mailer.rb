@@ -11,7 +11,6 @@ class ResearchGroupMailer < ApplicationMailer
 
         full_name = @user.name + " " + @user.lastname
         email_with_name = %("#{full_name}" <#{@user.email}>)
-        puts "ASDADs"
         mail(to: email_with_name, subject: "Ahora eres miembro de #{@research_group.name} !")
     end
 

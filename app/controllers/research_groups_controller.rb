@@ -18,7 +18,7 @@ class ResearchGroupsController < ApplicationController
     if @research_group.errors.any?
       render json: @research_group.errors.messages
     else
-      render json: @research_group, include: [:members, "members.user", :publications, :events, "events.photos", :research_subjects, :photo] # This is an example of associations that are brought
+      render json: @research_group, include: [:members, "members.user", "members.user.photo", :publications, :events, "events.photos", :research_subjects, :photo] # This is an example of associations that are brought
     end
   end
 
@@ -59,31 +59,11 @@ class ResearchGroupsController < ApplicationController
     end
   end
 
-  # GET /research_groups/:id/photo
-  def get_photo
-    set_research_group
-    response = {}
-    response["photo"] = @research_group.photo.picture.url
-    render json: response, status: :ok
-  end
-
   # GET /research_groups/news
   def news
     research_groups = ResearchGroup.news
     fields = %i[name description updated_at]
     render json: research_groups, fields: fields, include: [:photo], status: :ok
-  end
-
-  # POST /research_groups/:id/join
-  def join_to_research_group
-    research_group = ResearchGroup.find(params[:id])
-    result = current_user.join_research_group(research_group)
-    if result.errors.any?
-      render json: result.errors.messages, status: :unprocessable_entity
-    else
-      ResearchGroupMailer.delay.welcome_research_group(current_user, research_group)
-      render json: {"message": "Ahora eres miembro del grupo de investigación."}, status: :ok
-    end
   end
 
   def get_events
@@ -124,13 +104,104 @@ class ResearchGroupsController < ApplicationController
            }, fields: %i[id name], include: []
   end
 
-  def add_members
+  # POST /research_groups/:id/add_users
+  def add_users
     users = params[:users]
     research_group = ResearchGroup.find(params[:id])
     users.each do |user|
       research_group.add_member(User.find(user[:id]), user[:member_type])
+      ResearchGroupMailer.delay.welcome_research_group(current_user, research_group)
     end
     render json: {"message": "Miembros agregados satisfactoriamente."}, status: :ok
+  end
+
+  # PUT /research_groups/:id/user_as_retired?user_id=1
+  def change_user_as_retired
+    user_id = params[:user_id]
+    research_group = ResearchGroup.find(params[:id])
+    research_group.change_state_user(user_id, :Retirado)
+    render json: research_group, status: :ok
+  end
+
+  # PUT /research_groups/:id/user_as_active?user_id=1
+  def change_user_as_active
+    user_id = params[:user_id]
+    research_group = ResearchGroup.find(params[:id])
+    research_group.change_state_user(user_id, :Activo)
+    render json: research_group, status: :ok
+  end
+
+  # PUT /research_groups/:id/user_as_lider?user_id=1
+  def change_user_as_lider
+    user_id = params[:user_id]
+    research_group = ResearchGroup.find(params[:id])
+    research_group.change_type_user(user_id, :Líder)
+    render json: research_group, status: :ok
+  end
+
+  # PUT /research_groups/:id/accept_request?user_id=1
+  # PUT /research_groups/:id/user_as_member?user_id=1
+  def change_user_as_member
+    user_id = params[:user_id]
+    research_group = ResearchGroup.find(params[:id])
+    research_group.change_type_user(user_id, :Miembro)
+    render json: research_group, status: :ok
+  end
+
+  # DELETE /research_groups/:id/reject_request?user_id=1
+  def remove_user
+    user = User.find(params[:user_id])
+    research_group = ResearchGroup.find(params[:id])
+    research_group.remove_user(user)
+    render json: research_group, status: :ok
+  end 
+
+  # POST /research_groups/request_create
+  def request_create
+    @research_group = ResearchGroup.new(research_group_params)
+
+    if @research_group.save
+      picture = params[:picture]
+      @research_group.update(photo: Photo.create_photo(picture, @research_group)) if picture
+      @research_group.add_member(User.find(current_user.id), :Líder)
+      render json: @research_group, status: :created, location: @research_group, include: [:photo]
+    else
+      render json: @research_group.errors, status: :unprocessable_entity
+    end
+  end
+
+  # PUT /research_groups/:id/accept_new_group
+  def accept_new_group
+    research_group = ResearchGroup.find(params.require(:id))
+
+    if research_group.update(state: :Aceptado)
+      render json: {"message": "El grupo ha sido aceptado satisfactoriamente."}, status: :ok
+    else
+      render json: {"error": "Error no especificado."}, status: 400
+    end
+  end
+
+  # PUT /research_groups/:id/reject_new_group
+  def reject_new_group
+    research_group = ResearchGroup.find(params.require(:id))
+
+    if research_group.update(state: :Rechazado)
+      render json: {"message": "El grupo ha sido rechazado."}, status: :ok
+    else
+      render json: {"error": "Error no especificado."}, status: 400
+    end
+  end
+
+  # GET /research_groups/:id/available_users?keywords=words
+  def available_users_to_add
+    research_group = ResearchGroup.find(params.require(:id))
+    keywords = params[:keywords]
+    if keywords.empty?
+      users = User.order("RANDOM()").limit(10)
+    else
+      users = research_group.search_available_users(keywords.upcase)
+    end
+    render json: users, fields: [:id, :full_name, :username, :user_type], include: [], each_serializer: UserSerializer, status: :ok
   end
 
   private
@@ -142,7 +213,7 @@ class ResearchGroupsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def research_group_params
-    params.require(:research_group).permit(:name, :description, :strategic_focus, :research_priorities, :foundation_date, :classification, :date_classification, :url)
+    params.require(:research_group).permit(:name, :description, :strategic_focus, :research_priorities, :foundation_date, :classification, :date_classification, :url, :state)
   end
 
   def authorize_update

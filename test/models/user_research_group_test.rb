@@ -3,7 +3,6 @@
 # Table name: user_research_groups
 #
 #  joining_date      :date             not null
-#  end_joining_date  :date
 #  state             :integer          default("Retirado"), not null
 #  member_type       :integer          default("Miembro"), not null
 #  user_id           :bigint(8)

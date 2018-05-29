@@ -6,17 +6,7 @@ Rails.application.routes.draw do
   post "google_login", to: "google_user_token#create"
   
   # MAILERS 
-  post "comments", to: "incoming_mails#receive_comments"
-
-  # ROUTES NOT USED YET
-  get "events_by_state" => "events#search_events_by_state"
-  get "events_by_freq" => "events#search_events_by_freq"
-  get "events_by_type" => "events#search_events_by_type"  
-  get "publications_by_type" => "publications#search_publications_by_type"
-  
-  get "rgs_by_class" => "research_groups#search_rgs_by_class"
-  get "rgs_by_department" => "research_groups#search_rgs_by_department"
-  get "rs_by_name" => "research_subjects#search_rs_by_name"
+  post "comments", to: "incoming_mails#receive_comments"  
   
   # SEARCH
   scope :search do
@@ -37,6 +27,10 @@ Rails.application.routes.draw do
         get "editable_events"
         get "schedule", to: "users#schedules"
         get "research_groups", to: "users#research_groups_current"
+        
+        post "request_join_research_group", to: "users#request_join_research_group"
+        
+        delete "cancel_request", to: "users#cancel_request_join_research_group"
       end
 
       get "current"      
@@ -52,12 +46,24 @@ Rails.application.routes.draw do
   resources :research_groups do
     collection do 
       get "news"
+      post "request_create"
     end
     
     member do 
-      post "join", to: "research_groups#join_to_research_group"
-      post "add_members", to: "research_groups#add_members"
-      #post "leave", to: "research_groups#leave_from_research_group"
+      get "available_users", to: "research_groups#available_users_to_add"
+
+      post "add_users", to: "research_groups#add_users"
+      
+      put "accept_new_group"
+      put "reject_new_group"
+
+      put "user_as_retired", to: "research_groups#change_user_as_retired"
+      put "user_as_active", to: "research_groups#change_user_as_active"
+      put "user_as_lider", to: "research_groups#change_user_as_lider"
+      put "user_as_member", to: "research_groups#change_user_as_member"
+      
+      put "accept_request", to: "research_groups#change_user_as_member"      
+      delete "reject_request", to: "research_groups#remove_user"
     end
   end
     
@@ -135,6 +141,16 @@ Rails.application.routes.draw do
   resources :relationships
   resources :photos
   resources :research_subjects
+
+  # # ROUTES NOT USED YET
+  # get "events_by_state" => "events#search_events_by_state"
+  # get "events_by_freq" => "events#search_events_by_freq"
+  # get "events_by_type" => "events#search_events_by_type"  
+  # get "publications_by_type" => "publications#search_publications_by_type"
   
+  # get "rgs_by_class" => "research_groups#search_rgs_by_class"
+  # get "rgs_by_department" => "research_groups#search_rgs_by_department"
+  # get "rs_by_name" => "research_subjects#search_rs_by_name"
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
