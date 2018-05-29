@@ -70,7 +70,7 @@ class PublicationsController < ApplicationController
   # PUT /publications/:id/accept_publication
   def accept_publication
     set_publication
-    @publication.state = states[:Aceptado]
+    @publication.state = :Aceptado
     if @publication.save 
       render json:  @publication, include: [], status: :ok
     else
@@ -81,7 +81,7 @@ class PublicationsController < ApplicationController
   # PUT /publications/:id/reject_publication
   def reject_publication
     set_publication
-    @publication.state = states[:Rechazado]
+    @publication.state = :Rechazado
     if @publication.save 
       render json:  @publication, include: [], status: :ok
     else
