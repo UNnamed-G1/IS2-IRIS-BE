@@ -72,7 +72,9 @@ class EventsController < ApplicationController
     users_ids = params[:users_ids]
     event = Event.get_by_id(params[:id])
     for user_id in users_ids
-      event.invite_user(User.find_by_id(user_id))
+      user = User.find_by_id(user_id)
+      event.invite_user(user)
+      EventMailer.delay.invitation_event_mail(user, event)
     end
     render json: {message: "Usuarios han sido invitados."}, status: :ok
   end
