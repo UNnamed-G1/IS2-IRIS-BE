@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     if @user.errors.any?
       render json: @user.errors.messages
     else
-      render json: @user, include: [:photo, :career, :research_groups, :events, :publications, :research_subjects]
+      render json: @user, include: [:photo, :career, :research_groups, "research_groups.photo", :events, :publications, :research_subjects]
     end
   end
 

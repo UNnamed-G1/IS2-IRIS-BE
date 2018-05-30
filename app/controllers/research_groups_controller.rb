@@ -220,7 +220,7 @@ class ResearchGroupsController < ApplicationController
     else
       users = research_group.search_available_users(keywords.upcase)
     end
-    render json: users, fields: [:id, :full_name, :username, :user_type], include: [], each_serializer: UserSerializer, status: :ok
+    render json: users, fields: [:id, :full_name, :username, :user_type], include: [:photo], each_serializer: UserSerializer, status: :ok
   end
 
   private
