@@ -77,6 +77,7 @@ Rails.application.routes.draw do
       get "invited_users", to: "events#get_invited_users"
       get "attendees", to: "events#get_attendees"
       get "authors", to: "events#get_authors"
+      get "available_users", to: "events#available_users"
       
       post "invite_users" # params: users_ids
       post "remove_invitation" # params: user_id

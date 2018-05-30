@@ -108,6 +108,18 @@ class EventsController < ApplicationController
     render json: users, include: [], status: :ok
   end
 
+  # GET /events/:id/available_users
+  def available_users
+    event = Event.find(params.require(:id))
+    keywords = params[:keywords]
+    if keywords.empty?
+      users = User.order("RANDOM()").limit(10)
+    else
+      users = event.search_available_users(keywords.upcase)
+    end
+    render json: users, fields: [:id, :full_name, :username, :user_type], include: [], each_serializer: UserSerializer, status: :ok
+  end
+
   def search_events_by_state
     events_by_state = Event.search_events_by_state(params[:status]).items(params[:page])
     render json: {

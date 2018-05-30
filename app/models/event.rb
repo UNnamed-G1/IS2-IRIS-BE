@@ -172,4 +172,9 @@ class Event < ApplicationRecord
     return users.where('event_users.type_user_event': "Autor")
   end
 
+  def search_available_users(keywords)
+    users = event_users.distinct().pluck(:user_id)
+    return User.search_by_name(keywords).all_except(users).except_admin().limit(10)
+  end
+
 end
