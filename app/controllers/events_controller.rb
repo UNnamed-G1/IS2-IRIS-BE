@@ -72,7 +72,9 @@ class EventsController < ApplicationController
     users_ids = params[:users_ids]
     event = Event.get_by_id(params[:id])
     for user_id in users_ids
-      event.invite_user(User.find_by_id(user_id))
+      user = User.find_by_id(user_id)
+      event.invite_user(user)
+      EventMailer.delay.invitation_event_mail(user, event)
     end
     render json: {message: "Usuarios han sido invitados."}, status: :ok
   end
@@ -89,7 +91,7 @@ class EventsController < ApplicationController
   def get_invited_users
     event = Event.get_by_id(params[:id])
     users = event.get_invited_users
-    render json: users, include: [], status: :ok
+    render json: users, include: [:photo], status: :ok
   end
 
   # GET /events/:id/attendees
@@ -104,6 +106,18 @@ class EventsController < ApplicationController
     event = Event.get_by_id(params[:id])
     users = event.get_authors
     render json: users, include: [], status: :ok
+  end
+
+  # GET /events/:id/available_users
+  def available_users
+    event = Event.find(params.require(:id))
+    keywords = params[:keywords]
+    if keywords.empty?
+      users = User.order("RANDOM()").limit(10)
+    else
+      users = event.search_available_users(keywords.upcase)
+    end
+    render json: users, fields: [:id, :full_name, :username, :user_type], include: [], each_serializer: UserSerializer, status: :ok
   end
 
   def search_events_by_state

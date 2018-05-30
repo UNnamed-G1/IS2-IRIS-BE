@@ -5,8 +5,10 @@ Rails.application.routes.draw do
   post "login", to: "user_token#create"
   post "google_login", to: "google_user_token#create"
   
-  # MAILERS 
-  post "comments", to: "incoming_mails#receive_comments"  
+  # MAILERS
+  scope :mailing do
+    post "comments", to: "incoming_mails#receive_comments"  
+  end
   
   # SEARCH
   scope :search do
@@ -46,6 +48,8 @@ Rails.application.routes.draw do
   resources :research_groups do
     collection do 
       get "news"
+      get "requested"
+      get "accepted"
       post "request_create"
     end
     
@@ -75,6 +79,7 @@ Rails.application.routes.draw do
       get "invited_users", to: "events#get_invited_users"
       get "attendees", to: "events#get_attendees"
       get "authors", to: "events#get_authors"
+      get "available_users", to: "events#available_users"
       
       post "invite_users" # params: users_ids
       post "remove_invitation" # params: user_id
