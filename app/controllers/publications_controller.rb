@@ -66,7 +66,29 @@ class PublicationsController < ApplicationController
             total_pages: publications_by_type.total_pages
             }, fields: %i[id name publication_type], include: []
   end
+  
+  # PUT /publications/:id/accept_publication
+  def accept_publication
+    set_publication
+    @publication.state = :Aceptado
+    if @publication.save 
+      render json:  @publication, include: [], status: :ok
+    else
+      render json: {"error": "There was an error trying to update the publication."} 
+    end
+  end
 
+  # PUT /publications/:id/reject_publication
+  def reject_publication
+    set_publication
+    @publication.state = :Rechazado
+    if @publication.save 
+      render json:  @publication, include: [], status: :ok
+    else
+      render json: {"error": "There was an error trying to update the publication."} 
+    end
+  end
+  
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -76,7 +98,7 @@ class PublicationsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def publication_params
-    params.require(:publication).permit(:name, :date, :abstract, :document, :brief_description, :publication_type)
+    params.require(:publication).permit(:name, :date, :abstract, :document, :brief_description, :publication_type, :state)
   end
 
   def is_lider_research_group_publication?

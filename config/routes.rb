@@ -142,7 +142,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :publications
+  resources :publications do
+    member do
+      put "accept_publication"
+      put "reject_publication"
+    end
+  end
+  
   resources :relationships
   resources :photos
   resources :research_subjects

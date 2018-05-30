@@ -9,7 +9,11 @@
 #  document          :text
 #  brief_description :string(500)      not null
 #  publication_type  :integer          not null
+<<<<<<< HEAD
 #  distinction_type  :integer          not null
+=======
+#  state             :integer          default("Solicitado"), not null
+>>>>>>> publications
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
@@ -24,6 +28,7 @@ class Publication < ApplicationRecord
 
     enum publication_type: [:Software, :Artículo, :Tesis, :Libro, :Monografía, :Patente]
     enum distinction_type: [:Ninguna, :Meritoria, :Laureada]
+    enum state: [:Solicitado, :Aceptado, :Rechazado]
 
     validates :name, presence: { message: Proc.new { ApplicationRecord.presence_msg("nombre") } }
     validates :date, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha") } }
