@@ -66,6 +66,24 @@ class ResearchGroupsController < ApplicationController
     render json: research_groups, fields: fields, include: [:photo], status: :ok
   end
 
+  # GET /research_groups/requested
+  def requested
+    research_groups = ResearchGroup.Solicitado.items(params[:page])
+    render json: {
+             research_groups: research_groups,
+             total_pages: research_groups.total_pages,
+           }, include: [:photo]
+  end
+
+  # GET /research_groups/accepted
+  def accepted
+    research_groups = ResearchGroup.Aceptado.items(params[:page])
+    render json: {
+             research_groups: research_groups,
+             total_pages: research_groups.total_pages,
+           }, include: [:photo]
+  end
+
   def get_events
     research_group = ResearchGroup.find(params[:id])
     events_by_rg = research_group.get_events().items(params[:page])
@@ -159,6 +177,7 @@ class ResearchGroupsController < ApplicationController
   # POST /research_groups/request_create
   def request_create
     @research_group = ResearchGroup.new(research_group_params)
+    @research_group.update(state: :Solicitado)
 
     if @research_group.save
       picture = params[:picture]

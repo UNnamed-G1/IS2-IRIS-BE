@@ -46,6 +46,8 @@ Rails.application.routes.draw do
   resources :research_groups do
     collection do 
       get "news"
+      get "requested"
+      get "accepted"
       post "request_create"
     end
     
