@@ -130,6 +130,7 @@ end
 end
 
 100.times do
+    
     p = PublicationUser.create(
         publication_id: Faker::Number.between(1,1000),
         user_id: Faker::Number.between(1,100)
@@ -141,7 +142,7 @@ end
     )    
     u = UserResearchGroup.create(
         joining_date: Faker::Time.backward(10),
-        state: 0,
+        state: Faker::Number.between(0,1),
         member_type: Faker::Number.between(0,1),
         user_id: p.user_id,
         research_group_id: prg.research_group_id
