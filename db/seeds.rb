@@ -101,12 +101,13 @@ end
     end
 end
 
+index = 0
 100.times do
     u = User.create(
         name: Faker::Name.first_name,
         lastname: Faker::Name.last_name,
-        username: Faker::Internet.user_name,
-        email: Faker::Internet.user_name+"@unal.edu.co",
+        username: "user#{index}",
+        email: "user#{index}@unal.edu.co",
         professional_profile: Faker::Lorem.paragraph,
         user_type: Faker::Number.between(0,1),
         phone: Faker::PhoneNumber.cell_phone,
@@ -120,6 +121,7 @@ end
         picture: seed_image("user_image"),
         imageable: u
     ))
+    index += 1
 end
 
 100.times do
@@ -135,7 +137,7 @@ end
         user_id: Faker::Number.between(1,100)
         
     )
-    prg = PublicationResearchGroup(
+    prg = PublicationResearchGroup.create(
         publication_id: p.publication_id,
         research_group_id: Faker::Number.between(1,50)
     )    
