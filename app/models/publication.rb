@@ -35,7 +35,7 @@ class Publication < ApplicationRecord
     validates :brief_description, length: { maximum: 500, too_long: "Se permiten maximo %{count} caracteres para el campo descripción breve." }
     validates :publication_type, inclusion: {in: publication_types, message: "El tipo de publicación seleccionado no es valida."}
     validates :distinction_type, presence: {message: Proc.new { ApplicationRecord.presence_msg("tipo de distinción") } }
-    validates :distinction_type, inclusion: {in: distinction_types, message: "El tipo de distinción seleccionado no es valida."}    
+    validates :distinction_type, inclusion: {in: distinction_types, message: "El tipo de distinción seleccionado no es valida."}
 
     def self.items(p)
       paginate(page: p, per_page: 12)
@@ -45,8 +45,8 @@ class Publication < ApplicationRecord
 
     def self.search_publications_by_name(keywords)
         select(:id, :name, :publication_type, :abstract).where("upper(name) LIKE ?","%#{keywords}%").order(name: :asc)
-    end 
-    
+    end
+
     def self.search_publications_by_type(type)
         where(publication_type: publication_types[type])
     end
@@ -60,7 +60,7 @@ class Publication < ApplicationRecord
     def self.num_publications_by_rg(rg_id)
         joins(:research_groups).where('research_groups.id' => rg_id).count if rg_id.present?
     end
-    
+
     def self.num_publications_by_user_in_a_period(usr_id)
         joins(:users).where('users.id' => usr_id)
                      .group_by_period(:month, :date, range: 6.months.ago..Time.now, time_zone: "Bogota").count
@@ -82,11 +82,11 @@ class Publication < ApplicationRecord
     def self.num_publications_in_a_period_by_rg(rg_id, period)#3 or 6 months
         joins(:research_groups).where('research_groups.id = ? AND publications.created_at > ?', rg_id , period.months.ago).count
     end
-    
+
     def self.num_publications_in_a_period_by_user(user_id, period)#3 or 6 months
         joins(:users).where('users.id = ? AND publications.created_at > ?', user_id , period.months.ago).count
-    end 
-    
+    end
+
     def self.num_publications_by_rg_and_type(rg_id, type)
         joins(:research_groups).where('research_groups.id' => rg_id, publication_type: type).count
     end
@@ -100,9 +100,9 @@ class Publication < ApplicationRecord
         joins(:users).where('users.id = ? AND publications.distinction_type = ?', usr_id, 2)
                      .count if usr_id.present?
     end
-    
+
     def self.num_undistincted_publications_by_user(usr_id)
         joins(:users).where('users.id = ? AND publications.distinction_type = ?', usr_id, 0)
                      .count if usr_id.present?
-    end       
+    end
 end
