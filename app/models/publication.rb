@@ -9,6 +9,11 @@
 #  document          :text
 #  brief_description :string(500)      not null
 #  publication_type  :integer          not null
+<<<<<<< HEAD
+#  distinction_type  :integer          not null
+=======
+#  state             :integer          default("Solicitado"), not null
+>>>>>>> publications
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #
@@ -22,6 +27,8 @@ class Publication < ApplicationRecord
     mount_uploader :document, DocumentUploader
 
     enum publication_type: [:Software, :Artículo, :Tesis, :Libro, :Monografía, :Patente]
+    enum distinction_type: [:Ninguna, :Meritoria, :Laureada]
+    enum state: [:Solicitado, :Aceptado, :Rechazado]
 
     validates :name, presence: { message: Proc.new { ApplicationRecord.presence_msg("nombre") } }
     validates :date, presence: { message: Proc.new { ApplicationRecord.presence_msg("fecha") } }
@@ -30,6 +37,8 @@ class Publication < ApplicationRecord
     validates :publication_type, presence: { message: Proc.new { ApplicationRecord.presence_msg("tipo de publicación") } }
     validates :brief_description, length: { maximum: 500, too_long: "Se permiten maximo %{count} caracteres para el campo descripción breve." }
     validates :publication_type, inclusion: {in: publication_types, message: "El tipo de publicación seleccionado no es valida."}
+    validates :distinction_type, presence: {message: Proc.new { ApplicationRecord.presence_msg("tipo de distinción") } }
+    validates :distinction_type, inclusion: {in: distinction_types, message: "El tipo de distinción seleccionado no es valida."}    
 
     def self.items(p)
       paginate(page: p, per_page: 12)
@@ -54,11 +63,7 @@ class Publication < ApplicationRecord
     def self.num_publications_by_rg(rg_id)
         joins(:research_groups).where('research_groups.id' => rg_id).count if rg_id.present?
     end
-
-    def self.num_publications_by_user(usr_id)
-        joins(:users).where('users.id' => usr_id).count if usr_id.present?
-    end
-
+    
     def self.num_publications_by_user_in_a_period(usr_id)
         joins(:users).where('users.id' => usr_id)
                      .group_by_period(:month, :date, range: 6.months.ago..Time.now, time_zone: "Bogota").count
@@ -76,7 +81,7 @@ class Publication < ApplicationRecord
     def self.num_publications_by_type(type)
         where(publication_type: type).count if type.present?
     end
-    
+
     def self.num_publications_in_a_period_by_rg(rg_id, period)#3 or 6 months
         joins(:research_groups).where('research_groups.id = ? AND publications.created_at > ?', rg_id , period.months.ago).count
     end
@@ -89,4 +94,18 @@ class Publication < ApplicationRecord
         joins(:research_groups).where('research_groups.id' => rg_id, publication_type: type).count
     end
 
+    def self.num_meritorious_publications_by_user(usr_id)
+        joins(:users).where('users.id = ? AND publications.distinction_type = ?', usr_id, 1)
+                     .count if usr_id.present?
+    end
+
+    def self.num_laureate_publications_by_user(usr_id)
+        joins(:users).where('users.id = ? AND publications.distinction_type = ?', usr_id, 2)
+                     .count if usr_id.present?
+    end
+    
+    def self.num_undistincted_publications_by_user(usr_id)
+        joins(:users).where('users.id = ? AND publications.distinction_type = ?', usr_id, 0)
+                     .count if usr_id.present?
+    end       
 end

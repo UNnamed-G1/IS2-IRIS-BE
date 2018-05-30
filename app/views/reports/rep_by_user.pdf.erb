@@ -43,3 +43,21 @@
     </tr>
   </tbody>
 </table>
+<table class="table table-bordered">
+  <tr>
+    <th>Softwares publicados</th>
+    <th>Articulos publicados</th>
+    <th>Tesis publicadas</th>
+    <th>Libros publicados</th>
+    <th>Monografías publicadas</th>
+    <th>Patentes publicadas</th>
+  </tr>
+
+  <tbody>
+    <tr>
+      <% for value in @data["stats_publication"] do %>
+      <td><%= value %></td>
+      <%end%>
+    </tr>
+  </tbody>
+</table>

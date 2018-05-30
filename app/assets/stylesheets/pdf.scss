@@ -2,18 +2,18 @@
 @import "bootstrap";
 
 tr{
-    border-bottom: solid;
-    border-width: 1px;
-    border-color: black;
-  }
-  td, th{
-    text-align: center;
-  }
-  th{
-    background-color: #555;
-    color: white;
-  }
-  table, tr, td, th, tbody, thead, tfoot{
-    page-break-inside: avoid !important;
-  }
+  border-width: 1px;
+  border-color: black;
+}
+td, th{
+  text-align: center;
+}
+th{
+  background-color: #555;
+  color: white;
+}
+table, tr, td, th, tbody, thead, tfoot{
+  border-bottom: solid;
+  page-break-inside: avoid !important;
+}
   

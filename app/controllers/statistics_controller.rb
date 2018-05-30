@@ -30,7 +30,7 @@ class StatisticsController < ApplicationController
   
     def num_publications_by_user_in_a_period
         user_id = params[:id]
-        num_publications_by_user = Publication.num_publications_by_user(user_id)
+        num_publications_by_user = Publication.num_publications_by_user_in_a_period(user_id)
         if num_publications_by_user == 0
             render json:{
                 message: "El usuario solicitado no registra publicaciones"

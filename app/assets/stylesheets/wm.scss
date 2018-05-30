@@ -1,0 +1,18 @@
+.watermarked {
+    position: relative;
+  }
+
+.watermarked:before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-image: asset-data-url("IRIS_logo.png");
+  background-size: 300px 300px;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  opacity: 0.3;
+}

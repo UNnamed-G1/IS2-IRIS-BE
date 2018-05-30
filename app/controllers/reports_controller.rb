@@ -11,7 +11,7 @@ class ReportsController < ActionController::Base
       format.html
       format.pdf do
         response.headers["Access-Control-Expose-Headers"] = "Accept-Ranges"
-        render pdf: pdf_name, template: template_path, layout: "pdf.html", footer: { right: '[page] of [topage]' }
+        render pdf: pdf_name, template: template_path, layout: "pdf.html", footer: { right: '[page] of [topage]' }, background: true
       end
     end
   end
@@ -96,7 +96,7 @@ class ReportsController < ActionController::Base
     pdf_name = "Report_Research_Group #{rg_id}"
     
     if params[:send] == "true"
-      data["report_description"] = "publicaciones realizada por un
+      data["report_description"] = "publicaciones realizadas por un
                                     Grupo de Investigación"
       send_report(pdf_name, template, data)
     else
