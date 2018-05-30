@@ -91,7 +91,7 @@ class EventsController < ApplicationController
   def get_invited_users
     event = Event.get_by_id(params[:id])
     users = event.get_invited_users
-    render json: users, include: [], status: :ok
+    render json: users, include: [:photo], status: :ok
   end
 
   # GET /events/:id/attendees
