@@ -5,8 +5,10 @@ Rails.application.routes.draw do
   post "login", to: "user_token#create"
   post "google_login", to: "google_user_token#create"
   
-  # MAILERS 
-  post "comments", to: "incoming_mails#receive_comments"  
+  # MAILERS
+  scope :mailing do
+    post "comments", to: "incoming_mails#receive_comments"  
+  end
   
   # SEARCH
   scope :search do
