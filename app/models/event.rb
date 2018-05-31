@@ -52,7 +52,7 @@ class Event < ApplicationRecord
   validates :state, inclusion: {in: states, message: "El estado seleccionado no es valido."}
 
   def self.items(p)
-    paginate(page: p, per_page: 12)
+    paginate(page: p, per_page: 12).includes(:photos)
   end
 
   def self.get_group_id(event_id)
@@ -124,7 +124,10 @@ class Event < ApplicationRecord
         }
 
   def self.news
-    select(:topic, :description, :date).order(:date).first(3)
+    select(:topic, :description, :date)
+          .order(:date)
+          .includes(:photos)
+          .first(3)
   end
 
   def self.get_research_group_id(event_id)

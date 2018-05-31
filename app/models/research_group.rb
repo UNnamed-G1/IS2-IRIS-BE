@@ -45,7 +45,7 @@ class ResearchGroup < ApplicationRecord
     validates :state, inclusion: { in: states, message: "El estado seleccionado no es válido."}
 
     def self.items(p)
-      paginate(page: p, per_page: 12)
+      paginate(page: p, per_page: 12).includes(:photo)
     end
 
     def get_events()
@@ -79,7 +79,10 @@ class ResearchGroup < ApplicationRecord
     end
 
     def self.news
-        select(:name, :description, :updated_at).order(:updated_at).last(3)
+        select(:name, :description, :updated_at)
+            .order(:updated_at)
+            .includes(:photo)
+            .last(5)
     end
 
     scope :with_publications_count, -> {
