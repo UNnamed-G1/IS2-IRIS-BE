@@ -9,6 +9,8 @@ class CreatePublications < ActiveRecord::Migration[5.1]
       t.integer :publication_type, null: false
       t.integer :distinction_type, null: false 
       
+      t.integer :state, null: false, default: 0
+
       t.timestamps
     end
   end
