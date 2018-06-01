@@ -9,7 +9,7 @@ class EventsController < ApplicationController
     render json: {
              events: events,
              total_pages: events.total_pages,
-           }, fields: %i[id name topic event_type], include: [:photos, :research_group]
+           }, fields: %i[id name topic event_type], include: [:photos]
   end
 
   # GET /events/1
