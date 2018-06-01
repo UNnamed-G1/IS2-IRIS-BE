@@ -97,16 +97,12 @@ end
         user_id: Faker::Number.between(1,50),
         research_group_id: rg.id
     )
-end
-
-100.times do
-
     ResearchSubjectResearchGroup.create(
         research_subject_id: Faker::Number.between(1,100),
-        research_group_id: Faker::Number.between(1,50)
+        research_group_id: rg.id
     )
-
 end
+
 
 1000.times do
     Publication.create(
