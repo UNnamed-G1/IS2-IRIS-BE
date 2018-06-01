@@ -64,7 +64,7 @@ class EventsController < ApplicationController
   def news
     events = Event.news
     fields = %i[topic description date]
-    render json: events, fields: fields, include: [:photo]
+    render json: events, fields: fields, include: [:photos]
   end
 
   # POST /events/:id/invite_users

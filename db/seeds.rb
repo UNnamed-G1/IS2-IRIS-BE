@@ -44,62 +44,10 @@ end
     )
 end
 
-50.times do
+100.times do
     ResearchSubject.create(
         name: Faker::Hacker.say_something_smart
     )
-end
-
-50.times do
-    rg = ResearchGroup.create(
-        name: Faker::Name.name,
-        description: Faker::Lorem.sentence,
-        strategic_focus: Faker::Hacker.say_something_smart,
-        research_priorities: Faker::Hacker.say_something_smart,
-        foundation_date: Faker::Time.backward,
-        classification: Faker::Number.between(0, 3),
-        date_classification: Faker::Time.backward(10),
-        url: Faker::Internet.url,
-        state: Faker::Number.between(0, 1)
-    )
-    rg.update(photo: Photo.create(
-        picture: seed_image("research_group_image"),
-        imageable: rg
-    ))
-end
-
-1000.times do
-    Publication.create(
-        name: Faker::Hacker.abbreviation,
-        date: Faker::Time.backward(180),
-        abstract: Faker::Lorem.paragraph,
-        brief_description: Faker::Hacker.say_something_smart,
-        publication_type: Faker::Number.between(0,5),
-        distinction_type: Faker::Number.between(0,2),
-        document: seed_document("publication_document"),
-        state: Faker::Number.between(0,2)
-    )
-end
-
-50.times do
-    e = Event.create(
-        research_group_id: Faker::Number.between(1, 50),
-        name: Faker::Name.name,
-        topic: Faker::Lorem.sentence,
-        description: Faker::Hacker.say_something_smart,
-        event_type: Faker::Number.between(0,1),
-        date: Faker::Time.forward(20),
-        frequence: Faker::Number.between(0,1),
-        duration: "01:18:19",
-        state: Faker::Number.between(0,1),
-        latitude:  Float(4.63858),
-        longitude: Float(-74.0841)
-    )
-    5.times do
-      e.photos.create(
-        picture: seed_image("event_image")
-      )
-    end
 end
 
 index = 0
@@ -125,6 +73,72 @@ index = 0
     index += 1
 end
 
+50.times do
+    rg = ResearchGroup.create(
+        name: Faker::Name.name,
+        description: Faker::Lorem.sentence,
+        strategic_focus: Faker::Hacker.say_something_smart,
+        research_priorities: Faker::Hacker.say_something_smart,
+        foundation_date: Faker::Time.backward,
+        classification: Faker::Number.between(0, 3),
+        date_classification: Faker::Time.backward(10),
+        url: Faker::Internet.url,
+        state: Faker::Number.between(0, 1)
+    )
+    rg.update(photo: Photo.create(
+        picture: seed_image("research_group_image"),
+        imageable: rg
+    ))
+
+    UserResearchGroup.create(
+        joining_date: Faker::Time.backward(10),
+        state: :Activo,
+        member_type: "Líder",
+        user_id: Faker::Number.between(1,50),
+        research_group_id: rg.id
+    )
+    ResearchSubjectResearchGroup.create(
+        research_subject_id: Faker::Number.between(1,100),
+        research_group_id: rg.id
+    )
+end
+
+
+1000.times do
+    Publication.create(
+        name: Faker::Hacker.abbreviation,
+        date: Faker::Time.backward(180),
+        abstract: Faker::Lorem.paragraph,
+        brief_description: Faker::Hacker.say_something_smart,
+        publication_type: Faker::Number.between(0,5),
+        distinction_type: Faker::Number.between(0,2),
+        document: seed_document("publication_document")
+    )
+end
+
+50.times do
+    e = Event.create(
+        research_group_id: Faker::Number.between(1, 50),
+        name: Faker::Name.name,
+        topic: Faker::Lorem.sentence,
+        description: Faker::Hacker.say_something_smart,
+        event_type: Faker::Number.between(0,1),
+        date: Faker::Time.forward(20),
+        frequence: Faker::Number.between(0,1),
+        duration: "01:18:19",
+        state: Faker::Number.between(0,1),
+        latitude:  Float(4.63858),
+        longitude: Float(-74.0841)
+    )
+    5.times do
+      e.photos.create(
+        picture: seed_image("event_image")
+      )
+    end
+end
+
+
+
 100.times do
     Relationship.create(
         follower_id: Faker::Number.between(1,100),
@@ -133,8 +147,9 @@ end
 end
 
 100.times do
+    
     p = PublicationUser.create(
-        publication_id: Faker::Number.between(1,100),
+        publication_id: Faker::Number.between(1,1000),
         user_id: Faker::Number.between(1,100)
         
     )
@@ -144,8 +159,8 @@ end
     )    
     u = UserResearchGroup.create(
         joining_date: Faker::Time.backward(10),
-        state: 0,
-        member_type: Faker::Number.between(0,1),
+        state: Faker::Number.between(0,1),
+        member_type: "Miembro",
         user_id: p.user_id,
         research_group_id: prg.research_group_id
     )
@@ -236,7 +251,7 @@ student.update(photo: Photo.create(
 
 UserResearchGroup.create(
     joining_date: Faker::Time.backward(10),
-    state: 0,
+    state: :Activo,
     member_type: "Líder",
     user_id: leader.id,
     research_group_id: 1
@@ -248,7 +263,7 @@ UserResearchGroup.create(
 
     UserResearchGroup.create(
         joining_date: Faker::Time.backward(8),
-        state: 0,
+        state: :Activo,
         member_type: "Miembro",
         user_id: student.id,
         research_group_id: Faker::Number.between(1,50)
@@ -256,7 +271,7 @@ UserResearchGroup.create(
 
     UserResearchGroup.create(
         joining_date: Faker::Time.backward(10),
-        state: 0,
+        state: :Activo,
         member_type: "Miembro",
         user_id: leader.id,
         research_group_id: Faker::Number.between(2,50)
@@ -268,11 +283,11 @@ end
 
 20.times do
     PublicationUser.create(
-        publication_id: Faker::Number.between(1,100),
+        publication_id: Faker::Number.between(1,1000),
         user_id: student.id  
     )
     PublicationUser.create(
-        publication_id: Faker::Number.between(1,100),
+        publication_id: Faker::Number.between(1,1000),
         user_id: leader.id
     )
 end
@@ -282,11 +297,11 @@ end
 4.times do
     ResearchSubjectUser.create(
         user_id: student.id,
-        research_subject_id: Faker::Number.between(1,50)
+        research_subject_id: Faker::Number.between(1,100)
     )
     ResearchSubjectUser.create(
         user_id: leader.id,
-        research_subject_id: Faker::Number.between(1,50)
+        research_subject_id: Faker::Number.between(1,100)
     )
 end
 
