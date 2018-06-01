@@ -44,7 +44,7 @@ end
     )
 end
 
-50.times do
+100.times do
     ResearchSubject.create(
         name: Faker::Hacker.say_something_smart
     )
@@ -96,6 +96,14 @@ end
         member_type: "Líder",
         user_id: Faker::Number.between(1,50),
         research_group_id: rg.id
+    )
+end
+
+100.times do
+
+    ResearchSubjectResearchGroup.create(
+        research_subject_id: Faker::Number.between(1,100),
+        research_group_id: Faker::Number.between(1,50)
     )
 
 end
@@ -293,11 +301,11 @@ end
 4.times do
     ResearchSubjectUser.create(
         user_id: student.id,
-        research_subject_id: Faker::Number.between(1,50)
+        research_subject_id: Faker::Number.between(1,100)
     )
     ResearchSubjectUser.create(
         user_id: leader.id,
-        research_subject_id: Faker::Number.between(1,50)
+        research_subject_id: Faker::Number.between(1,100)
     )
 end
 
