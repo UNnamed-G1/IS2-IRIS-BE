@@ -7,9 +7,11 @@ end
 ruby "2.4.4"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.5'
+gem 'rails', '~> 5.1.6'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
+
+gem 'knock'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
@@ -32,7 +34,7 @@ gem 'rack-cors', :require => 'rack/cors'
 ## Gemfile for Rails 3+, Sinatra, and Merb
 gem 'will_paginate', '~> 3.1.0'
 gem 'faker', '~> 1.8', '>= 1.8.7'
-gem 'knock'
+
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'groupdate'
