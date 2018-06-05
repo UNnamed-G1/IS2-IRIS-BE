@@ -120,11 +120,14 @@ class Event < ApplicationRecord
 
   scope :evs_by_usr_and_type, -> (user_id) {
           union_scope(public_evs,
-                      private_evs_by_user(user_id))
+                      private_evs_by_user(user_id)).includes(:photos, :research_group)
         }
 
   def self.news
-    select(:topic, :description, :date).order(:date).first(3)
+    select(:topic, :description, :date)
+          .order(:date)
+          .includes(:photos)
+          .first(3)
   end
 
   def self.get_research_group_id(event_id)
